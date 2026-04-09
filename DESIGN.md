@@ -185,6 +185,7 @@ Bubble-style chat with MeshGradient showing between messages.
 
 ### Input Bar
 - **Surface:** `#0D0C18` at 95% opacity with `#302E42` top border
+- **History toggle:** Glass button (34pt, `#1A1830` at 60% opacity, `#302E42` border, 8pt corner radius) with SF Symbol `clock`. Active state: `clock.fill` in `#8B7CF0`. Positioned left of text field.
 - **Text field:** `#1A1830` fill, `#302E42` border at 0.5pt, 12pt corner radius
 - **Placeholder:** "Message..." in `#6B6980` 15pt
 - **Send button (ready):** 34pt circle, `#8B7CF0` fill, white `arrow.up` icon 14pt bold
@@ -199,6 +200,47 @@ Bubble-style chat with MeshGradient showing between messages.
 - **Input bar:** Disabled state, placeholder "Waiting for model..." at 50% opacity
 - **No overlay or dimming:** The gradient is the backdrop
 
+## Glass Material (Phase 5)
+A lighter, more translucent surface for navigational elements. Differentiates from solid `#0D0C18` data cards.
+
+- **Background:** `#1A1830` at 60% opacity (gradient bleeds through slightly)
+- **Border:** `#302E42` at 0.5pt
+- **Corner radius:** 12pt
+- **Usage:** Conversation history rows, history toggle button, settings section backgrounds, "Get Started" welcome button
+
+## Conversation History (Phase 5)
+Chat tab is always "chat first." History is a toggle overlay, not a landing page.
+
+- **Default state:** Active conversation with input bar at bottom. History toggle (clock icon) beside text field.
+- **History state:** Tapping clock replaces chat content with history list. History is bottom-anchored (`.defaultScrollAnchor(.bottom)`), growing upward from the input bar. Most recent conversations closest to text field.
+- **Grouped by model:** Model name + quant + tok/s badge as section headers. Glass-material conversation rows underneath.
+- **Row content:** Auto-title (truncated first message) in SF Pro 15pt, relative timestamp in 12pt trailing, chevron indicator. One line each.
+- **Dismiss:** Tap X button in history header, or tap the clock icon again, or select a conversation.
+- **Animation:** Spring with 0.3s duration for toggle transitions.
+- **New chat:** Just type in the text field. No separate "New Chat" button needed.
+- **Deletion:** Swipe-to-delete on history rows, consistent with Library pattern.
+
+## Parameter Settings (Phase 5)
+Accessible from gear icon in chat nav bar. Per-model settings.
+
+- **Background:** MeshGradient (consistent with rest of app)
+- **Sections:** Glass-material section backgrounds with uppercase 12pt semibold tracking labels
+- **Presets:** Three horizontal capsule pills — "Precise" / "Balanced" / "Creative". Selected: `#8B7CF0` fill. Unselected: `#302E42` border. Tapping snaps sliders to preset values.
+- **Advanced section:** Collapsed by default with chevron disclosure. Opens to show temperature (0.0-2.0) and top-p (0.0-1.0) sliders.
+- **Sliders:** SwiftUI native with `#8B7CF0` tint. Label left, SF Mono value right. Min/max endpoint labels in `#6B6980`.
+- **System prompt:** Multi-line text field with glass background. Preset chips above ("Helpful assistant", "Creative writer", "Code helper", "Tutor") that populate the field on tap.
+- **Scope:** Per-model. Each model stores its own temperature, top-p, and system prompt.
+
+## Welcome Screen (Phase 5)
+First-launch only. Poster layout on full MeshGradient.
+
+- **Background:** Full MeshGradient with no cards or overlays. The gradient breathes completely.
+- **Content:** Centered vertically. App icon placeholder (80pt rounded rect, `#8B7CF0` at 15% opacity, `cpu` SF Symbol). "ModelRunner" in SF Pro 28pt bold. "Run AI on your iPhone" in 20pt semibold. Subtitle in 15pt secondary.
+- **Two buttons:** Stacked vertically, full-width, 16pt horizontal margins.
+  - "Show Me Around" — `#8B7CF0` filled, 14pt corner radius. Starts guided download (auto-picks best model).
+  - "Get Started" — Glass material, 14pt corner radius. Skips to Browse tab.
+- **No decoration.** No illustration, no emoji. The gradient is the visual. The copy is the hook.
+
 ## Design Playgrounds
 
 Working SwiftUI playground files for visual reference and iteration:
@@ -207,6 +249,7 @@ Working SwiftUI playground files for visual reference and iteration:
 |-----------|--------|-------------|
 | `MeshGradientPreview.playground` | Phase 2 | MeshGradient background, browse cards, search bar, tok/s badges |
 | `ChatLibraryPreview.playground` | Phase 3 + 4 | Chat bubbles, library tab, download bar, model loading, tab bar |
+| `Phase5Preview.playground` | Phase 5 | Conversation history overlay, parameter settings, welcome screen |
 
 Swap the `setLiveView()` call at the bottom of each playground's `Contents.swift` to preview different screens.
 
@@ -227,3 +270,10 @@ Swap the `setLiveView()` call at the bottom of each playground's `Contents.swift
 | 2026-04-09 | Active model left-edge accent bar | 3pt violet bar instead of checkmark — visual pop without clutter |
 | 2026-04-09 | Amber stop button during generation | Clear differentiation from send button, matches amber "runs slowly" semantic |
 | 2026-04-09 | ChatLibraryPreview.playground | Phase 3+4 design playground with chat, library, loading, tab bar |
+| 2026-04-09 | Glass material for navigational surfaces | 60% opacity differentiates from solid data cards |
+| 2026-04-09 | Bottom-anchored history overlay | History grows upward from input bar, not top-down. Chat-first tab. |
+| 2026-04-09 | Clock toggle for history | Glass button beside text field, no separate history page |
+| 2026-04-09 | Preset pills for inference params | Precise/Balanced/Creative snap sliders to values |
+| 2026-04-09 | Per-model parameter settings | Each model stores own temperature, top-p, system prompt |
+| 2026-04-09 | Welcome screen as poster | Full gradient, two paths (guided vs skip), zero decoration |
+| 2026-04-09 | Phase5Preview.playground | Phase 5 design playground with history, settings, welcome |

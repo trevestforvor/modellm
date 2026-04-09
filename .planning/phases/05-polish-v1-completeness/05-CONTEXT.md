@@ -1,7 +1,7 @@
 # Phase 5: Polish + V1 Completeness - Context
 
 **Gathered:** 2026-04-09
-**Status:** Ready for planning (design consultation needed before planning)
+**Status:** Ready for planning
 
 <domain>
 ## Phase Boundary
@@ -16,20 +16,22 @@ Chat history persists, inference parameters are adjustable, and the full pipelin
 ### Chat History Persistence
 - **D-01:** Conversations stored in SwiftData. Each conversation has messages, associated model, creation date, and auto-generated title.
 - **D-02:** Conversation list grouped by model. Model name as section header, conversations listed underneath.
-- **D-03:** Conversation list lives inside the Chat tab. Chat tab shows the list by default; tapping a conversation resumes it, "New Chat" starts fresh.
-- **D-04:** Auto-title from first user message (truncated). No manual renaming.
-- **D-05:** Swipe-to-delete on conversation rows. Confirmation alert. Consistent with Library deletion pattern.
-- **D-06:** Conversation list visual treatment: glass-style navigation buttons per model group (not cards, not plain rows). Exact design TBD via design consultation.
+- **D-03:** Chat tab is always "chat first." The default view is the active conversation with the input bar. History is a toggle overlay, NOT a landing page.
+- **D-04:** History toggle: a glass clock button beside the text field in the input bar. Tapping it replaces the chat content with the history list. Tapping again (or selecting a conversation, or tapping X) dismisses it.
+- **D-05:** History list is bottom-anchored (`.defaultScrollAnchor(.bottom)`). Rows grow upward from the input bar. Most recent conversations are closest to the text field. Grouped by model with tok/s badges.
+- **D-06:** History rows use glass material (`#1A1830` at 60% opacity, `#302E42` border). Auto-title from first user message (truncated), relative timestamp trailing, chevron indicator.
+- **D-07:** New chat: just type in the text field. No separate "New Chat" button. The text field IS the new chat affordance.
+- **D-08:** Swipe-to-delete on history rows. Confirmation alert. Consistent with Library deletion pattern.
 
 ### Inference Parameters
-- **D-07:** Friendly presets ("Precise", "Balanced", "Creative") that map to temperature/top-p combos, plus an expandable "Advanced" section with actual sliders for power users.
-- **D-08:** Parameters are per-model. Each model has its own temperature, top-p, and system prompt stored in SwiftData. All conversations with that model use its settings.
-- **D-09:** System prompt presets established in Phase 4 (D-11) — Phase 5 extends the settings view with temperature/top-p controls alongside the existing system prompt field.
+- **D-09:** Friendly presets ("Precise", "Balanced", "Creative") that map to temperature/top-p combos, plus an expandable "Advanced" section with actual sliders for power users.
+- **D-10:** Parameters are per-model. Each model has its own temperature, top-p, and system prompt stored in SwiftData. All conversations with that model use its settings.
+- **D-11:** System prompt presets established in Phase 4 — Phase 5 extends the settings view with temperature/top-p controls alongside the existing system prompt field. Settings sections use glass material backgrounds.
 
 ### First-Launch Onboarding
-- **D-10:** Welcome screen with two paths: "Get Started" (skip to Browse) or "Show Me Around" (guided download). Users choose their experience.
-- **D-11:** Guided path: app auto-picks the best "Runs Well" model for the user's device (smallest + fastest). Walks them through download → first message. Zero decision fatigue.
-- **D-12:** Welcome screen design TBD via design consultation — may use MeshGradient or be visually distinct.
+- **D-12:** Welcome screen with two paths: "Show Me Around" (guided download, accent filled button) or "Get Started" (skip to Browse, glass button). Users choose their experience.
+- **D-13:** Guided path: app auto-picks the best "Runs Well" model for the user's device (smallest + fastest). Walks them through download → first message. Zero decision fatigue.
+- **D-14:** Welcome screen is a poster on full MeshGradient. App icon, "ModelRunner" title, tagline, two buttons. No decoration, no illustration. The gradient is the visual.
 
 ### Claude's Discretion
 - Edge case handling: deleted model with existing conversations, storage full during inference
@@ -52,7 +54,7 @@ Chat history persists, inference parameters are adjustable, and the full pipelin
 ### Design System
 - `DESIGN.md` — Full visual system. **Must be updated** with Phase 5 surfaces before planning.
 - `ChatLibraryPreview.playground` — Phase 3+4 design reference
-- A new design consultation is needed for: conversation list, parameter settings view, welcome/onboarding screen
+- `Phase5Preview.playground` — Phase 5 design playground with history overlay, settings, welcome screen
 
 ### Project & Requirements
 - `.planning/PROJECT.md` — Core value, constraints

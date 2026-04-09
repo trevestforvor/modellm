@@ -302,6 +302,7 @@ Working SwiftUI playgrounds for visual iteration and developer reference:
 |-----------|-------|-------------|
 | `MeshGradientPreview.playground` | Phase 2 | MeshGradient background, browse cards, search bar, tok/s badges |
 | `ChatLibraryPreview.playground` | Phase 3 + 4 | Chat bubbles, library tab, download bar, model loading, tab bar |
+| `Phase5Preview.playground` | Phase 5 | Conversation history overlay, parameter settings, welcome screen |
 
 > **Note:** The design system in `DESIGN.md` uses a custom dark MeshGradient aesthetic with explicit hex tokens. This UI-SPEC was generated before the design consultation and references system colors (`Color(.systemBackground)` etc.). When implementing, **DESIGN.md takes precedence** — use the custom hex palette, not system semantics. The playgrounds above are the visual source of truth.
 
