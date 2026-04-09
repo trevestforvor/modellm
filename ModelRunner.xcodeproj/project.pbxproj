@@ -42,6 +42,8 @@
 		CC0301000100000BCC030100 /* ModelLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0301000100000CCC030100; };
 		CC0301000100000DCC030100 /* StorageGuardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0301000100000ECC030100; };
 		CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000014CC030100; };
+		CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000017CC030100; };
+		CC03010001000018CC030100 /* LibraryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000019CC030100; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,8 @@
 		CC0301000100000CCC030100 /* ModelLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelLibraryTests.swift; sourceTree = "<group>"; };
 		CC0301000100000ECC030100 /* StorageGuardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageGuardTests.swift; sourceTree = "<group>"; };
 		CC03010001000014CC030100 /* DownloadProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProgressBar.swift; sourceTree = "<group>"; };
+		CC03010001000017CC030100 /* LibraryModelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModelCard.swift; sourceTree = "<group>"; };
+		CC03010001000019CC030100 /* LibraryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -140,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				CC03010001000008CC030100 /* LibraryView.swift */,
+				CC03010001000017CC030100 /* LibraryModelCard.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 				AF3EDE50F4F3467C8BC6A1FC /* Device */,
 				BB01AA0000000021BB01AA00 /* HF */,
 				CC03010001000012CC030100 /* Download */,
+				CC0301000100001ACC030100 /* Library */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -169,6 +175,14 @@
 				CC03010001000006CC030100 /* DownloadService.swift */,
 			);
 			path = Download;
+			sourceTree = "<group>";
+		};
+		CC0301000100001ACC030100 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				CC03010001000019CC030100 /* LibraryService.swift */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		BB01AA0000000020BB01AA00 /* Features */ = {
@@ -381,6 +395,8 @@
 				CC03010001000003CC030100 /* DownloadState.swift in Sources */,
 				CC03010001000005CC030100 /* DownloadService.swift in Sources */,
 				CC03010001000007CC030100 /* LibraryView.swift in Sources */,
+				CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */,
+				CC03010001000018CC030100 /* LibraryService.swift in Sources */,
 				CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
