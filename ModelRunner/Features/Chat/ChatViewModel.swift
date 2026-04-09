@@ -217,7 +217,8 @@ final class ChatViewModel {
             totalChars -= removed.content.count
         }
 
-        return PromptFormatter.chatml(system: settings.systemPrompt, messages: historyMessages)
+        // Per-model system prompt from InferenceParams (sourced from SwiftData via DownloadedModel)
+        return PromptFormatter.chatml(system: inferenceParams.systemPrompt, messages: historyMessages)
     }
 
     private func updateToksPerSecond() {

@@ -53,9 +53,13 @@ final class AppContainer {
     }
 
     /// Build InferenceParams scoped to this device's chip context window cap.
-    /// Falls back to a conservative 2048-token context if device profile is not yet loaded.
-    func inferenceParams() -> InferenceParams {
+    /// Reads per-model temperature, topP, and systemPrompt from SwiftData when an active model exists.
+    /// Falls back to defaults if no active model or device profile is not yet loaded.
+    func inferenceParams(activeModel: DownloadedModel? = nil) -> InferenceParams {
         let contextCap = compatibilityEngine?.device.chipProfile.contextWindowCap ?? 2048
+        if let model = activeModel {
+            return InferenceParams.from(model: model, contextWindowCap: contextCap)
+        }
         return InferenceParams.default(contextWindowCap: contextCap)
     }
 }

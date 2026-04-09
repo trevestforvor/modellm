@@ -221,9 +221,10 @@ struct ChatView: View {
             viewModel = nil
             return
         }
+        let model = activeModel(from: container)
         let vm = ChatViewModel(
             inferenceService: container.inferenceService,
-            inferenceParams: container.inferenceParams()
+            inferenceParams: container.inferenceParams(activeModel: model)
         )
         viewModel = vm
         await vm.loadModel(url: url)
