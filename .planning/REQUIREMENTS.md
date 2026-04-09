@@ -34,7 +34,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Inference & Chat
 
 - [x] **CHAT-01**: User can load a downloaded model and chat with it via streaming token output
-- [ ] **CHAT-02**: App displays tokens/sec during inference
+- [x] **CHAT-02**: App displays tokens/sec during inference
 - [x] **CHAT-03**: Chat works fully offline after model is downloaded
 - [ ] **CHAT-04**: User can view and return to previous chat conversations (history persistence)
 - [ ] **CHAT-05**: User can adjust inference parameters (temperature, system prompt, top-p)
@@ -93,7 +93,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DLST-04 | Phase 3 | Complete |
 | DLST-05 | Phase 3 | Complete |
 | CHAT-01 | Phase 4 | Complete |
-| CHAT-02 | Phase 4 | Pending |
+| CHAT-02 | Phase 4 | Complete |
 | CHAT-03 | Phase 4 | Complete |
 | CHAT-06 | Phase 4 | Complete |
 | CHAT-04 | Phase 5 | Pending |
