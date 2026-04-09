@@ -9,12 +9,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Device & Compatibility
 
-- [ ] **DEVC-01**: App dynamically detects device chip family, RAM, and available storage at runtime
-- [ ] **DEVC-02**: App computes hard compatibility limits — models that cannot run are blocked from download
-- [ ] **DEVC-03**: App computes soft compatibility tiers — models that will run slowly display a warning with expected performance band
-- [ ] **DEVC-04**: App shows storage impact before download (e.g. "Uses 4.2 GB, you have 6.1 GB free")
-- [ ] **DEVC-05**: Compatibility engine accounts for actual usable RAM (~40% of physical) not total RAM
-- [ ] **DEVC-06**: Compatibility engine factors in KV cache memory for context window sizing
+- [x] **DEVC-01**: App dynamically detects device chip family, RAM, and available storage at runtime
+- [x] **DEVC-02**: App computes hard compatibility limits — models that cannot run are blocked from download
+- [x] **DEVC-03**: App computes soft compatibility tiers — models that will run slowly display a warning with expected performance band
+- [x] **DEVC-04**: App shows storage impact before download (e.g. "Uses 4.2 GB, you have 6.1 GB free")
+- [x] **DEVC-05**: Compatibility engine accounts for actual usable RAM (~40% of physical) not total RAM
+- [x] **DEVC-06**: Compatibility engine factors in KV cache memory for context window sizing
 
 ### HF Integration
 
@@ -77,12 +77,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DEVC-01 | Phase 1 | Pending |
-| DEVC-02 | Phase 1 | Pending |
-| DEVC-03 | Phase 1 | Pending |
-| DEVC-04 | Phase 1 | Pending |
-| DEVC-05 | Phase 1 | Pending |
-| DEVC-06 | Phase 1 | Pending |
+| DEVC-01 | Phase 1 | Complete |
+| DEVC-02 | Phase 1 | Complete |
+| DEVC-03 | Phase 1 | Complete |
+| DEVC-04 | Phase 1 | Complete |
+| DEVC-05 | Phase 1 | Complete |
+| DEVC-06 | Phase 1 | Complete |
 | HFIN-01 | Phase 2 | Pending |
 | HFIN-02 | Phase 2 | Pending |
 | HFIN-03 | Phase 2 | Pending |

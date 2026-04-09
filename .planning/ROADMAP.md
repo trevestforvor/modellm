@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. Storage impact (e.g. "Uses 4.2 GB, you have 6.1 GB free") can be computed from model metadata
 **Plans**: 3 plans
 Plans:
-- [ ] 01-01-PLAN.md — Xcode project scaffold, entitlements, type contracts, Wave 0 test stubs
+- [x] 01-01-PLAN.md — Xcode project scaffold, entitlements, type contracts, Wave 0 test stubs
 - [ ] 01-02-PLAN.md — ChipLookupTable + DeviceCapabilityService (DEVC-01, DEVC-05)
 - [ ] 01-03-PLAN.md — CompatibilityEngine with KV cache math (DEVC-02, DEVC-03, DEVC-04, DEVC-06)
 
@@ -92,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Device Foundation | 0/3 | Not started | - |
+| 1. Device Foundation | 1/3 | In Progress|  |
 | 2. HF Browse + Compatibility UI | 0/TBD | Not started | - |
 | 3. Download + Model Library | 0/TBD | Not started | - |
 | 4. Inference + Chat | 0/TBD | Not started | - |
