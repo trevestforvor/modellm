@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 03-04-PLAN.md
-last_updated: "2026-04-09T12:18:12.446Z"
+status: Ready to execute
+stopped_at: Completed 04-03-PLAN.md
+last_updated: "2026-04-09T12:31:29.689Z"
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 17
-  completed_plans: 10
+  completed_plans: 12
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-08)
 
 **Core value:** Device-aware model compatibility verification — users see at a glance what will run well, what will run slowly, and what won't run at all on their specific device, before downloading anything.
-**Current focus:** Phase 03 — download-model-library
+**Current focus:** Phase 04 — inference-chat
 
 ## Current Position
 
-Phase: 04
-Plan: Not started
+Phase: 04 (inference-chat) — EXECUTING
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -57,6 +57,8 @@ Plan: Not started
 | Phase 03 P02 | 344 | 7 tasks | 2 files |
 | Phase 03 P03 | 433 | 4 tasks | 5 files |
 | Phase 03 P04 | 456 | 4 tasks | 5 files |
+| Phase 04 P01 | 630 | 6 tasks | 9 files |
+| Phase 04 P03 | 586 | 6 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -82,6 +84,12 @@ Recent decisions affecting current work:
 - [Phase 03]: availableStorage is async throws on DeviceCapabilityService actor — preDownloadStorageCheck must use try await
 - [Phase 03]: Color.accentColor is the correct ShapeStyle on iOS; .accent is not a valid ShapeStyle member
 - [Phase 03]: availableStorage on DeviceCapabilityService is async throws (actor property) — use try? await in .task modifier
+- [Phase 04]: LlamaSession stub with XCFramework integration comments — XCFramework requires Xcode UI to add as binary target
+- [Phase 04]: ChatMessage defined in Models/ canonically to avoid duplication between 04-01 and 04-02
+- [Phase 04]: Swift Testing used for all Phase 4 tests (matches existing codebase convention)
+- [Phase 04]: ChatSettings and ChatViewModel stubs created in 04-03 to unblock build during parallel wave execution
+- [Phase 04]: MeshGradient wrapped in if #available(iOS 18.0, *) in ChatView to match iOS 17 deployment target
+- [Phase 04]: activeModelURL/Name/Quant stubs added to AppContainer as nil vars — Phase 5 will wire Library selection
 
 ### Pending Todos
 
@@ -95,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-09T12:09:26.138Z
-Stopped at: Completed 03-04-PLAN.md
+Last session: 2026-04-09T12:31:29.686Z
+Stopped at: Completed 04-03-PLAN.md
 Resume file: None
