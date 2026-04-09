@@ -12,8 +12,8 @@ ModelRunner ships in five phases that follow the natural dependency chain of the
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Device Foundation** - Detect device specs and compute compatibility verdicts before any UI exists
-- [ ] **Phase 2: HF Browse + Compatibility UI** - Browse Hugging Face models with live compatibility badges
+- [x] **Phase 1: Device Foundation** - Detect device specs and compute compatibility verdicts before any UI exists
+- [x] **Phase 2: HF Browse + Compatibility UI** - Browse Hugging Face models with live compatibility badges
 - [ ] **Phase 3: Download + Model Library** - Download models in the background and manage the local library
 - [ ] **Phase 4: Inference + Chat** - Load a model and run a streaming chat conversation on-device
 - [ ] **Phase 5: Polish + V1 Completeness** - Chat history, inference parameters, and UX completeness
@@ -46,7 +46,11 @@ Plans:
   3. User can tap a model and view file size, quantization level, parameter count, and a clear compatibility verdict (Runs well / Runs slowly / Won't run)
   4. Each model row in the list shows a compatibility badge derived from the device's actual specs
   5. A "Best for your device" recommendation section surfaces chip-appropriate models
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [x] 02-01-PLAN.md — HF type system scaffold (HFModels, AnnotatedModel, HFAPIError, QuantizationParser, test stubs)
+- [x] 02-02-PLAN.md — HFAPIService networking + HFBrowseViewModel business logic
+- [x] 02-03-PLAN.md — SwiftUI view layer (BrowseView, ModelCardView, ToksBadgeView, ModelDetailView, VariantRowView, ContentView TabView)
 **UI hint**: yes
 
 ### Phase 3: Download + Model Library
