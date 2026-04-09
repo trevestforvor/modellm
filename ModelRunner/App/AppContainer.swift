@@ -3,6 +3,7 @@ import Foundation
 @Observable
 final class AppContainer {
     let deviceService = DeviceCapabilityService()
+    let hfAPIService = HFAPIService()
     private(set) var compatibilityEngine: CompatibilityEngine?
 
     init() {

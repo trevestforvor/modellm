@@ -17,6 +17,15 @@
 		0A9AE88B5DC2448597F66C5D /* DeviceCapabilityServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9AE88B5DC2448597F66C5E; };
 		44321BB674EA4DBA9669F67A /* CompatibilityEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44321BB674EA4DBA9669F67B; };
 		9C31C4E1288841068B4131B4 /* ChipLookupTableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C31C4E1288841068B4131B5; };
+		BB01AA0000000001BB01AA00 /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000002BB01AA00; };
+		BB01AA0000000003BB01AA00 /* HFAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000004BB01AA00; };
+		BB01AA0000000005BB01AA00 /* HFModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000006BB01AA00; };
+		BB01AA0000000007BB01AA00 /* HFAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000008BB01AA00; };
+		BB01AA0000000009BB01AA00 /* AnnotatedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA000000000ABB01AA00; };
+		BB01AA000000000BBB01AA00 /* QuantizationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA000000000CBB01AA00; };
+		BB01AA000000000DBB01AA00 /* HFAPIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA000000000EBB01AA00; };
+		BB01AA000000000FBB01AA00 /* QuantizationTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000010BB01AA00; };
+		BB01AA0000000011BB01AA00 /* HFBrowseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000012BB01AA00; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +52,15 @@
 		44321BB674EA4DBA9669F67B /* CompatibilityEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityEngineTests.swift; sourceTree = "<group>"; };
 		9C31C4E1288841068B4131B5 /* ChipLookupTableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipLookupTableTests.swift; sourceTree = "<group>"; };
 		3BB18C8F4F4B485380132B87 /* ModelRunner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ModelRunner.entitlements; sourceTree = "<group>"; };
+		BB01AA0000000002BB01AA00 /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
+		BB01AA0000000004BB01AA00 /* HFAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HFAPIService.swift; sourceTree = "<group>"; };
+		BB01AA0000000006BB01AA00 /* HFModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HFModels.swift; sourceTree = "<group>"; };
+		BB01AA0000000008BB01AA00 /* HFAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HFAPIError.swift; sourceTree = "<group>"; };
+		BB01AA000000000ABB01AA00 /* AnnotatedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotatedModel.swift; sourceTree = "<group>"; };
+		BB01AA000000000CBB01AA00 /* QuantizationParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantizationParser.swift; sourceTree = "<group>"; };
+		BB01AA000000000EBB01AA00 /* HFAPIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HFAPIServiceTests.swift; sourceTree = "<group>"; };
+		BB01AA0000000010BB01AA00 /* QuantizationTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantizationTypeTests.swift; sourceTree = "<group>"; };
+		BB01AA0000000012BB01AA00 /* HFBrowseViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HFBrowseViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -51,6 +69,7 @@
 			children = (
 				8BC891A9D4E842BFBD0D21AB /* App */,
 				B8FBF741BAAD452C9D858445 /* Services */,
+				BB01AA0000000020BB01AA00 /* Features */,
 				8225560F7DBD44C99EA7AD92 /* ContentView.swift */,
 				3BB18C8F4F4B485380132B87 /* ModelRunner.entitlements */,
 			);
@@ -70,8 +89,37 @@
 			isa = PBXGroup;
 			children = (
 				AF3EDE50F4F3467C8BC6A1FC /* Device */,
+				BB01AA0000000021BB01AA00 /* HF */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		BB01AA0000000020BB01AA00 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				BB01AA0000000022BB01AA00 /* Browse */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		BB01AA0000000022BB01AA00 /* Browse */ = {
+			isa = PBXGroup;
+			children = (
+				BB01AA0000000002BB01AA00 /* BrowseView.swift */,
+			);
+			path = Browse;
+			sourceTree = "<group>";
+		};
+		BB01AA0000000021BB01AA00 /* HF */ = {
+			isa = PBXGroup;
+			children = (
+				BB01AA0000000004BB01AA00 /* HFAPIService.swift */,
+				BB01AA0000000006BB01AA00 /* HFModels.swift */,
+				BB01AA0000000008BB01AA00 /* HFAPIError.swift */,
+				BB01AA000000000ABB01AA00 /* AnnotatedModel.swift */,
+				BB01AA000000000CBB01AA00 /* QuantizationParser.swift */,
+			);
+			path = HF;
 			sourceTree = "<group>";
 		};
 		AF3EDE50F4F3467C8BC6A1FC /* Device */ = {
@@ -91,6 +139,9 @@
 				0A9AE88B5DC2448597F66C5E /* DeviceCapabilityServiceTests.swift */,
 				44321BB674EA4DBA9669F67B /* CompatibilityEngineTests.swift */,
 				9C31C4E1288841068B4131B5 /* ChipLookupTableTests.swift */,
+				BB01AA000000000EBB01AA00 /* HFAPIServiceTests.swift */,
+				BB01AA0000000010BB01AA00 /* QuantizationTypeTests.swift */,
+				BB01AA0000000012BB01AA00 /* HFBrowseViewModelTests.swift */,
 			);
 			path = ModelRunnerTests;
 			sourceTree = "<group>";
@@ -208,6 +259,12 @@
 				A1B2C3D4E5F60010A2B3C4D5 /* ChipLookupTable.swift in Sources */,
 				A1B2C3D4E5F60012A2B3C4D5 /* DeviceCapabilityService.swift in Sources */,
 				F1A2B3C4D5E60014F1A2B3C4 /* CompatibilityEngine.swift in Sources */,
+				BB01AA0000000001BB01AA00 /* BrowseView.swift in Sources */,
+				BB01AA0000000003BB01AA00 /* HFAPIService.swift in Sources */,
+				BB01AA0000000005BB01AA00 /* HFModels.swift in Sources */,
+				BB01AA0000000007BB01AA00 /* HFAPIError.swift in Sources */,
+				BB01AA0000000009BB01AA00 /* AnnotatedModel.swift in Sources */,
+				BB01AA000000000BBB01AA00 /* QuantizationParser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +275,9 @@
 				0A9AE88B5DC2448597F66C5D /* DeviceCapabilityServiceTests.swift in Sources */,
 				44321BB674EA4DBA9669F67A /* CompatibilityEngineTests.swift in Sources */,
 				9C31C4E1288841068B4131B4 /* ChipLookupTableTests.swift in Sources */,
+				BB01AA000000000DBB01AA00 /* HFAPIServiceTests.swift in Sources */,
+				BB01AA000000000FBB01AA00 /* QuantizationTypeTests.swift in Sources */,
+				BB01AA0000000011BB01AA00 /* HFBrowseViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
