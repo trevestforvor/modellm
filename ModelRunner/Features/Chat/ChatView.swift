@@ -1,7 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct ChatView: View {
     @Environment(AppContainer.self) private var container
+    @Environment(\.modelContext) private var modelContext
     @State private var viewModel: ChatViewModel?
     @State private var inputText = ""
     @State private var showSettings = false
@@ -48,11 +50,10 @@ struct ChatView: View {
             }
         }
         .sheet(isPresented: $showSettings) {
-            if let vm = viewModel {
-                ChatSettingsView(settings: Binding(
-                    get: { vm.settings },
-                    set: { vm.settings = $0 }
-                ))
+            // Pass the SwiftData DownloadedModel so ChatSettingsView writes temperature,
+            // topP, and systemPrompt directly to SwiftData (per-model settings, D-10/D-11).
+            if let model = activeModel(from: container) {
+                ChatSettingsView(model: model)
             }
         }
         .task(id: activeModelURL) {
@@ -82,10 +83,35 @@ struct ChatView: View {
                     .padding()
                 Spacer()
             default:
-                messageList(vm: vm)
+                // ZStack allows history overlay to replace chat bubble area with animation
+                ZStack(alignment: .bottom) {
+                    if vm.showingHistory {
+                        ConversationHistoryView(
+                            onSelect: { conversation in
+                                vm.activeConversation = conversation
+                                vm.messages = conversation.messages
+                                    .sorted { $0.createdAt < $1.createdAt }
+                                    .map { ChatMessage(role: $0.role == "user" ? .user : .assistant, content: $0.content) }
+                                vm.showingHistory = false
+                            },
+                            onDismiss: {
+                                vm.showingHistory = false
+                            },
+                            onDelete: { conversation in
+                                vm.deleteConversation(conversation)
+                            }
+                        )
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                    } else {
+                        messageList(vm: vm)
+                            .transition(.opacity)
+                    }
+                }
+                .animation(.spring(duration: 0.3, bounce: 0.15), value: vm.showingHistory)
             }
 
             // Input bar — always rendered; disabled when model not ready
+            // Clock button at leading edge toggles conversation history
             ChatInputBar(
                 text: $inputText,
                 isGenerating: vm.isGenerating,
@@ -94,8 +120,15 @@ struct ChatView: View {
                     vm.send(text: inputText)
                     inputText = ""
                 },
-                onStop: { vm.stop() }
+                onStop: { vm.stop() },
+                onToggleHistory: { vm.showingHistory.toggle() }
             )
+        }
+        .onAppear {
+            vm.configure(modelContext: modelContext)
+            if let activeModel = activeModel(from: container) {
+                vm.loadMostRecentConversation(for: activeModel, modelContext: modelContext)
+            }
         }
     }
 
@@ -144,22 +177,41 @@ struct ChatView: View {
 
     // MARK: - MeshGradient background
 
+    @ViewBuilder
     private var chatMeshGradient: some View {
-        MeshGradient(
-            width: 3,
-            height: 3,
-            points: [
-                [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
-                [0.0, 0.5], [0.5, 0.5], [1.0, 0.5],
-                [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
-            ],
-            colors: [
-                Color(hex: "#0D0C18"), Color(hex: "#141230"), Color(hex: "#0D0C18"),
-                Color(hex: "#1A1040"), Color(hex: "#221850"), Color(hex: "#180E35"),
-                Color(hex: "#0D0C18"), Color(hex: "#120B2E"), Color(hex: "#0D0C18")
-            ]
+        if #available(iOS 18.0, *) {
+            MeshGradient(
+                width: 3,
+                height: 3,
+                points: [
+                    [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
+                    [0.0, 0.5], [0.5, 0.5], [1.0, 0.5],
+                    [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
+                ],
+                colors: [
+                    Color(hex: "#0D0C18"), Color(hex: "#141230"), Color(hex: "#0D0C18"),
+                    Color(hex: "#1A1040"), Color(hex: "#221850"), Color(hex: "#180E35"),
+                    Color(hex: "#0D0C18"), Color(hex: "#120B2E"), Color(hex: "#0D0C18")
+                ]
+            )
+            .ignoresSafeArea()
+        } else {
+            Color(hex: "#0D0C18")
+                .ignoresSafeArea()
+        }
+    }
+
+    // MARK: - Helpers
+
+    /// Resolve active DownloadedModel from AppContainer for persistence wiring.
+    /// Phase 5 wires Library selection; for now we look up by activeModelURL path.
+    private func activeModel(from container: AppContainer) -> DownloadedModel? {
+        guard let url = activeModelURL else { return nil }
+        var descriptor = FetchDescriptor<DownloadedModel>(
+            predicate: #Predicate { $0.localPath == url.path }
         )
-        .ignoresSafeArea()
+        descriptor.fetchLimit = 1
+        return try? modelContext.fetch(descriptor).first
     }
 
     // MARK: - Setup
