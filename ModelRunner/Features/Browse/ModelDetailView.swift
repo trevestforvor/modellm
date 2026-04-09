@@ -5,6 +5,10 @@ struct ModelDetailView: View {
 
     @State private var detailedModel: AnnotatedModel?
     @State private var isLoading = false
+    @State private var isDownloading = false
+    @State private var downloadError: String?
+    @State private var showCellularAlert = false
+    @State private var cellularContinuation: CheckedContinuation<Bool, Never>?
     @Environment(AppContainer.self) private var container
 
     private let cardSurface   = Color(hex: "#0D0C18")
@@ -61,21 +65,32 @@ struct ModelDetailView: View {
             // MARK: Download Button
             Section {
                 Button {
-                    // Phase 3: download action
+                    downloadBestVariant()
                 } label: {
                     HStack {
                         Spacer()
-                        Text("Download · Coming Soon")
-                            .font(.headline)
-                            .foregroundStyle(primaryText)
+                        if isDownloading {
+                            ProgressView()
+                                .tint(primaryText)
+                                .padding(.trailing, 8)
+                            Text("Downloading...")
+                                .font(.headline)
+                                .foregroundStyle(primaryText)
+                        } else {
+                            Image(systemName: "arrow.down.circle.fill")
+                                .foregroundStyle(primaryText)
+                            Text(downloadButtonLabel)
+                                .font(.headline)
+                                .foregroundStyle(primaryText)
+                        }
                         Spacer()
                     }
                 }
-                .disabled(true)
+                .disabled(bestDownloadVariant == nil || isDownloading)
                 .buttonStyle(.borderedProminent)
-                .tint(accent.opacity(0.4))
+                .tint(bestDownloadVariant != nil && !isDownloading ? accent : accent.opacity(0.4))
                 .frame(maxWidth: .infinity)
-                .accessibilityHint("Download available in a future update")
+                .accessibilityHint(bestDownloadVariant != nil ? "Download this model to your device" : "No compatible variant available")
             }
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 16, trailing: 16))
@@ -94,6 +109,28 @@ struct ModelDetailView: View {
         }
         .task {
             await loadDetail()
+        }
+        .alert("Cellular Download", isPresented: $showCellularAlert) {
+            Button("Download", role: .destructive) {
+                cellularContinuation?.resume(returning: true)
+                cellularContinuation = nil
+            }
+            Button("Cancel", role: .cancel) {
+                cellularContinuation?.resume(returning: false)
+                cellularContinuation = nil
+            }
+        } message: {
+            let size = bestDownloadVariant?.metadata.fileSizeBytes
+                .map { UInt64($0).formattedFileSize } ?? "this model"
+            Text("This will use ~\(size) of cellular data. Continue?")
+        }
+        .alert("Download Error", isPresented: .init(
+            get: { downloadError != nil },
+            set: { if !$0 { downloadError = nil } }
+        )) {
+            Button("OK") { downloadError = nil }
+        } message: {
+            Text(downloadError ?? "")
         }
     }
 
@@ -124,6 +161,51 @@ struct ModelDetailView: View {
             return "Uses \(sizeStr) · You have \(freeFormatted) free"
         } else {
             return "Uses \(sizeStr)"
+        }
+    }
+
+    // MARK: - Download
+
+    private var bestDownloadVariant: AnnotatedVariant? {
+        displayModel.bestVariant ?? displayModel.variants.first
+    }
+
+    private var downloadButtonLabel: String {
+        guard let variant = bestDownloadVariant else {
+            return "No Compatible Variant"
+        }
+        let size = variant.metadata.fileSizeBytes.map { UInt64($0).formattedFileSize } ?? ""
+        return "Download \(variant.quantType.rawValue) · \(size)"
+    }
+
+    private func downloadBestVariant() {
+        guard let variant = bestDownloadVariant else { return }
+        isDownloading = true
+        downloadError = nil
+
+        Task {
+            do {
+                try await container.downloadService.beginDownload(
+                    repoId: displayModel.repoId,
+                    filename: variant.filename,
+                    fileSizeBytes: Int64(variant.metadata.fileSizeBytes ?? 0),
+                    displayName: displayModel.displayName,
+                    quantization: variant.quantType.rawValue,
+                    authToken: nil,
+                    deviceService: container.deviceService,
+                    cellularConfirmation: { await requestCellularConfirmation() }
+                )
+            } catch {
+                downloadError = error.localizedDescription
+            }
+            isDownloading = false
+        }
+    }
+
+    private func requestCellularConfirmation() async -> Bool {
+        await withCheckedContinuation { continuation in
+            cellularContinuation = continuation
+            showCellularAlert = true
         }
     }
 }

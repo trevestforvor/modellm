@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(AppContainer.self) private var container
+    @Environment(\.modelContext) private var modelContext
     @State private var selectedTab: Tab = .browse
 
     enum Tab { case browse, library, chat }
@@ -33,6 +34,10 @@ struct ContentView: View {
                 .tag(Tab.chat)
         }
         .tint(accent)
+        // Inject ModelContext into DownloadService so completed downloads create SwiftData records
+        .task {
+            await container.downloadService.setModelContext(modelContext)
+        }
         // Toolbar appearance for dark tab bar
         .onAppear { configureTabBarAppearance() }
         // Persistent download progress bar — sits above tab bar (D-01)
