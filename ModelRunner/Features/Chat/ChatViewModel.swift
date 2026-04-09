@@ -74,8 +74,11 @@ final class ChatViewModel {
 
     func loadMostRecentConversation(for model: DownloadedModel, modelContext: ModelContext) {
         self.modelContext = modelContext
+        // Capture repoId as a local constant — #Predicate cannot reference properties
+        // from two different @Model types in the same closure (Swift Data limitation).
+        let repoId = model.repoId
         var descriptor = FetchDescriptor<Conversation>(
-            predicate: #Predicate { $0.modelRepoId == model.repoId },
+            predicate: #Predicate { $0.modelRepoId == repoId },
             sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
         )
         descriptor.fetchLimit = 1

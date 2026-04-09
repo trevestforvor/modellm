@@ -1,9 +1,12 @@
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.modelContext) private var modelContext
     @State private var selectedTab: Tab = .browse
+    // Onboarding guided path: if set, activate this model and switch to Chat on appear
+    @AppStorage("guidedOnboardingModelId") private var guidedOnboardingModelId: String = ""
 
     enum Tab { case browse, library, chat }
 
@@ -43,6 +46,26 @@ struct ContentView: View {
         // Inject ModelContext into DownloadService so completed downloads create SwiftData records
         .task {
             await container.downloadService.setModelContext(modelContext)
+        }
+        // Guided onboarding: if a model was pre-selected during onboarding, activate and switch to Chat
+        .onAppear {
+            guard !guidedOnboardingModelId.isEmpty else { return }
+            let repoId = guidedOnboardingModelId
+            guidedOnboardingModelId = ""  // consume once
+            // Find the model in SwiftData and wire it to AppContainer (Phase 5 active model wiring)
+            do {
+                let descriptor = FetchDescriptor<DownloadedModel>(
+                    predicate: #Predicate { $0.repoId == repoId }
+                )
+                if let model = try modelContext.fetch(descriptor).first {
+                    container.activeModelURL = URL(filePath: model.localPath)
+                    container.activeModelName = model.displayName
+                    container.activeModelQuant = model.quantization
+                    selectedTab = .chat
+                }
+            } catch {
+                // Non-fatal — fall back to default Browse tab with no active model
+            }
         }
         // Toolbar appearance for dark tab bar
         .onAppear { configureTabBarAppearance() }
