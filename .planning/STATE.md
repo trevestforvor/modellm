@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-04-09T12:31:29.689Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-04-09T12:41:38.406Z"
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 17
-  completed_plans: 12
+  completed_plans: 13
 ---
 
 # Project State
@@ -59,6 +59,7 @@ Plan: 3 of 3
 | Phase 03 P04 | 456 | 4 tasks | 5 files |
 | Phase 04 P01 | 630 | 6 tasks | 9 files |
 | Phase 04 P03 | 586 | 6 tasks | 11 files |
+| Phase 04 P02 | 35 | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,8 @@ Recent decisions affecting current work:
 - [Phase 04]: ChatSettings and ChatViewModel stubs created in 04-03 to unblock build during parallel wave execution
 - [Phase 04]: MeshGradient wrapped in if #available(iOS 18.0, *) in ChatView to match iOS 17 deployment target
 - [Phase 04]: activeModelURL/Name/Quant stubs added to AppContainer as nil vars — Phase 5 will wire Library selection
+- [Phase 04]: ChatViewModel uses @MainActor isolation — isGenerating set synchronously before Task launch so UI updates atomically
+- [Phase 04]: InferenceService stub created in 04-02 to unblock ChatViewModel compilation while 04-01 runs in parallel
 
 ### Pending Todos
 
@@ -103,6 +106,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-09T12:31:29.686Z
-Stopped at: Completed 04-03-PLAN.md
+Last session: 2026-04-09T12:41:38.403Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None
