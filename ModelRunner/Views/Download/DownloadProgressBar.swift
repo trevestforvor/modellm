@@ -35,7 +35,7 @@ struct DownloadProgressBar: View {
                 // Download icon
                 Image(systemName: isPaused ? "pause.circle.fill" : "arrow.down.circle.fill")
                     .font(.title3)
-                    .foregroundStyle(.accent)
+                    .foregroundStyle(Color.accentColor)
                     .symbolEffect(.pulse, isActive: !isPaused)
 
                 // Model name + progress stats
@@ -48,7 +48,7 @@ struct DownloadProgressBar: View {
                     HStack(spacing: 6) {
                         ProgressView(value: progress)
                             .progressViewStyle(.linear)
-                            .tint(.accent)
+                            .tint(Color.accentColor)
 
                         // Throughput
                         Text(DownloadService.formattedThroughput(throughput))

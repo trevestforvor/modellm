@@ -550,7 +550,7 @@ extension DownloadService {
     ) async throws {
         let bufferBytes: Int64 = 1_073_741_824  // exactly 1 GB
         let needed = requiredBytes + bufferBytes
-        let freeBytes = Int64(await deviceService.availableStorage)
+        let freeBytes = Int64(try await deviceService.availableStorage)
 
         if freeBytes < needed {
             throw DownloadError.insufficientStorage(freeBytes: freeBytes, neededBytes: needed)
