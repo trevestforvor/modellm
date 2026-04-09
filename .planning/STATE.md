@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-04-09T05:40:23.317Z"
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-04-09T05:47:09.957Z"
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-04-08)
 ## Current Position
 
 Phase: 01 (device-foundation) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -47,6 +47,7 @@ Plan: 2 of 3
 
 *Updated after each plan completion*
 | Phase 01 P01 | 7 | 2 tasks | 10 files |
+| Phase 01 P02 | 15 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -61,6 +62,8 @@ Recent decisions affecting current work:
 - [Phase 01]: Hand-authored project.pbxproj rather than XcodeBuildMCP — direct control over entitlements reference and test target BUNDLE_LOADER/TEST_HOST settings
 - [Phase 01]: CompatibilityModels.swift uses public access control — Plans 02/03 import ModelRunner via @testable import and need access to all type contracts
 - [Phase 01]: Wave 0 stubs use Issue.record() not throw — non-fatal issue marker allows test discovery while marking tests as known-failing RED state
+- [Phase 01]: iPhone15,4 (iPhone 15 non-Pro) maps to A16 chip — verified against adamawolf gist, not A17Pro
+- [Phase 01]: os_proc_available_memory available via Darwin umbrella import in Swift — no ObjC bridging header needed
 
 ### Pending Todos
 
@@ -74,6 +77,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-09T05:40:23.313Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-04-09T05:47:09.954Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
