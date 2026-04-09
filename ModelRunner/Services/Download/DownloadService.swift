@@ -1,4 +1,5 @@
 import Foundation
+import Network
 import SwiftData
 
 // MARK: - DownloadService Actor
@@ -475,6 +476,85 @@ extension DownloadService {
         activeTask = nil
         activeDownloadId = nil
         activeDisplayName = nil
+    }
+}
+
+// MARK: - Network Type Detection
+
+extension DownloadService {
+
+    /// Returns true if the current path uses cellular interface.
+    /// Checks once at download initiation — not a continuous monitor (D-04).
+    /// Uses NWPathMonitor (Network framework) — do NOT use SCNetworkReachability or Reachability.
+    func isOnCellular() async -> Bool {
+        await withCheckedContinuation { continuation in
+            let monitor = NWPathMonitor()
+            monitor.pathUpdateHandler = { path in
+                monitor.cancel()  // one-shot check
+                continuation.resume(returning: path.usesInterfaceType(.cellular))
+            }
+            monitor.start(queue: .global(qos: .userInitiated))
+        }
+    }
+}
+
+// MARK: - Download Entry Point (with guardrails)
+
+extension DownloadService {
+
+    /// High-level entry point for initiating a download.
+    /// 1. Checks cellular — if on cellular, calls cellularConfirmation (caller shows alert)
+    /// 2. Checks storage — throws .insufficientStorage if free < model + 1GB buffer
+    /// 3. Calls startDownload
+    ///
+    /// Called by Phase 2's model detail view Download button.
+    func beginDownload(
+        repoId: String,
+        filename: String,
+        fileSizeBytes: Int64,
+        displayName: String,
+        quantization: String,
+        authToken: String?,
+        deviceService: DeviceCapabilityService,
+        cellularConfirmation: @escaping () async -> Bool
+    ) async throws {
+        // 1. Cellular check
+        let onCellular = await isOnCellular()
+        if onCellular {
+            let shouldProceed = await cellularConfirmation()
+            guard shouldProceed else { return }  // user cancelled cellular dialog
+        }
+
+        // 2. Storage check (D-11: free < model + 1GB buffer = hard block)
+        try await preDownloadStorageCheck(
+            requiredBytes: fileSizeBytes,
+            deviceService: deviceService
+        )
+
+        // 3. Initiate download
+        try await startDownload(
+            repoId: repoId,
+            filename: filename,
+            fileSizeBytes: fileSizeBytes,
+            displayName: displayName,
+            quantization: quantization,
+            authToken: authToken
+        )
+    }
+
+    /// Checks if free storage is sufficient for the model + 1 GB safety buffer.
+    /// Throws .insufficientStorage if not (D-11: hard block, no override).
+    func preDownloadStorageCheck(
+        requiredBytes: Int64,
+        deviceService: DeviceCapabilityService
+    ) async throws {
+        let bufferBytes: Int64 = 1_073_741_824  // exactly 1 GB
+        let needed = requiredBytes + bufferBytes
+        let freeBytes = Int64(await deviceService.availableStorage)
+
+        if freeBytes < needed {
+            throw DownloadError.insufficientStorage(freeBytes: freeBytes, neededBytes: needed)
+        }
     }
 }
 
