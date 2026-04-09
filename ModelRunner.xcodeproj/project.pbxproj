@@ -59,6 +59,14 @@
 		CC0403000100000BCC040300 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000CCC040300; };
 		CC0403000100000DCC040300 /* ChatSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000ECC040300; };
 		CC0403000100000FCC040300 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000011CC040300; };
+		CC05010001000001CC050100 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05010001000002CC050100; };
+		CC05010001000003CC050100 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05010001000004CC050100; };
+		CC05010001000005CC050100 /* InferencePreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05010001000006CC050100; };
+		CC05010001000007CC050100 /* ConversationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05010001000008CC050100; };
+		CC05010001000009CC050100 /* InferencePresetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0501000100000ACC050100; };
+		CC05040001000001CC050400 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05040001000002CC050400; };
+		CC05030001000001CC050300 /* ConversationHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05030001000002CC050300; };
+		CC05030001000003CC050300 /* ChatViewModelPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05030001000004CC050300; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +135,14 @@
 		CC0403000100000CCC040300 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		CC0403000100000ECC040300 /* ChatSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettings.swift; sourceTree = "<group>"; };
 		CC04030001000011CC040300 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		CC05010001000002CC050100 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		CC05010001000004CC050100 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		CC05010001000006CC050100 /* InferencePreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferencePreset.swift; sourceTree = "<group>"; };
+		CC05010001000008CC050100 /* ConversationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTests.swift; sourceTree = "<group>"; };
+		CC0501000100000ACC050100 /* InferencePresetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferencePresetTests.swift; sourceTree = "<group>"; };
+		CC05040001000002CC050400 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		CC05030001000002CC050300 /* ConversationHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationHistoryView.swift; sourceTree = "<group>"; };
+		CC05030001000004CC050300 /* ChatViewModelPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModelPersistenceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -150,6 +166,9 @@
 				CC03010001000002CC030100 /* DownloadedModel.swift */,
 				CC03010001000004CC030100 /* DownloadState.swift */,
 				CC04010001000002CC040100 /* ChatMessage.swift */,
+				CC05010001000002CC050100 /* Conversation.swift */,
+				CC05010001000004CC050100 /* Message.swift */,
+				CC05010001000006CC050100 /* InferencePreset.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,8 +252,17 @@
 			children = (
 				BB01AA0000000022BB01AA00 /* Browse */,
 				CC04030001000010CC040300 /* Chat */,
+				CC05040001000010CC050400 /* Onboarding */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		CC05040001000010CC050400 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				CC05040001000002CC050400 /* WelcomeView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		CC04030001000010CC040300 /* Chat */ = {
@@ -248,6 +276,7 @@
 				CC04030001000008CC040300 /* ChatLoadingView.swift */,
 				CC0403000100000ACC040300 /* ChatSettingsView.swift */,
 				CC0403000100000CCC040300 /* ChatView.swift */,
+				CC05030001000002CC050300 /* ConversationHistoryView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -302,6 +331,9 @@
 				CC0301000100000ECC030100 /* StorageGuardTests.swift */,
 				CC0401000100000CCC040100 /* PromptFormatterTests.swift */,
 				CC0401000100000ECC040100 /* InferenceServiceTests.swift */,
+				CC05010001000008CC050100 /* ConversationTests.swift */,
+				CC0501000100000ACC050100 /* InferencePresetTests.swift */,
+				CC05030001000004CC050300 /* ChatViewModelPersistenceTests.swift */,
 				BB01AA0000000040BB01AA00 /* Fixtures */,
 			);
 			path = ModelRunnerTests;
@@ -472,6 +504,11 @@
 				CC0403000100000BCC040300 /* ChatView.swift in Sources */,
 				CC0403000100000DCC040300 /* ChatSettings.swift in Sources */,
 				CC0403000100000FCC040300 /* ChatViewModel.swift in Sources */,
+				CC05010001000001CC050100 /* Conversation.swift in Sources */,
+				CC05010001000003CC050100 /* Message.swift in Sources */,
+				CC05010001000005CC050100 /* InferencePreset.swift in Sources */,
+				CC05040001000001CC050400 /* WelcomeView.swift in Sources */,
+				CC05030001000001CC050300 /* ConversationHistoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +527,9 @@
 				CC0301000100000DCC030100 /* StorageGuardTests.swift in Sources */,
 				CC0401000100000BCC040100 /* PromptFormatterTests.swift in Sources */,
 				CC0401000100000DCC040100 /* InferenceServiceTests.swift in Sources */,
+				CC05010001000007CC050100 /* ConversationTests.swift in Sources */,
+				CC05010001000009CC050100 /* InferencePresetTests.swift in Sources */,
+				CC05030001000003CC050300 /* ChatViewModelPersistenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

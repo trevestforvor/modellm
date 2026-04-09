@@ -24,6 +24,14 @@ final class DownloadedModel {
     /// Timestamp when download completed
     var downloadedAt: Date
 
+    // MARK: - Inference Parameters (Phase 5)
+    /// Temperature for sampling. Range 0.0–2.0. Default 0.7 (balanced).
+    var temperature: Double = 0.7
+    /// Top-p nucleus sampling. Range 0.0–1.0. Default 0.9 (balanced).
+    var topP: Double = 0.9
+    /// System prompt sent at the start of every conversation with this model.
+    var systemPrompt: String = "You are a helpful assistant."
+
     init(
         repoId: String,
         displayName: String,

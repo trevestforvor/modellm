@@ -33,10 +33,16 @@ struct ModelRunnerApp: App {
     // AppContainer is a shared singleton so AppDelegate can access downloadService
     @State private var container = AppContainer.shared
 
+    // First-launch gate — false on fresh install, true after welcome screen is dismissed
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
+
+    // Pending guided model ID — set by WelcomeView, consumed by ContentView on appear
+    @AppStorage("guidedOnboardingModelId") private var guidedOnboardingModelId: String = ""
+
     // ModelContainer: DownloadedModel persists in Application Support (not Caches — see P-07)
     // isExcludedFromBackup is set per-file on GGUF blobs, not on the SwiftData store itself.
     private static let modelContainer: ModelContainer = {
-        let schema = Schema([DownloadedModel.self])
+        let schema = Schema([DownloadedModel.self, Conversation.self, Message.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
             return try ModelContainer(for: schema, configurations: [config])
@@ -47,8 +53,25 @@ struct ModelRunnerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if hasCompletedOnboarding {
+                ContentView()
+                    .environment(container)
+            } else {
+                WelcomeView { path in
+                    switch path {
+                    case .guided(let model):
+                        if let model = model {
+                            // Store model repoId — ContentView reads this on appear and activates
+                            guidedOnboardingModelId = model.repoId
+                        }
+                        // nil model (no downloads) → fall back to Browse tab (same as .browse)
+                    case .browse:
+                        break  // ContentView shows Browse tab by default
+                    }
+                    hasCompletedOnboarding = true
+                }
                 .environment(container)
+            }
         }
         .modelContainer(Self.modelContainer)
     }
