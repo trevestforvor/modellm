@@ -8,12 +8,15 @@ public enum ChipGeneration: String, Hashable, Sendable {
     case a17Pro = "A17 Pro"
     case a18    = "A18"
     case a18Pro = "A18 Pro"
+    case a19    = "A19"
+    case a19Pro = "A19 Pro"
     case unknown = "Unknown"
 }
 
 public enum NEGeneration: String, Hashable, Sendable {
     case gen4    = "4th gen"
     case gen5    = "5th gen"
+    case gen6    = "6th gen"
     case unknown = "Unknown"
 }
 

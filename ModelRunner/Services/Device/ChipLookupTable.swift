@@ -124,6 +124,49 @@ public struct ChipLookupTable {
         t["iPhone17,3"] = a18ProProfile  // iPhone 16 Pro
         t["iPhone17,4"] = a18ProProfile  // iPhone 16 Pro Max
 
+        // --- iPhone 16e (A18, 8GB) ---
+        t["iPhone17,5"] = a18Profile     // iPhone 16e
+
+        // --- A19 (iPhone 17, iPhone 17e) ---
+        // Neural Engine: 6th gen, 8GB physical
+        // ~40% better sustained perf vs A18 due to improved thermals
+        let a19Bands = SpeedBands(
+            small3B: 35...65,
+            medium7B: 18...35,
+            large13B: 8...18
+        )
+        let a19Profile = ChipProfile(
+            generation: .a19,
+            physicalRAMBytes: 8 * 1024 * 1024 * 1024,
+            jetsamBudgetBytes: 6 * 1024 * 1024 * 1024,   // ~6GB estimated (8GB device)
+            neuralEngine: .gen6,
+            contextWindowCap: 2048,
+            speedBands: a19Bands
+        )
+        t["iPhone18,1"] = a19Profile     // iPhone 17
+        t["iPhone18,2"] = a19Profile     // iPhone 17 Plus (if exists)
+        t["iPhone18,5"] = a19Profile     // iPhone 17e
+
+        // --- A19 Pro (iPhone 17 Pro, iPhone 17 Pro Max, iPhone Air) ---
+        // Neural Engine: 6th gen, 12GB physical LPDDR5X
+        // Vapor chamber cooling — up to 40% better sustained perf vs A18 Pro
+        let a19ProBands = SpeedBands(
+            small3B: 40...80,
+            medium7B: 20...40,
+            large13B: 10...20
+        )
+        let a19ProProfile = ChipProfile(
+            generation: .a19Pro,
+            physicalRAMBytes: 12 * 1024 * 1024 * 1024,
+            jetsamBudgetBytes: 9 * 1024 * 1024 * 1024,   // ~9GB estimated (12GB device, ~75%)
+            neuralEngine: .gen6,
+            contextWindowCap: 4096,
+            speedBands: a19ProBands
+        )
+        t["iPhone18,3"] = a19ProProfile  // iPhone 17 Pro
+        t["iPhone18,4"] = a19ProProfile  // iPhone 17 Pro Max
+        t["iPhone18,6"] = a19ProProfile  // iPhone Air
+
         return t
     }
 }
