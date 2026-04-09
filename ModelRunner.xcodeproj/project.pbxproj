@@ -57,6 +57,8 @@
 		CC04030001000007CC040300 /* ChatLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000008CC040300; };
 		CC04030001000009CC040300 /* ChatSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000ACC040300; };
 		CC0403000100000BCC040300 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000CCC040300; };
+		CC0403000100000DCC040300 /* ChatSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000ECC040300; };
+		CC0403000100000FCC040300 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000011CC040300; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +125,8 @@
 		CC04030001000008CC040300 /* ChatLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLoadingView.swift; sourceTree = "<group>"; };
 		CC0403000100000ACC040300 /* ChatSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettingsView.swift; sourceTree = "<group>"; };
 		CC0403000100000CCC040300 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		CC0403000100000ECC040300 /* ChatSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettings.swift; sourceTree = "<group>"; };
+		CC04030001000011CC040300 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -236,6 +240,8 @@
 		CC04030001000010CC040300 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				CC0403000100000ECC040300 /* ChatSettings.swift */,
+				CC04030001000011CC040300 /* ChatViewModel.swift */,
 				CC04030001000002CC040300 /* ChatBubbleView.swift */,
 				CC04030001000004CC040300 /* ToksPerSecondBadge.swift */,
 				CC04030001000006CC040300 /* ChatInputBar.swift */,
@@ -464,6 +470,8 @@
 				CC04030001000007CC040300 /* ChatLoadingView.swift in Sources */,
 				CC04030001000009CC040300 /* ChatSettingsView.swift in Sources */,
 				CC0403000100000BCC040300 /* ChatView.swift in Sources */,
+				CC0403000100000DCC040300 /* ChatSettings.swift in Sources */,
+				CC0403000100000FCC040300 /* ChatViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
