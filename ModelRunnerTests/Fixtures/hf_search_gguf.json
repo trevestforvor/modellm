@@ -1,0 +1,71 @@
+[
+  {
+    "id": "bartowski/Meta-Llama-3-8B-Instruct-GGUF",
+    "modelId": "bartowski/Meta-Llama-3-8B-Instruct-GGUF",
+    "downloads": 124300,
+    "likes": 892,
+    "lastModified": "2024-04-20T10:00:00.000Z",
+    "siblings": [
+      {
+        "rfilename": "Meta-Llama-3-8B-Instruct-Q4_K_M.gguf",
+        "size": 136,
+        "blobId": "abc123",
+        "lfs": { "size": 4920000000, "sha256": "deadbeef" }
+      },
+      {
+        "rfilename": "Meta-Llama-3-8B-Instruct-Q8_0.gguf",
+        "size": 136,
+        "blobId": "def456",
+        "lfs": { "size": 8540000000, "sha256": "cafebabe" }
+      },
+      {
+        "rfilename": "config.json",
+        "size": 4096,
+        "blobId": "ghi789",
+        "lfs": null
+      },
+      {
+        "rfilename": "README.md",
+        "size": 2048,
+        "blobId": "jkl012",
+        "lfs": null
+      }
+    ]
+  },
+  {
+    "id": "TheBloke/Mistral-7B-Instruct-v0.2-GGUF",
+    "modelId": "TheBloke/Mistral-7B-Instruct-v0.2-GGUF",
+    "downloads": 89200,
+    "likes": 511,
+    "lastModified": "2024-03-15T08:30:00.000Z",
+    "siblings": [
+      {
+        "rfilename": "mistral-7b-instruct-v0.2.Q4_K_M.gguf",
+        "size": 136,
+        "blobId": "mno345",
+        "lfs": { "size": 4370000000, "sha256": "feedface" }
+      },
+      {
+        "rfilename": "mistral-7b-instruct-v0.2.Q2_K.gguf",
+        "size": 136,
+        "blobId": "pqr678",
+        "lfs": { "size": 2870000000, "sha256": "baadf00d" }
+      }
+    ]
+  },
+  {
+    "id": "microsoft/Phi-3-mini-4k-instruct-gguf",
+    "modelId": "microsoft/Phi-3-mini-4k-instruct-gguf",
+    "downloads": 42100,
+    "likes": 234,
+    "lastModified": "2024-04-10T14:00:00.000Z",
+    "siblings": [
+      {
+        "rfilename": "Phi-3-mini-4k-instruct-q4.gguf",
+        "size": 136,
+        "blobId": "stu901",
+        "lfs": { "size": 2180000000, "sha256": "12345678" }
+      }
+    ]
+  }
+]

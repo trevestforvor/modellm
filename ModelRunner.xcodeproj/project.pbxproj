@@ -26,6 +26,10 @@
 		BB01AA000000000DBB01AA00 /* HFAPIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA000000000EBB01AA00; };
 		BB01AA000000000FBB01AA00 /* QuantizationTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000010BB01AA00; };
 		BB01AA0000000011BB01AA00 /* HFBrowseViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000012BB01AA00; };
+		BB01AA0000000030BB01AA00 /* hf_search_gguf.json in Resources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000031BB01AA00; };
+		BB01AA0000000032BB01AA00 /* hf_model_detail.json in Resources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000033BB01AA00; };
+		BB01AA0000000034BB01AA00 /* hf_search_empty.json in Resources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000035BB01AA00; };
+		BB01AA0000000036BB01AA00 /* BrowseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000037BB01AA00; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +65,10 @@
 		BB01AA000000000EBB01AA00 /* HFAPIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HFAPIServiceTests.swift; sourceTree = "<group>"; };
 		BB01AA0000000010BB01AA00 /* QuantizationTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantizationTypeTests.swift; sourceTree = "<group>"; };
 		BB01AA0000000012BB01AA00 /* HFBrowseViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HFBrowseViewModelTests.swift; sourceTree = "<group>"; };
+		BB01AA0000000031BB01AA00 /* hf_search_gguf.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hf_search_gguf.json; sourceTree = "<group>"; };
+		BB01AA0000000033BB01AA00 /* hf_model_detail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hf_model_detail.json; sourceTree = "<group>"; };
+		BB01AA0000000035BB01AA00 /* hf_search_empty.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hf_search_empty.json; sourceTree = "<group>"; };
+		BB01AA0000000037BB01AA00 /* BrowseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -106,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				BB01AA0000000002BB01AA00 /* BrowseView.swift */,
+				BB01AA0000000037BB01AA00 /* BrowseViewModel.swift */,
 			);
 			path = Browse;
 			sourceTree = "<group>";
@@ -142,8 +151,19 @@
 				BB01AA000000000EBB01AA00 /* HFAPIServiceTests.swift */,
 				BB01AA0000000010BB01AA00 /* QuantizationTypeTests.swift */,
 				BB01AA0000000012BB01AA00 /* HFBrowseViewModelTests.swift */,
+				BB01AA0000000040BB01AA00 /* Fixtures */,
 			);
 			path = ModelRunnerTests;
+			sourceTree = "<group>";
+		};
+		BB01AA0000000040BB01AA00 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				BB01AA0000000031BB01AA00 /* hf_search_gguf.json */,
+				BB01AA0000000033BB01AA00 /* hf_model_detail.json */,
+				BB01AA0000000035BB01AA00 /* hf_search_empty.json */,
+			);
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 		E99E5DF8436E40A0A45FA7B7 /* Products */ = {
@@ -188,6 +208,7 @@
 			buildConfigurationList = F29EF7145BA4404EAB7D24D2 /* Build configuration list for PBXNativeTarget "ModelRunnerTests" */;
 			buildPhases = (
 				4E340E27D68444E4871C58DE /* Sources */,
+				BB01AA0000000050BB01AA00 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -245,6 +266,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB01AA0000000050BB01AA00 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB01AA0000000030BB01AA00 /* hf_search_gguf.json in Resources */,
+				BB01AA0000000032BB01AA00 /* hf_model_detail.json in Resources */,
+				BB01AA0000000034BB01AA00 /* hf_search_empty.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -265,6 +296,7 @@
 				BB01AA0000000007BB01AA00 /* HFAPIError.swift in Sources */,
 				BB01AA0000000009BB01AA00 /* AnnotatedModel.swift in Sources */,
 				BB01AA000000000BBB01AA00 /* QuantizationParser.swift in Sources */,
+				BB01AA0000000036BB01AA00 /* BrowseViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
