@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Device Foundation** - Detect device specs and compute compatibility verdicts before any UI exists
 - [x] **Phase 2: HF Browse + Compatibility UI** - Browse Hugging Face models with live compatibility badges
-- [ ] **Phase 3: Download + Model Library** - Download models in the background and manage the local library
+- [x] **Phase 3: Download + Model Library** - Download models in the background and manage the local library (completed 2026-04-09)
 - [ ] **Phase 4: Inference + Chat** - Load a model and run a streaming chat conversation on-device
 - [ ] **Phase 5: Polish + V1 Completeness** - Chat history, inference parameters, and UX completeness
 
@@ -98,6 +98,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Device Foundation | 2/3 | In Progress|  |
 | 2. HF Browse + Compatibility UI | 0/TBD | Not started | - |
-| 3. Download + Model Library | 3/4 | In Progress|  |
+| 3. Download + Model Library | 4/4 | Complete   | 2026-04-09 |
 | 4. Inference + Chat | 0/TBD | Not started | - |
 | 5. Polish + V1 Completeness | 0/TBD | Not started | - |
