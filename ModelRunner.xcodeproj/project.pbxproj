@@ -34,6 +34,13 @@
 		BB01AA0000000062BB01AA00 /* ModelCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000063BB01AA00; };
 		BB01AA0000000064BB01AA00 /* VariantRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000065BB01AA00; };
 		BB01AA0000000066BB01AA00 /* ModelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000067BB01AA00; };
+		CC03010001000001CC030100 /* DownloadedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000002CC030100; };
+		CC03010001000003CC030100 /* DownloadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000004CC030100; };
+		CC03010001000005CC030100 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000006CC030100; };
+		CC03010001000007CC030100 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000008CC030100; };
+		CC03010001000009CC030100 /* DownloadServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0301000100000ACC030100; };
+		CC0301000100000BCC030100 /* ModelLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0301000100000CCC030100; };
+		CC0301000100000DCC030100 /* StorageGuardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0301000100000ECC030100; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +84,13 @@
 		BB01AA0000000063BB01AA00 /* ModelCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCardView.swift; sourceTree = "<group>"; };
 		BB01AA0000000065BB01AA00 /* VariantRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantRowView.swift; sourceTree = "<group>"; };
 		BB01AA0000000067BB01AA00 /* ModelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDetailView.swift; sourceTree = "<group>"; };
+		CC03010001000002CC030100 /* DownloadedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedModel.swift; sourceTree = "<group>"; };
+		CC03010001000004CC030100 /* DownloadState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadState.swift; sourceTree = "<group>"; };
+		CC03010001000006CC030100 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
+		CC03010001000008CC030100 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		CC0301000100000ACC030100 /* DownloadServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadServiceTests.swift; sourceTree = "<group>"; };
+		CC0301000100000CCC030100 /* ModelLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelLibraryTests.swift; sourceTree = "<group>"; };
+		CC0301000100000ECC030100 /* StorageGuardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageGuardTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -86,10 +100,37 @@
 				8BC891A9D4E842BFBD0D21AB /* App */,
 				B8FBF741BAAD452C9D858445 /* Services */,
 				BB01AA0000000020BB01AA00 /* Features */,
+				CC0301000100000FCC030100 /* Models */,
+				CC03010001000010CC030100 /* Views */,
 				8225560F7DBD44C99EA7AD92 /* ContentView.swift */,
 				3BB18C8F4F4B485380132B87 /* ModelRunner.entitlements */,
 			);
 			path = ModelRunner;
+			sourceTree = "<group>";
+		};
+		CC0301000100000FCC030100 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CC03010001000002CC030100 /* DownloadedModel.swift */,
+				CC03010001000004CC030100 /* DownloadState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CC03010001000010CC030100 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CC03010001000011CC030100 /* Library */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CC03010001000011CC030100 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				CC03010001000008CC030100 /* LibraryView.swift */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		8BC891A9D4E842BFBD0D21AB /* App */ = {
@@ -106,8 +147,17 @@
 			children = (
 				AF3EDE50F4F3467C8BC6A1FC /* Device */,
 				BB01AA0000000021BB01AA00 /* HF */,
+				CC03010001000012CC030100 /* Download */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		CC03010001000012CC030100 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				CC03010001000006CC030100 /* DownloadService.swift */,
+			);
+			path = Download;
 			sourceTree = "<group>";
 		};
 		BB01AA0000000020BB01AA00 /* Features */ = {
@@ -163,6 +213,9 @@
 				BB01AA000000000EBB01AA00 /* HFAPIServiceTests.swift */,
 				BB01AA0000000010BB01AA00 /* QuantizationTypeTests.swift */,
 				BB01AA0000000012BB01AA00 /* HFBrowseViewModelTests.swift */,
+				CC0301000100000ACC030100 /* DownloadServiceTests.swift */,
+				CC0301000100000CCC030100 /* ModelLibraryTests.swift */,
+				CC0301000100000ECC030100 /* StorageGuardTests.swift */,
 				BB01AA0000000040BB01AA00 /* Fixtures */,
 			);
 			path = ModelRunnerTests;
@@ -313,6 +366,10 @@
 				BB01AA0000000062BB01AA00 /* ModelCardView.swift in Sources */,
 				BB01AA0000000064BB01AA00 /* VariantRowView.swift in Sources */,
 				BB01AA0000000066BB01AA00 /* ModelDetailView.swift in Sources */,
+				CC03010001000001CC030100 /* DownloadedModel.swift in Sources */,
+				CC03010001000003CC030100 /* DownloadState.swift in Sources */,
+				CC03010001000005CC030100 /* DownloadService.swift in Sources */,
+				CC03010001000007CC030100 /* LibraryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +383,9 @@
 				BB01AA000000000DBB01AA00 /* HFAPIServiceTests.swift in Sources */,
 				BB01AA000000000FBB01AA00 /* QuantizationTypeTests.swift in Sources */,
 				BB01AA0000000011BB01AA00 /* HFBrowseViewModelTests.swift in Sources */,
+				CC03010001000009CC030100 /* DownloadServiceTests.swift in Sources */,
+				CC0301000100000BCC030100 /* ModelLibraryTests.swift in Sources */,
+				CC0301000100000DCC030100 /* StorageGuardTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

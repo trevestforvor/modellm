@@ -278,5 +278,5 @@ private struct BrowseMeshBackground: View {
 
 #Preview {
     BrowseView()
-        .environment(AppContainer())
+        .environment(AppContainer.shared)
 }
