@@ -77,33 +77,33 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DEVC-01 | — | Pending |
-| DEVC-02 | — | Pending |
-| DEVC-03 | — | Pending |
-| DEVC-04 | — | Pending |
-| DEVC-05 | — | Pending |
-| DEVC-06 | — | Pending |
-| HFIN-01 | — | Pending |
-| HFIN-02 | — | Pending |
-| HFIN-03 | — | Pending |
-| HFIN-04 | — | Pending |
-| DLST-01 | — | Pending |
-| DLST-02 | — | Pending |
-| DLST-03 | — | Pending |
-| DLST-04 | — | Pending |
-| DLST-05 | — | Pending |
-| CHAT-01 | — | Pending |
-| CHAT-02 | — | Pending |
-| CHAT-03 | — | Pending |
-| CHAT-04 | — | Pending |
-| CHAT-05 | — | Pending |
-| CHAT-06 | — | Pending |
+| DEVC-01 | Phase 1 | Pending |
+| DEVC-02 | Phase 1 | Pending |
+| DEVC-03 | Phase 1 | Pending |
+| DEVC-04 | Phase 1 | Pending |
+| DEVC-05 | Phase 1 | Pending |
+| DEVC-06 | Phase 1 | Pending |
+| HFIN-01 | Phase 2 | Pending |
+| HFIN-02 | Phase 2 | Pending |
+| HFIN-03 | Phase 2 | Pending |
+| HFIN-04 | Phase 2 | Pending |
+| DLST-01 | Phase 3 | Pending |
+| DLST-02 | Phase 3 | Pending |
+| DLST-03 | Phase 3 | Pending |
+| DLST-04 | Phase 3 | Pending |
+| DLST-05 | Phase 3 | Pending |
+| CHAT-01 | Phase 4 | Pending |
+| CHAT-02 | Phase 4 | Pending |
+| CHAT-03 | Phase 4 | Pending |
+| CHAT-06 | Phase 4 | Pending |
+| CHAT-04 | Phase 5 | Pending |
+| CHAT-05 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 21 total
-- Mapped to phases: 0
-- Unmapped: 21
+- Mapped to phases: 21
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-08*
-*Last updated: 2026-04-08 after initial definition*
+*Last updated: 2026-04-08 after roadmap creation*
