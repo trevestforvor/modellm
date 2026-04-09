@@ -11,6 +11,8 @@
 		99EDF330C9DA4E82B653CDB0 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF330C9DA4E82B653CDB1; };
 		8225560F7DBD44C99EA7AD93 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8225560F7DBD44C99EA7AD92; };
 		C3BFBAEE689F486190398248 /* CompatibilityModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BFBAEE689F486190398247; };
+		A1B2C3D4E5F60010A2B3C4D5 /* ChipLookupTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60011A2B3C4D5; };
+		A1B2C3D4E5F60012A2B3C4D5 /* DeviceCapabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60013A2B3C4D5; };
 		0A9AE88B5DC2448597F66C5D /* DeviceCapabilityServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9AE88B5DC2448597F66C5E; };
 		44321BB674EA4DBA9669F67A /* CompatibilityEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44321BB674EA4DBA9669F67B; };
 		9C31C4E1288841068B4131B4 /* ChipLookupTableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C31C4E1288841068B4131B5; };
@@ -33,6 +35,8 @@
 		99EDF330C9DA4E82B653CDB1 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		8225560F7DBD44C99EA7AD92 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C3BFBAEE689F486190398247 /* CompatibilityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityModels.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60011A2B3C4D5 /* ChipLookupTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipLookupTable.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60013A2B3C4D5 /* DeviceCapabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCapabilityService.swift; sourceTree = "<group>"; };
 		0A9AE88B5DC2448597F66C5E /* DeviceCapabilityServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCapabilityServiceTests.swift; sourceTree = "<group>"; };
 		44321BB674EA4DBA9669F67B /* CompatibilityEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityEngineTests.swift; sourceTree = "<group>"; };
 		9C31C4E1288841068B4131B5 /* ChipLookupTableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipLookupTableTests.swift; sourceTree = "<group>"; };
@@ -72,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				C3BFBAEE689F486190398247 /* CompatibilityModels.swift */,
+				A1B2C3D4E5F60011A2B3C4D5 /* ChipLookupTable.swift */,
+				A1B2C3D4E5F60013A2B3C4D5 /* DeviceCapabilityService.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -196,6 +202,8 @@
 				99EDF330C9DA4E82B653CDB0 /* AppContainer.swift in Sources */,
 				8225560F7DBD44C99EA7AD93 /* ContentView.swift in Sources */,
 				C3BFBAEE689F486190398248 /* CompatibilityModels.swift in Sources */,
+				A1B2C3D4E5F60010A2B3C4D5 /* ChipLookupTable.swift in Sources */,
+				A1B2C3D4E5F60012A2B3C4D5 /* DeviceCapabilityService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
