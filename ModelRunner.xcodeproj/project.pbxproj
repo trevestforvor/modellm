@@ -30,6 +30,10 @@
 		BB01AA0000000032BB01AA00 /* hf_model_detail.json in Resources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000033BB01AA00; };
 		BB01AA0000000034BB01AA00 /* hf_search_empty.json in Resources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000035BB01AA00; };
 		BB01AA0000000036BB01AA00 /* BrowseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000037BB01AA00; };
+		BB01AA0000000060BB01AA00 /* ToksBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000061BB01AA00; };
+		BB01AA0000000062BB01AA00 /* ModelCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000063BB01AA00; };
+		BB01AA0000000064BB01AA00 /* VariantRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000065BB01AA00; };
+		BB01AA0000000066BB01AA00 /* ModelDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB01AA0000000067BB01AA00; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +73,10 @@
 		BB01AA0000000033BB01AA00 /* hf_model_detail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hf_model_detail.json; sourceTree = "<group>"; };
 		BB01AA0000000035BB01AA00 /* hf_search_empty.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hf_search_empty.json; sourceTree = "<group>"; };
 		BB01AA0000000037BB01AA00 /* BrowseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewModel.swift; sourceTree = "<group>"; };
+		BB01AA0000000061BB01AA00 /* ToksBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToksBadgeView.swift; sourceTree = "<group>"; };
+		BB01AA0000000063BB01AA00 /* ModelCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelCardView.swift; sourceTree = "<group>"; };
+		BB01AA0000000065BB01AA00 /* VariantRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariantRowView.swift; sourceTree = "<group>"; };
+		BB01AA0000000067BB01AA00 /* ModelDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -115,6 +123,10 @@
 			children = (
 				BB01AA0000000002BB01AA00 /* BrowseView.swift */,
 				BB01AA0000000037BB01AA00 /* BrowseViewModel.swift */,
+				BB01AA0000000061BB01AA00 /* ToksBadgeView.swift */,
+				BB01AA0000000063BB01AA00 /* ModelCardView.swift */,
+				BB01AA0000000065BB01AA00 /* VariantRowView.swift */,
+				BB01AA0000000067BB01AA00 /* ModelDetailView.swift */,
 			);
 			path = Browse;
 			sourceTree = "<group>";
@@ -297,6 +309,10 @@
 				BB01AA0000000009BB01AA00 /* AnnotatedModel.swift in Sources */,
 				BB01AA000000000BBB01AA00 /* QuantizationParser.swift in Sources */,
 				BB01AA0000000036BB01AA00 /* BrowseViewModel.swift in Sources */,
+				BB01AA0000000060BB01AA00 /* ToksBadgeView.swift in Sources */,
+				BB01AA0000000062BB01AA00 /* ModelCardView.swift in Sources */,
+				BB01AA0000000064BB01AA00 /* VariantRowView.swift in Sources */,
+				BB01AA0000000066BB01AA00 /* ModelDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
