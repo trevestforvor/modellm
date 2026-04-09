@@ -1,4 +1,5 @@
 import Foundation
+import SwiftData
 import OSLog
 
 private let logger = Logger(subsystem: "com.modelrunner", category: "ChatViewModel")
@@ -23,11 +24,16 @@ enum ModelLoadState: Equatable {
 @MainActor
 final class ChatViewModel {
     // MARK: - State (observable)
-    private(set) var messages: [ChatMessage] = []
+    var messages: [ChatMessage] = []
     private(set) var isGenerating: Bool = false
     private(set) var tokensPerSecond: Double = 0
     private(set) var loadingState: ModelLoadState = .idle
     var settings: ChatSettings = ChatSettings.load()
+
+    // MARK: - Phase 5: persistence
+    var activeConversation: Conversation?
+    var showingHistory: Bool = false
+    private var modelContext: ModelContext?
 
     // MARK: - Private
     private let inferenceService: InferenceService
@@ -45,6 +51,55 @@ final class ChatViewModel {
         self.inferenceParams = inferenceParams
     }
 
+    // MARK: - Persistence Configuration
+
+    func configure(modelContext: ModelContext) {
+        self.modelContext = modelContext
+    }
+
+    // MARK: - Conversation Management
+
+    func startNewConversation(for model: DownloadedModel) {
+        guard let modelContext else { return }
+        let conv = Conversation(
+            modelRepoId: model.repoId,
+            modelDisplayName: model.displayName,
+            modelQuantization: model.quantization
+        )
+        modelContext.insert(conv)
+        try? modelContext.save()
+        activeConversation = conv
+        messages = []
+    }
+
+    func loadMostRecentConversation(for model: DownloadedModel, modelContext: ModelContext) {
+        self.modelContext = modelContext
+        var descriptor = FetchDescriptor<Conversation>(
+            predicate: #Predicate { $0.modelRepoId == model.repoId },
+            sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
+        )
+        descriptor.fetchLimit = 1
+        if let recent = try? modelContext.fetch(descriptor).first {
+            activeConversation = recent
+            // Rebuild in-memory messages array from persisted messages
+            messages = recent.messages
+                .sorted { $0.createdAt < $1.createdAt }
+                .map { ChatMessage(role: $0.role == "user" ? .user : .assistant, content: $0.content) }
+        } else {
+            startNewConversation(for: model)
+        }
+    }
+
+    func deleteConversation(_ conversation: Conversation) {
+        modelContext?.delete(conversation)
+        try? modelContext?.save()
+        // If deleting the active conversation, clear state
+        if activeConversation?.id == conversation.id {
+            activeConversation = nil
+            messages = []
+        }
+    }
+
     // MARK: - Public API
 
     func send(text: String) {
@@ -53,6 +108,18 @@ final class ChatViewModel {
 
         let userMessage = ChatMessage(role: .user, content: text)
         messages.append(userMessage)
+
+        // Persist user message
+        if let conv = activeConversation {
+            let persistedUser = Message(role: "user", content: text)
+            conv.messages.append(persistedUser)
+            // Auto-title from first user message
+            if conv.title == "New Conversation" {
+                conv.generateTitle(from: text)
+            }
+            conv.updatedAt = Date()
+            try? modelContext?.save()
+        }
 
         isGenerating = true
         generationTask = Task {
@@ -107,7 +174,9 @@ final class ChatViewModel {
         tokenCount = 0
         tokensPerSecond = 0
 
-        let stream = await inferenceService.generate(prompt: prompt)
+        // Pass current inferenceParams so temperature/topP changes take effect
+        // without reloading the model from disk (sampler chain built per call).
+        let stream = await inferenceService.generate(prompt: prompt, params: inferenceParams)
 
         do {
             for try await token in stream {
@@ -123,6 +192,13 @@ final class ChatViewModel {
         messages[assistantIndex].isStreaming = false
         isGenerating = false
         resetTokSAfterDelay()
+
+        // Persist assistant message
+        let assistantContent = messages[assistantIndex].content
+        let persistedAssistant = Message(role: "assistant", content: assistantContent)
+        activeConversation?.messages.append(persistedAssistant)
+        activeConversation?.updatedAt = Date()
+        try? modelContext?.save()
     }
 
     private func buildPrompt() -> String {

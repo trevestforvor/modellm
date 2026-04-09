@@ -30,9 +30,10 @@ struct InferenceServiceTests {
     @Test("generate without loaded model throws noActiveSession")
     func testGenerateWithoutModelThrows() async {
         let service = InferenceService()
+        let params = InferenceParams.default(contextWindowCap: 2048)
         var threwExpectedError = false
         do {
-            for try await _ in await service.generate(prompt: "hello") {
+            for try await _ in await service.generate(prompt: "hello", params: params) {
                 Issue.record("Should not yield tokens without a loaded model")
             }
         } catch InferenceError.noActiveSession {

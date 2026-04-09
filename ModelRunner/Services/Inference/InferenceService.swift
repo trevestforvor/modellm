@@ -68,18 +68,22 @@ public actor InferenceService {
     /// Inference runs on `Task.detached(priority: .userInitiated)` so the MainActor
     /// is never blocked between tokens (CHAT-06).
     ///
+    /// Pass current model params so temperature/top-p changes take effect on the next
+    /// generate() call without reloading the 2–4 GB model from disk.
+    ///
     /// The caller should iterate on a non-MainActor task:
     /// ```swift
     /// Task {
-    ///     for try await token in await inferenceService.generate(prompt: prompt) {
+    ///     for try await token in await inferenceService.generate(prompt: prompt, params: params) {
     ///         await MainActor.run { message.content += token }
     ///     }
     /// }
     /// ```
     ///
     /// - Parameter prompt: Fully formatted prompt (e.g., PromptFormatter.chatml output).
+    /// - Parameter params: Current inference parameters — sampler chain built fresh per call.
     /// - Returns: Async stream of token strings. Finishes normally at EOS, or throws on error.
-    public func generate(prompt: String) -> AsyncThrowingStream<String, Error> {
+    public func generate(prompt: String, params: InferenceParams) -> AsyncThrowingStream<String, Error> {
         AsyncThrowingStream { [weak self] continuation in
             guard let self else {
                 continuation.finish(throwing: InferenceError.noActiveSession)
@@ -92,7 +96,9 @@ public actor InferenceService {
                     return
                 }
                 await self.setNotCancelled()
-                session.runDecodeLoop(prompt: prompt, continuation: continuation)
+                // Pass params to decode loop — sampler chain built fresh each invocation
+                // so temperature/topP changes from ChatSettingsView take effect immediately.
+                session.runDecodeLoop(prompt: prompt, params: params, continuation: continuation)
             }
         }
     }
