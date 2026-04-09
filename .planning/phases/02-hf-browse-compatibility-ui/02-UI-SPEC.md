@@ -294,6 +294,20 @@ No third-party UI packages. All components are native SwiftUI + SF Symbols.
 
 ---
 
+## Design Playground References
+
+Working SwiftUI playgrounds for visual iteration and developer reference:
+
+| Playground | Scope | Key Surfaces |
+|-----------|-------|-------------|
+| `MeshGradientPreview.playground` | Phase 2 | MeshGradient background, browse cards, search bar, tok/s badges |
+| `ChatLibraryPreview.playground` | Phase 3 + 4 | Chat bubbles, library tab, download bar, model loading, tab bar |
+
+> **Note:** The design system in `DESIGN.md` uses a custom dark MeshGradient aesthetic with explicit hex tokens. This UI-SPEC was generated before the design consultation and references system colors (`Color(.systemBackground)` etc.). When implementing, **DESIGN.md takes precedence** — use the custom hex palette, not system semantics. The playgrounds above are the visual source of truth.
+
+---
+
 *Phase: 02-hf-browse-compatibility-ui*
 *UI-SPEC created: 2026-04-08*
+*UI-SPEC updated: 2026-04-09 — added playground references, DESIGN.md precedence note*
 *Pre-populated from: CONTEXT.md (15 decisions), REQUIREMENTS.md (HFIN-01–04), Phase 1 CONTEXT.md (D-01, D-05), codebase scan (ContentView.swift, CompatibilityModels.swift)*

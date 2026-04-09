@@ -89,12 +89,126 @@ The compatibility badge is the centerpiece of every card. It communicates both c
 - **Approach:** Minimal-functional
 - **Transitions:** Standard NavigationStack push/pop
 - **No bouncy springs, no entrance animations.** The speed of the app IS the motion design.
+- **Download bar:** Spring with dampingFraction 0.8 for slide in/out
 - **Potential future:** Subtle MeshGradient animation (slow-moving color flow), but not for v1
 
 ## Iconography
 - **System:** SF Symbols exclusively
 - **Style:** Monochrome, matching text color context
 - **No custom icons for v1**
+
+## Navigation Structure
+- **Tab bar:** 3 tabs — Browse | Library | Chat
+- **Tab bar surface:** `#0D0C18` at 95% opacity with `#302E42` top border
+- **Tab icons:** SF Symbols — `square.grid.2x2` (Browse), `tray.full` (Library), `bubble.left.fill` (Chat)
+- **Selected state:** `#8B7CF0` (accent violet)
+- **Unselected state:** `#6B6980` (tertiary text)
+
+## Download Bar (Phase 3)
+Persistent bottom bar visible across all screens during active download. Sits above the tab bar.
+
+- **Surface:** `#0D0C18` at 95% opacity with `#302E42` top border. Same card material.
+- **Height:** 52pt. Compact.
+- **Progress indicator:** Circular ring (30pt diameter), `#302E42` track, `#8B7CF0` fill stroke with round line cap.
+- **Info layout:** Model name in SF Pro Text 13pt medium, then speed/ETA in SF Mono 11pt secondary text.
+- **Speed format:** "63%  ·  12.4 MB/s  ·  ~2 min left"
+- **Cancel button:** SF Symbol `xmark.circle.fill` at 22pt in `#6B6980`
+- **Completion state:** Briefly shows checkmark + "Downloaded" in `#34D399`, then slides away.
+- **Animation:** Spring slide up/down with dampingFraction 0.8.
+
+## Library Tab (Phase 3)
+Dedicated tab for managing downloaded models.
+
+### Storage Summary Header
+- **Position:** Below nav title, centered
+- **Format:** "3 Models  ·  8.4 GB  ·  12.1 GB free" in SF Mono 13pt medium, `#9896B0`
+- **Dots:** `#6B6980` tertiary
+
+### Library Model Card
+Same visual language as browse cards with usage metadata.
+
+```
+┌───────────────────────────────────────────┐
+│▌ Model Name (16pt semibold)   [ ~32 tok/s]│  ← violet left bar = active model
+│▌ Q4_K_M (13pt secondary)                 │
+│▌ 2.5 GB  ·  💬 14  ·  2 hours ago        │  ← SF Mono size, conversation count, relative time
+└───────────────────────────────────────────┘
+```
+
+- **Background:** `#0D0C18` solid
+- **Corner radius:** 16pt
+- **Active model indicator:** 3pt wide `#8B7CF0` bar on left edge, full card height, 8pt vertical padding
+- **Inactive cards:** No left bar, 16pt horizontal padding
+- **Active cards:** 13pt horizontal padding (3pt bar + 13pt = 16pt total)
+- **Card spacing:** 8pt between cards
+- **Sort order:** Last-used date, most recent first
+- **Deletion:** Swipe-to-delete (single) + Edit button (bulk). Destructive alert: "Delete [Name]? This will free [size]."
+
+### Library Empty State
+- **Symbol:** `arrow.down.circle` SF Symbol in `#6B6980`, `.largeTitle` scale
+- **Heading:** "No models yet" in `#6B6980`
+- **Body:** "Browse models to download your first one" with "Browse" in `#8B7CF0`
+
+## Chat UI (Phase 4)
+Bubble-style chat with MeshGradient showing between messages.
+
+### Chat Nav Bar
+- **Surface:** `#0D0C18` at 90% opacity with `#302E42` bottom border
+- **Title:** "Chat" in SF Pro 18pt bold
+- **Subtitle:** "[Model] · [Quant]" in SF Pro 12pt secondary
+- **Settings icon:** SF Symbol `gearshape` in `#9896B0`, trailing
+
+### User Bubbles
+- **Background:** `#8B7CF0` (accent violet)
+- **Text:** `#EDEDF4` in SF Pro 15pt
+- **Alignment:** Right
+- **Corner radius:** 16pt top-leading, 16pt top-trailing, 4pt bottom-trailing (tail), 16pt bottom-leading
+- **Padding:** 14pt horizontal, 10pt vertical
+- **Max width:** Screen width minus 60pt left margin
+
+### Assistant Bubbles
+- **Background:** `#1A1830` — slightly lighter than card surface, readable on gradient
+- **Text:** `#EDEDF4` in SF Pro 15pt
+- **Alignment:** Left
+- **Corner radius:** 16pt top-leading, 16pt top-trailing, 16pt bottom-trailing, 4pt bottom-leading (tail)
+- **Padding:** 14pt horizontal, 10pt vertical
+- **Max width:** Screen width minus 60pt right margin
+- **Markdown:** Rendered inside bubbles. Code blocks get `#0D0C18` background with SF Mono.
+- **Key visual:** The MeshGradient shows between bubbles. Bubbles float on the gradient, not on a flat background.
+
+### Streaming Indicator
+- **Position:** Below the assistant bubble being generated
+- **Format:** "~24 tok/s" in SF Mono 11pt semibold
+- **Color during streaming:** `#34D399` (green)
+- **Color after completion:** `#6B6980` (tertiary), fades out after 2s
+- **Cursor:** 2×16pt rectangle in `#8B7CF0` at end of streaming text
+
+### Input Bar
+- **Surface:** `#0D0C18` at 95% opacity with `#302E42` top border
+- **Text field:** `#1A1830` fill, `#302E42` border at 0.5pt, 12pt corner radius
+- **Placeholder:** "Message..." in `#6B6980` 15pt
+- **Send button (ready):** 34pt circle, `#8B7CF0` fill, white `arrow.up` icon 14pt bold
+- **Send button (disabled):** Same but at 40% opacity
+- **Stop button (generating):** 34pt circle, `#FBBF24` (amber) fill, black `stop.fill` icon 12pt bold
+
+### Model Loading State
+- **Layout:** Centered on chat view with gradient fully visible behind
+- **Progress ring:** 64pt diameter, `#302E42` track, `#8B7CF0` fill, 3pt stroke with round cap
+- **Label:** "Loading [Model] [Quant]..." in SF Pro 15pt `#9896B0`
+- **Sublabel:** "[size] into memory" in SF Mono 12pt `#6B6980`
+- **Input bar:** Disabled state, placeholder "Waiting for model..." at 50% opacity
+- **No overlay or dimming:** The gradient is the backdrop
+
+## Design Playgrounds
+
+Working SwiftUI playground files for visual reference and iteration:
+
+| Playground | Covers | Key Surfaces |
+|-----------|--------|-------------|
+| `MeshGradientPreview.playground` | Phase 2 | MeshGradient background, browse cards, search bar, tok/s badges |
+| `ChatLibraryPreview.playground` | Phase 3 + 4 | Chat bubbles, library tab, download bar, model loading, tab bar |
+
+Swap the `setLiveView()` call at the bottom of each playground's `Contents.swift` to preview different screens.
 
 ## Decisions Log
 | Date | Decision | Rationale |
@@ -106,3 +220,10 @@ The compatibility badge is the centerpiece of every card. It communicates both c
 | 2026-04-09 | Solid dark cards (#0D0C18) | Consistent contrast, gradient shows between cards not through them |
 | 2026-04-09 | Warm violet accent (#8B7CF0) | Distinguishes from every other dark-blue dev tool |
 | 2026-04-09 | Playground-first design iteration | SwiftUI playground doubles as working view code |
+| 2026-04-09 | 3-tab navigation (Browse/Library/Chat) | Clean separation: discover, manage, use |
+| 2026-04-09 | Persistent download bar above tab bar | Visible across all screens, compact 52pt, circular progress ring |
+| 2026-04-09 | Violet user bubbles (#8B7CF0) | Brand-colored, asymmetric corner radius for tail effect |
+| 2026-04-09 | Gradient shows through chat | MeshGradient breathes between bubbles — no flat chat background |
+| 2026-04-09 | Active model left-edge accent bar | 3pt violet bar instead of checkmark — visual pop without clutter |
+| 2026-04-09 | Amber stop button during generation | Clear differentiation from send button, matches amber "runs slowly" semantic |
+| 2026-04-09 | ChatLibraryPreview.playground | Phase 3+4 design playground with chat, library, loading, tab bar |
