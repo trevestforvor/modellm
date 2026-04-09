@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-04-09T11:41:15.115Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-04-09T11:50:02.875Z"
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 17
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-04-08)
 ## Current Position
 
 Phase: 03 (download-model-library) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Plan: 2 of 4
 | Phase 02 P02 | complete | 3 tasks | 8 files |
 | Phase 02 P03 | complete | 6 tasks | 8 files |
 | Phase 03 P01 | 425 | 6 tasks | 11 files |
+| Phase 03 P02 | 344 | 7 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 01]: isSlow threshold: speed range upper bound < 5 tok/sec
 - [Phase 03]: AppContainer uses private init() + static shared singleton to prevent dual instantiation and enable AppDelegate background URLSession reconnect
 - [Phase 03]: quantization stored as String in DownloadedModel (not QuantizationType enum) for SwiftData Codable compatibility
+- [Phase 03]: progress.throughput is Int? (not NSNumber?) on iOS — bridge via Double(x)
+- [Phase 03]: recordDownloadComplete takes optional ModelContext parameter to avoid actor isolation crossing with @MainActor
 
 ### Pending Todos
 
@@ -87,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-09T11:41:15.112Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-04-09T11:50:02.872Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
