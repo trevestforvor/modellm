@@ -6,6 +6,7 @@ struct ChatInputBar: View {
     let isModelLoaded: Bool
     let onSend: () -> Void
     let onStop: () -> Void
+    var onToggleHistory: (() -> Void)? = nil
 
     private var canSend: Bool {
         !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && isModelLoaded && !isGenerating
@@ -13,6 +14,21 @@ struct ChatInputBar: View {
 
     var body: some View {
         HStack(spacing: 8) {
+            // Clock button — toggles conversation history overlay
+            if let onToggleHistory {
+                Button(action: onToggleHistory) {
+                    Image(systemName: "clock")
+                        .font(.system(size: 18))
+                        .foregroundStyle(Color(hex: "#9896B0"))
+                        .frame(width: 36, height: 36)
+                        .background(
+                            Circle()
+                                .fill(Color(hex: "#1A1830").opacity(0.6))
+                                .overlay(Circle().strokeBorder(Color(hex: "#302E42"), lineWidth: 0.5))
+                        )
+                }
+            }
+
             TextField(isModelLoaded ? "Message..." : "Waiting for model...", text: $text, axis: .vertical)
                 .lineLimit(1...6)
                 .padding(.horizontal, 12)
