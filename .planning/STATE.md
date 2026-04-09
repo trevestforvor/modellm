@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 04-02-PLAN.md
-last_updated: "2026-04-09T12:45:44.785Z"
+status: Ready to execute
+stopped_at: Completed 05-04-PLAN.md
+last_updated: "2026-04-09T12:56:18.458Z"
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 17
-  completed_plans: 13
+  completed_plans: 15
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-08)
 
 **Core value:** Device-aware model compatibility verification — users see at a glance what will run well, what will run slowly, and what won't run at all on their specific device, before downloading anything.
-**Current focus:** Phase 04 — inference-chat
+**Current focus:** Phase 05 — polish-v1-completeness
 
 ## Current Position
 
-Phase: 05
-Plan: Not started
+Phase: 05 (polish-v1-completeness) — EXECUTING
+Plan: 3 of 4
 
 ## Performance Metrics
 
@@ -60,6 +60,8 @@ Plan: Not started
 | Phase 04 P01 | 630 | 6 tasks | 9 files |
 | Phase 04 P03 | 586 | 6 tasks | 11 files |
 | Phase 04 P02 | 35 | 3 tasks | 8 files |
+| Phase 05 P02 | 25 | 3 tasks | 6 files |
+| Phase 05 P04 | 45 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -93,6 +95,11 @@ Recent decisions affecting current work:
 - [Phase 04]: activeModelURL/Name/Quant stubs added to AppContainer as nil vars — Phase 5 will wire Library selection
 - [Phase 04]: ChatViewModel uses @MainActor isolation — isGenerating set synchronously before Task launch so UI updates atomically
 - [Phase 04]: InferenceService stub created in 04-02 to unblock ChatViewModel compilation while 04-01 runs in parallel
+- [Phase 05]: Sampler chain built per generate() call (not at LlamaSession init) — temperature/topP changes take effect without model reload
+- [Phase 05]: ChatSettingsView receives @Bindable DownloadedModel directly — SwiftData is source of truth for inference params, replacing ChatSettings/UserDefaults
+- [Phase 05]: WelcomePath enum (not Bool) for typed guided/browse distinction
+- [Phase 05]: guidedOnboardingModelId in @AppStorage survives view transition when hasCompletedOnboarding flips
+- [Phase 05]: ChatViewModel #Predicate cross-model-type fix: capture repoId as local constant before predicate closure
 
 ### Pending Todos
 
@@ -106,6 +113,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-09T12:41:38.403Z
-Stopped at: Completed 04-02-PLAN.md
+Last session: 2026-04-09T12:56:18.455Z
+Stopped at: Completed 05-04-PLAN.md
 Resume file: None

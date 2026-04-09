@@ -36,8 +36,8 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **CHAT-01**: User can load a downloaded model and chat with it via streaming token output
 - [x] **CHAT-02**: App displays tokens/sec during inference
 - [x] **CHAT-03**: Chat works fully offline after model is downloaded
-- [ ] **CHAT-04**: User can view and return to previous chat conversations (history persistence)
-- [ ] **CHAT-05**: User can adjust inference parameters (temperature, system prompt, top-p)
+- [x] **CHAT-04**: User can view and return to previous chat conversations (history persistence)
+- [x] **CHAT-05**: User can adjust inference parameters (temperature, system prompt, top-p)
 - [x] **CHAT-06**: Inference runs on background thread — UI remains responsive during generation
 
 ## v2 Requirements
@@ -96,8 +96,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CHAT-02 | Phase 4 | Complete |
 | CHAT-03 | Phase 4 | Complete |
 | CHAT-06 | Phase 4 | Complete |
-| CHAT-04 | Phase 5 | Pending |
-| CHAT-05 | Phase 5 | Pending |
+| CHAT-04 | Phase 5 | Complete |
+| CHAT-05 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 21 total
