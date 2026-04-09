@@ -41,6 +41,7 @@
 		CC03010001000009CC030100 /* DownloadServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0301000100000ACC030100; };
 		CC0301000100000BCC030100 /* ModelLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0301000100000CCC030100; };
 		CC0301000100000DCC030100 /* StorageGuardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0301000100000ECC030100; };
+		CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000014CC030100; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		CC0301000100000ACC030100 /* DownloadServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadServiceTests.swift; sourceTree = "<group>"; };
 		CC0301000100000CCC030100 /* ModelLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelLibraryTests.swift; sourceTree = "<group>"; };
 		CC0301000100000ECC030100 /* StorageGuardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageGuardTests.swift; sourceTree = "<group>"; };
+		CC03010001000014CC030100 /* DownloadProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProgressBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -121,8 +123,17 @@
 			isa = PBXGroup;
 			children = (
 				CC03010001000011CC030100 /* Library */,
+				CC03010001000015CC030100 /* Download */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		CC03010001000015CC030100 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				CC03010001000014CC030100 /* DownloadProgressBar.swift */,
+			);
+			path = Download;
 			sourceTree = "<group>";
 		};
 		CC03010001000011CC030100 /* Library */ = {
@@ -370,6 +381,7 @@
 				CC03010001000003CC030100 /* DownloadState.swift in Sources */,
 				CC03010001000005CC030100 /* DownloadService.swift in Sources */,
 				CC03010001000007CC030100 /* LibraryView.swift in Sources */,
+				CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
