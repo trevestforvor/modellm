@@ -14,16 +14,15 @@ Device-aware model compatibility verification — users see at a glance what wil
 
 <!-- Shipped and confirmed valuable. -->
 
-(None yet — ship to validate)
+- ✓ Dynamic device spec detection (chip, RAM, available storage, OS version) — Phase 1
+- ✓ Hard compatibility limits — filter out models that cannot run on the device (insufficient RAM, storage, unsupported format) — Phase 1
+- ✓ Soft compatibility signals — warn about models that will run but perform poorly (slow token generation, high memory pressure) — Phase 1
 
 ### Active
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] Dynamic device spec detection (chip, RAM, available storage, OS version)
 - [ ] Browse and search Hugging Face model repository
-- [ ] Hard compatibility limits — filter out models that cannot run on the device (insufficient RAM, storage, unsupported format)
-- [ ] Soft compatibility signals — warn about models that will run but perform poorly (slow token generation, high memory pressure)
 - [ ] Download models with progress tracking and storage management
 - [ ] LLM inference via llama.cpp Swift bindings
 - [ ] Chat UI for interacting with loaded LLM models
@@ -82,4 +81,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-08 after initialization*
+*Last updated: 2026-04-08 after Phase 1 completion*
