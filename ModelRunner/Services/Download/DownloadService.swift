@@ -118,7 +118,7 @@ extension DownloadService: URLSessionDownloadDelegate {
         progress.completedUnitCount = bytesWritten
         // Foundation.Progress computes throughput in bytes/sec after first few updates.
         // .throughput returns NSNumber? — bridge to Double for display.
-        let throughputBPS: Double? = progress.throughput.map { Double(truncating: $0) }
+        let throughputBPS: Double? = progress.throughput.map { Double($0) }
 
         let modelName = activeDisplayName ?? "Downloading..."
         let fractionCompleted = totalBytes > 0
@@ -201,6 +201,8 @@ extension DownloadService: URLSessionDownloadDelegate {
         let filename = downloadTask.originalRequest?.url?.lastPathComponent ?? "model.gguf"
         let quantization = QuantizationType.allCases
             .first { filename.contains($0.rawValue) }?.rawValue ?? "Unknown"
+        let sizeBytes = activeFileSizeBytes
+        let ctx = modelContext
 
         await MainActor.run {
             recordDownloadComplete(
@@ -209,7 +211,8 @@ extension DownloadService: URLSessionDownloadDelegate {
                 displayName: displayName,
                 filename: filename,
                 quantization: quantization,
-                fileSizeBytes: activeFileSizeBytes
+                fileSizeBytes: sizeBytes,
+                context: ctx
             )
         }
         activeTask = nil
@@ -394,9 +397,10 @@ extension DownloadService {
         displayName: String,
         filename: String,
         quantization: String,
-        fileSizeBytes: Int64
+        fileSizeBytes: Int64,
+        context: ModelContext? = nil
     ) {
-        guard let modelContext else {
+        guard let context else {
             // modelContext not yet injected — this is a setup error
             assertionFailure("DownloadService.modelContext is nil — inject via setModelContext in AppContainer")
             return
@@ -411,10 +415,10 @@ extension DownloadService {
             localPath: localURL.path
         )
 
-        modelContext.insert(model)
+        context.insert(model)
 
         do {
-            try modelContext.save()
+            try context.save()
         } catch {
             // Non-fatal — model will appear after next context sync
             print("[DownloadService] SwiftData save failed: \(error)")
@@ -445,6 +449,9 @@ extension DownloadService {
         let quantization = QuantizationType.allCases
             .first { filename.contains($0.rawValue) }?.rawValue ?? "Unknown"
 
+        let sizeBytes = activeFileSizeBytes
+        let ctx = modelContext
+
         do {
             // finalizeDownload is synchronous — file is moved before this line returns
             let destURL = try finalizeDownload(tempURL: tempURL, repoId: repoId, filename: filename)
@@ -457,7 +464,8 @@ extension DownloadService {
                     displayName: displayName,
                     filename: filename,
                     quantization: quantization,
-                    fileSizeBytes: activeFileSizeBytes
+                    fileSizeBytes: sizeBytes,
+                    context: ctx
                 )
             }
         } catch {
