@@ -25,11 +25,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Download & Storage
 
-- [ ] **DLST-01**: User can download models via background URLSession with progress indicator (MB/s, ETA, cancel)
-- [ ] **DLST-02**: Downloads continue when app is backgrounded
-- [ ] **DLST-03**: User can view all downloaded models with size and last-used date
-- [ ] **DLST-04**: User can delete downloaded models to free storage
-- [ ] **DLST-05**: User can switch between downloaded models
+- [x] **DLST-01**: User can download models via background URLSession with progress indicator (MB/s, ETA, cancel)
+- [x] **DLST-02**: Downloads continue when app is backgrounded
+- [x] **DLST-03**: User can view all downloaded models with size and last-used date
+- [x] **DLST-04**: User can delete downloaded models to free storage
+- [x] **DLST-05**: User can switch between downloaded models
 
 ### Inference & Chat
 
@@ -87,11 +87,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HFIN-02 | Phase 2 | Pending |
 | HFIN-03 | Phase 2 | Pending |
 | HFIN-04 | Phase 2 | Pending |
-| DLST-01 | Phase 3 | Pending |
-| DLST-02 | Phase 3 | Pending |
-| DLST-03 | Phase 3 | Pending |
-| DLST-04 | Phase 3 | Pending |
-| DLST-05 | Phase 3 | Pending |
+| DLST-01 | Phase 3 | Complete |
+| DLST-02 | Phase 3 | Complete |
+| DLST-03 | Phase 3 | Complete |
+| DLST-04 | Phase 3 | Complete |
+| DLST-05 | Phase 3 | Complete |
 | CHAT-01 | Phase 4 | Pending |
 | CHAT-02 | Phase 4 | Pending |
 | CHAT-03 | Phase 4 | Pending |
