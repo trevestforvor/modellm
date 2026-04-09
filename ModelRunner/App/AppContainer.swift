@@ -23,6 +23,24 @@ final class AppContainer {
     /// with the same identifier before any UI loads (critical for P-01 background session reconnect).
     let downloadService = DownloadService()
 
+    // MARK: - Services (Phase 4)
+
+    /// Inference engine — one actor instance per app. Holds one LlamaSession resident.
+    /// Call loadModel() before generate(). Never recreate per message (KV cache is expensive).
+    let inferenceService = InferenceService()
+
+    // MARK: - Active Model (Phase 4 — stub; Phase 5 wires Library → Chat selection)
+
+    /// URL to the currently active GGUF model file on disk.
+    /// Set by LibraryView when user selects a model to chat with.
+    var activeModelURL: URL? = nil
+
+    /// Display name of the active model (e.g. "Llama-3.2-1B").
+    var activeModelName: String? = nil
+
+    /// Quantization label of the active model (e.g. "Q4_K_M").
+    var activeModelQuant: String? = nil
+
     // MARK: - Init
 
     private init() {
@@ -32,5 +50,12 @@ final class AppContainer {
                 self.compatibilityEngine = CompatibilityEngine(device: specs)
             }
         }
+    }
+
+    /// Build InferenceParams scoped to this device's chip context window cap.
+    /// Falls back to a conservative 2048-token context if device profile is not yet loaded.
+    func inferenceParams() -> InferenceParams {
+        let contextCap = compatibilityEngine?.device.chipProfile.contextWindowCap ?? 2048
+        return InferenceParams.default(contextWindowCap: contextCap)
     }
 }

@@ -27,11 +27,17 @@ struct ContentView: View {
                 }
                 .tag(Tab.library)
 
-            chatPlaceholder
-                .tabItem {
-                    Label("Chat", systemImage: "bubble.left.fill")
-                }
-                .tag(Tab.chat)
+            NavigationStack {
+                ChatView(
+                    activeModelURL: container.activeModelURL,
+                    activeModelName: container.activeModelName ?? "",
+                    activeModelQuant: container.activeModelQuant ?? ""
+                )
+            }
+            .tabItem {
+                Label("Chat", systemImage: "bubble.left.fill")
+            }
+            .tag(Tab.chat)
         }
         .tint(accent)
         // Inject ModelContext into DownloadService so completed downloads create SwiftData records
@@ -52,23 +58,6 @@ struct ContentView: View {
                         }
                     }
                 )
-            }
-        }
-    }
-
-    private var chatPlaceholder: some View {
-        ZStack {
-            Color(hex: "#0F0E1A").ignoresSafeArea()
-            VStack(spacing: 12) {
-                Image(systemName: "bubble.left.fill")
-                    .font(.largeTitle)
-                    .foregroundStyle(Color(hex: "#6B6980"))
-                Text("Chat")
-                    .font(.headline)
-                    .foregroundStyle(Color(hex: "#9896B0"))
-                Text("Download a model to start chatting")
-                    .font(.subheadline)
-                    .foregroundStyle(Color(hex: "#6B6980"))
             }
         }
     }
