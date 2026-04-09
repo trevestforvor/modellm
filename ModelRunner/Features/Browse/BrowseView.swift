@@ -56,10 +56,10 @@ private struct BrowseContentView: View {
     private let accent        = Color(hex: "#8B7CF0")
 
     var body: some View {
-        ZStack {
-            BrowseMeshBackground()
+        NavigationStack {
+            ZStack {
+                AppBackground()
 
-            NavigationStack {
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 0) {
                         if viewModel.searchQuery.isEmpty {
@@ -74,15 +74,14 @@ private struct BrowseContentView: View {
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
                 }
-                .scrollContentBackground(.hidden)
-                .background(.clear)
-                .searchable(text: $viewModel.searchQuery, prompt: "Search models")
-                .navigationTitle("Browse")
-                .navigationBarTitleDisplayMode(.large)
-                .toolbarBackground(.hidden, for: .navigationBar)
-                .navigationDestination(for: AnnotatedModel.self) { model in
-                    ModelDetailView(model: model)
-                }
+            }
+            .scrollContentBackground(.hidden)
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .searchable(text: $viewModel.searchQuery, prompt: "Search models")
+            .navigationTitle("Browse")
+            .navigationBarTitleDisplayMode(.large)
+            .navigationDestination(for: AnnotatedModel.self) { model in
+                ModelDetailView(model: model)
             }
         }
     }
