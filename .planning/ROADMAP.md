@@ -98,6 +98,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Device Foundation | 2/3 | In Progress|  |
 | 2. HF Browse + Compatibility UI | 0/TBD | Not started | - |
-| 3. Download + Model Library | 2/4 | In Progress|  |
+| 3. Download + Model Library | 3/4 | In Progress|  |
 | 4. Inference + Chat | 0/TBD | Not started | - |
 | 5. Polish + V1 Completeness | 0/TBD | Not started | - |
