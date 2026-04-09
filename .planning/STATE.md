@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 05-04-PLAN.md
-last_updated: "2026-04-09T12:56:18.458Z"
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-04-09T12:56:54.099Z"
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 17
-  completed_plans: 15
+  completed_plans: 16
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-04-08)
 ## Current Position
 
 Phase: 05 (polish-v1-completeness) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Plan: 3 of 4
 | Phase 04 P02 | 35 | 3 tasks | 8 files |
 | Phase 05 P02 | 25 | 3 tasks | 6 files |
 | Phase 05 P04 | 45 | 2 tasks | 4 files |
+| Phase 05 P01 | 539 | 6 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -100,6 +101,8 @@ Recent decisions affecting current work:
 - [Phase 05]: WelcomePath enum (not Bool) for typed guided/browse distinction
 - [Phase 05]: guidedOnboardingModelId in @AppStorage survives view transition when hasCompletedOnboarding flips
 - [Phase 05]: ChatViewModel #Predicate cross-model-type fix: capture repoId as local constant before predicate closure
+- [Phase 05]: InferenceParams.from(model:) is internal — DownloadedModel is internal, public method cannot reference internal type
+- [Phase 05]: Message.role stored as String not enum — avoids SwiftData Codable conformance requirement
 
 ### Pending Todos
 
@@ -113,6 +116,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-09T12:56:18.455Z
-Stopped at: Completed 05-04-PLAN.md
+Last session: 2026-04-09T12:56:54.097Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None

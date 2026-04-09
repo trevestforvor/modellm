@@ -100,4 +100,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. HF Browse + Compatibility UI | 0/TBD | Not started | - |
 | 3. Download + Model Library | 4/4 | Complete   | 2026-04-09 |
 | 4. Inference + Chat | 3/3 | Complete   | 2026-04-09 |
-| 5. Polish + V1 Completeness | 2/4 | In Progress|  |
+| 5. Polish + V1 Completeness | 3/4 | In Progress|  |
