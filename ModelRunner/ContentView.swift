@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(AppContainer.self) private var container
     @State private var selectedTab: Tab = .browse
 
     enum Tab { case browse, library, chat }
@@ -11,15 +12,17 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
+            // Tab 1: Browse Hugging Face models (Phase 2)
             BrowseView()
                 .tabItem {
                     Label("Browse", systemImage: "square.grid.2x2")
                 }
                 .tag(Tab.browse)
 
-            libraryPlaceholder
+            // Tab 2: Downloaded model library (Phase 3)
+            LibraryView()
                 .tabItem {
-                    Label("Library", systemImage: "tray.full")
+                    Label("Library", systemImage: "internaldrive")
                 }
                 .tag(Tab.library)
 
@@ -32,22 +35,11 @@ struct ContentView: View {
         .tint(accent)
         // Toolbar appearance for dark tab bar
         .onAppear { configureTabBarAppearance() }
-    }
-
-    private var libraryPlaceholder: some View {
-        ZStack {
-            Color(hex: "#0F0E1A").ignoresSafeArea()
-            VStack(spacing: 12) {
-                Image(systemName: "tray.full")
-                    .font(.largeTitle)
-                    .foregroundStyle(Color(hex: "#6B6980"))
-                Text("Library")
-                    .font(.headline)
-                    .foregroundStyle(Color(hex: "#9896B0"))
-                Text("Download models to see them here")
-                    .font(.subheadline)
-                    .foregroundStyle(Color(hex: "#6B6980"))
-            }
+        // Persistent download progress bar — sits above tab bar (D-01)
+        // Uses safeAreaInset to avoid covering scroll content on small screens (P-08)
+        .safeAreaInset(edge: .bottom) {
+            // Plan 03 adds DownloadProgressBar here when container.downloadService.state.isActive
+            EmptyView()
         }
     }
 
@@ -80,5 +72,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environment(AppContainer())
+        .environment(AppContainer.shared)
 }
