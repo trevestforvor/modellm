@@ -26,8 +26,8 @@ Bottom row: #0F0E1A (base)     → #12242C (teal)    → #1C153E (violet)
 
 **Rules:**
 - The gradient IS the app background. Content sits directly on it.
-- Cards use semi-transparent surfaces (`opacity: 0.75`) so gradient breathes through
-- Never place a flat opaque background over the gradient
+- Cards use solid `#0D0C18` — dark enough to let the gradient show between cards, solid enough for consistent text contrast
+- The gradient shows through the gaps between cards, not through the cards themselves
 - The gradient should feel like colored light in a dark room, not a painted wall
 
 **SwiftUI implementation:** See `MeshGradientPreview.playground` for the working reference.
@@ -48,7 +48,7 @@ All system fonts. No custom fonts.
 
 - **Approach:** Restrained dark with one accent + two semantic compatibility colors
 - **Background base:** `#0F0E1A` — dark violet-black (MeshGradient center points)
-- **Card surface:** `#1A1928` at 75% opacity — dark purple-gray, semi-transparent
+- **Card surface:** `#0D0C18` solid — near-black, no opacity. Cards are defined by content and faint corner radius, not by contrast.
 - **Primary text:** `#EDEDF4` — soft white
 - **Secondary text:** `#9896B0` — lavender-gray
 - **Tertiary text:** `#6B6980` — muted purple-gray
@@ -103,6 +103,6 @@ The compatibility badge is the centerpiece of every card. It communicates both c
 | 2026-04-09 | Dark-only, no light mode | Category convention, easier on eyes for long inference sessions |
 | 2026-04-09 | SF Mono for data values only | Precision feel without terminal aesthetic |
 | 2026-04-09 | No model thumbnails | Tok/s badge is the visual anchor. Cleaner, faster loading. |
-| 2026-04-09 | Semi-transparent cards | Gradient breathes through at 75% opacity |
+| 2026-04-09 | Solid dark cards (#0D0C18) | Consistent contrast, gradient shows between cards not through them |
 | 2026-04-09 | Warm violet accent (#8B7CF0) | Distinguishes from every other dark-blue dev tool |
 | 2026-04-09 | Playground-first design iteration | SwiftUI playground doubles as working view code |

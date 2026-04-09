@@ -39,6 +39,12 @@ struct ModelRunnerGradient: View {
 
 // MARK: - Model Card
 
+enum CardStyle {
+    case current      // #1A1928 at 75% — what we have now
+    case solidDark    // #111020 solid — dark, no opacity
+    case solidDarker  // #0D0C18 solid — near-black, barely visible edge
+}
+
 struct ModelCard: View {
     let name: String
     let author: String
@@ -48,8 +54,17 @@ struct ModelCard: View {
     let tokSec: String
     let downloads: String
     let isGreen: Bool
+    var style: CardStyle = .current
 
     var badgeColor: Color { isGreen ? Color(hex: 0x34D399) : Color(hex: 0xFBBF24) }
+
+    var cardBackground: some ShapeStyle {
+        switch style {
+        case .current:     return AnyShapeStyle(Color(hex: 0x1A1928).opacity(0.75))
+        case .solidDark:   return AnyShapeStyle(Color(hex: 0x111020))
+        case .solidDarker: return AnyShapeStyle(Color(hex: 0x0D0C18))
+        }
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -93,7 +108,7 @@ struct ModelCard: View {
         }
         .padding(16)
         .frame(minWidth: 270, alignment: .leading)
-        .background(Color(hex: 0x1A1928).opacity(0.75))
+        .background(cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
@@ -107,6 +122,9 @@ struct ModelCard: View {
 // MARK: - Browse Screen
 
 struct BrowseScreen: View {
+    let cardStyle: CardStyle
+    let label: String
+
     var body: some View {
         ZStack {
             ModelRunnerGradient()
@@ -114,6 +132,12 @@ struct BrowseScreen: View {
 
             ScrollView {
                 VStack(spacing: 0) {
+                    // Label
+                    Text(label)
+                        .font(.system(size: 11, weight: .bold, design: .monospaced))
+                        .foregroundStyle(Color(hex: 0x8B7CF0))
+                        .padding(.top, 8)
+
                     // Search bar
                     HStack(spacing: 8) {
                         Image(systemName: "magnifyingglass")
@@ -125,31 +149,17 @@ struct BrowseScreen: View {
                     .font(.system(size: 15))
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
-                    .background(Color(hex: 0x1A1928).opacity(0.75))
+                    .background(searchBackground)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .padding(.horizontal, 16)
-                    .padding(.top, 12)
+                    .padding(.top, 8)
 
-                    // Recommendations
-                    sectionHeader("Best for Your Device", showSeeAll: true)
-
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 10) {
-                            ModelCard(name: "Qwen3-4B-GGUF", author: "Qwen", size: "2.5 GB", params: "4B", quant: "Q4_K_M", tokSec: "~32 tok/s", downloads: "2.1M", isGreen: true)
-                            ModelCard(name: "Gemma-3-3B-GGUF", author: "Google", size: "1.8 GB", params: "3B", quant: "Q4_K_M", tokSec: "~38 tok/s", downloads: "890K", isGreen: true)
-                            ModelCard(name: "Phi-4-mini-GGUF", author: "Microsoft", size: "2.2 GB", params: "3.8B", quant: "Q4_K_M", tokSec: "~28 tok/s", downloads: "1.4M", isGreen: true)
-                        }
-                        .padding(.horizontal, 16)
-                    }
-
-                    // All Models
-                    sectionHeader("All Models", showSeeAll: false)
+                    sectionHeader("Best for Your Device")
 
                     VStack(spacing: 8) {
-                        ModelCard(name: "Mistral-7B-Instruct-v0.3-GGUF", author: "MistralAI", size: "4.1 GB", params: "7B", quant: "Q4_K_M", tokSec: "~12 tok/s", downloads: "5.7M", isGreen: false)
-                        ModelCard(name: "DeepSeek-R1-Distill-Qwen-7B", author: "DeepSeek", size: "4.7 GB", params: "7B", quant: "Q4_K_M", tokSec: "~10 tok/s", downloads: "4.3M", isGreen: false)
-                        ModelCard(name: "Llama-3.1-8B-Instruct-GGUF", author: "Meta", size: "4.9 GB", params: "8B", quant: "Q4_K_M", tokSec: "~8 tok/s", downloads: "8.1M", isGreen: false)
-                        ModelCard(name: "Gemma-3-1B-GGUF", author: "Google", size: "0.7 GB", params: "1B", quant: "Q4_K_M", tokSec: "~55 tok/s", downloads: "520K", isGreen: true)
+                        ModelCard(name: "Qwen3-4B-GGUF", author: "Qwen", size: "2.5 GB", params: "4B", quant: "Q4_K_M", tokSec: "~32 tok/s", downloads: "2.1M", isGreen: true, style: cardStyle)
+                        ModelCard(name: "Mistral-7B-v0.3-GGUF", author: "MistralAI", size: "4.1 GB", params: "7B", quant: "Q4_K_M", tokSec: "~12 tok/s", downloads: "5.7M", isGreen: false, style: cardStyle)
+                        ModelCard(name: "Gemma-3-1B-GGUF", author: "Google", size: "0.7 GB", params: "1B", quant: "Q4_K_M", tokSec: "~55 tok/s", downloads: "520K", isGreen: true, style: cardStyle)
                     }
                     .padding(.horizontal, 16)
                 }
@@ -159,17 +169,20 @@ struct BrowseScreen: View {
         .preferredColorScheme(.dark)
     }
 
-    func sectionHeader(_ title: String, showSeeAll: Bool) -> some View {
+    var searchBackground: some ShapeStyle {
+        switch cardStyle {
+        case .current:     return AnyShapeStyle(Color(hex: 0x1A1928).opacity(0.75))
+        case .solidDark:   return AnyShapeStyle(Color(hex: 0x111020))
+        case .solidDarker: return AnyShapeStyle(Color(hex: 0x0D0C18))
+        }
+    }
+
+    func sectionHeader(_ title: String) -> some View {
         HStack {
             Text(title)
                 .font(.system(size: 17, weight: .semibold))
                 .foregroundStyle(Color(hex: 0xEDEDF4))
             Spacer()
-            if showSeeAll {
-                Text("See All")
-                    .font(.system(size: 14))
-                    .foregroundStyle(Color(hex: 0x8B7CF0))
-            }
         }
         .padding(.horizontal, 16)
         .padding(.top, 20)
@@ -180,6 +193,6 @@ struct BrowseScreen: View {
 // MARK: - Set Live View
 
 PlaygroundPage.current.setLiveView(
-    BrowseScreen()
+    BrowseScreen(cardStyle: .solidDarker, label: "")
         .frame(width: 390, height: 844)
 )
