@@ -44,6 +44,19 @@
 		CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000014CC030100; };
 		CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000017CC030100; };
 		CC03010001000018CC030100 /* LibraryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000019CC030100; };
+		CC04010001000001CC040100 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04010001000002CC040100; };
+		CC04010001000003CC040100 /* InferenceParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04010001000004CC040100; };
+		CC04010001000005CC040100 /* PromptFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04010001000006CC040100; };
+		CC04010001000007CC040100 /* LlamaSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04010001000008CC040100; };
+		CC04010001000009CC040100 /* InferenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0401000100000ACC040100; };
+		CC0401000100000BCC040100 /* PromptFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0401000100000CCC040100; };
+		CC0401000100000DCC040100 /* InferenceServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0401000100000ECC040100; };
+		CC04030001000001CC040300 /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000002CC040300; };
+		CC04030001000003CC040300 /* ToksPerSecondBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000004CC040300; };
+		CC04030001000005CC040300 /* ChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000006CC040300; };
+		CC04030001000007CC040300 /* ChatLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000008CC040300; };
+		CC04030001000009CC040300 /* ChatSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000ACC040300; };
+		CC0403000100000BCC040300 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000CCC040300; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +110,19 @@
 		CC03010001000014CC030100 /* DownloadProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProgressBar.swift; sourceTree = "<group>"; };
 		CC03010001000017CC030100 /* LibraryModelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModelCard.swift; sourceTree = "<group>"; };
 		CC03010001000019CC030100 /* LibraryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryService.swift; sourceTree = "<group>"; };
+		CC04010001000002CC040100 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		CC04010001000004CC040100 /* InferenceParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceParams.swift; sourceTree = "<group>"; };
+		CC04010001000006CC040100 /* PromptFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptFormatter.swift; sourceTree = "<group>"; };
+		CC04010001000008CC040100 /* LlamaSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LlamaSession.swift; sourceTree = "<group>"; };
+		CC0401000100000ACC040100 /* InferenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceService.swift; sourceTree = "<group>"; };
+		CC0401000100000CCC040100 /* PromptFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptFormatterTests.swift; sourceTree = "<group>"; };
+		CC0401000100000ECC040100 /* InferenceServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceServiceTests.swift; sourceTree = "<group>"; };
+		CC04030001000002CC040300 /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
+		CC04030001000004CC040300 /* ToksPerSecondBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToksPerSecondBadge.swift; sourceTree = "<group>"; };
+		CC04030001000006CC040300 /* ChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBar.swift; sourceTree = "<group>"; };
+		CC04030001000008CC040300 /* ChatLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLoadingView.swift; sourceTree = "<group>"; };
+		CC0403000100000ACC040300 /* ChatSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettingsView.swift; sourceTree = "<group>"; };
+		CC0403000100000CCC040300 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -119,6 +145,7 @@
 			children = (
 				CC03010001000002CC030100 /* DownloadedModel.swift */,
 				CC03010001000004CC030100 /* DownloadState.swift */,
+				CC04010001000002CC040100 /* ChatMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -165,8 +192,20 @@
 				BB01AA0000000021BB01AA00 /* HF */,
 				CC03010001000012CC030100 /* Download */,
 				CC0301000100001ACC030100 /* Library */,
+				CC04010001000010CC040100 /* Inference */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		CC04010001000010CC040100 /* Inference */ = {
+			isa = PBXGroup;
+			children = (
+				CC04010001000004CC040100 /* InferenceParams.swift */,
+				CC04010001000006CC040100 /* PromptFormatter.swift */,
+				CC04010001000008CC040100 /* LlamaSession.swift */,
+				CC0401000100000ACC040100 /* InferenceService.swift */,
+			);
+			path = Inference;
 			sourceTree = "<group>";
 		};
 		CC03010001000012CC030100 /* Download */ = {
@@ -189,8 +228,22 @@
 			isa = PBXGroup;
 			children = (
 				BB01AA0000000022BB01AA00 /* Browse */,
+				CC04030001000010CC040300 /* Chat */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		CC04030001000010CC040300 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				CC04030001000002CC040300 /* ChatBubbleView.swift */,
+				CC04030001000004CC040300 /* ToksPerSecondBadge.swift */,
+				CC04030001000006CC040300 /* ChatInputBar.swift */,
+				CC04030001000008CC040300 /* ChatLoadingView.swift */,
+				CC0403000100000ACC040300 /* ChatSettingsView.swift */,
+				CC0403000100000CCC040300 /* ChatView.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		BB01AA0000000022BB01AA00 /* Browse */ = {
@@ -241,6 +294,8 @@
 				CC0301000100000ACC030100 /* DownloadServiceTests.swift */,
 				CC0301000100000CCC030100 /* ModelLibraryTests.swift */,
 				CC0301000100000ECC030100 /* StorageGuardTests.swift */,
+				CC0401000100000CCC040100 /* PromptFormatterTests.swift */,
+				CC0401000100000ECC040100 /* InferenceServiceTests.swift */,
 				BB01AA0000000040BB01AA00 /* Fixtures */,
 			);
 			path = ModelRunnerTests;
@@ -398,6 +453,17 @@
 				CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */,
 				CC03010001000018CC030100 /* LibraryService.swift in Sources */,
 				CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */,
+				CC04010001000001CC040100 /* ChatMessage.swift in Sources */,
+				CC04010001000003CC040100 /* InferenceParams.swift in Sources */,
+				CC04010001000005CC040100 /* PromptFormatter.swift in Sources */,
+				CC04010001000007CC040100 /* LlamaSession.swift in Sources */,
+				CC04010001000009CC040100 /* InferenceService.swift in Sources */,
+				CC04030001000001CC040300 /* ChatBubbleView.swift in Sources */,
+				CC04030001000003CC040300 /* ToksPerSecondBadge.swift in Sources */,
+				CC04030001000005CC040300 /* ChatInputBar.swift in Sources */,
+				CC04030001000007CC040300 /* ChatLoadingView.swift in Sources */,
+				CC04030001000009CC040300 /* ChatSettingsView.swift in Sources */,
+				CC0403000100000BCC040300 /* ChatView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +480,8 @@
 				CC03010001000009CC030100 /* DownloadServiceTests.swift in Sources */,
 				CC0301000100000BCC030100 /* ModelLibraryTests.swift in Sources */,
 				CC0301000100000DCC030100 /* StorageGuardTests.swift in Sources */,
+				CC0401000100000BCC040100 /* PromptFormatterTests.swift in Sources */,
+				CC0401000100000DCC040100 /* InferenceServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
