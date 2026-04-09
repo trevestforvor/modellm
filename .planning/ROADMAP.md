@@ -30,7 +30,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. CompatibilityEngine returns a soft-warning verdict for a model that will run but is likely to generate tokens slowly
   4. Compatibility math accounts for ~40% jetsam headroom and KV cache overhead, not raw physical RAM
   5. Storage impact (e.g. "Uses 4.2 GB, you have 6.1 GB free") can be computed from model metadata
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 01-01-PLAN.md — Xcode project scaffold, entitlements, type contracts, Wave 0 test stubs
+- [ ] 01-02-PLAN.md — ChipLookupTable + DeviceCapabilityService (DEVC-01, DEVC-05)
+- [ ] 01-03-PLAN.md — CompatibilityEngine with KV cache math (DEVC-02, DEVC-03, DEVC-04, DEVC-06)
 
 ### Phase 2: HF Browse + Compatibility UI
 **Goal**: Users can browse and search Hugging Face models and immediately see whether each will run on their device
@@ -88,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Device Foundation | 0/TBD | Not started | - |
+| 1. Device Foundation | 0/3 | Not started | - |
 | 2. HF Browse + Compatibility UI | 0/TBD | Not started | - |
 | 3. Download + Model Library | 0/TBD | Not started | - |
 | 4. Inference + Chat | 0/TBD | Not started | - |
