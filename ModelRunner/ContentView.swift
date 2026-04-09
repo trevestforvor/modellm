@@ -38,8 +38,16 @@ struct ContentView: View {
         // Persistent download progress bar — sits above tab bar (D-01)
         // Uses safeAreaInset to avoid covering scroll content on small screens (P-08)
         .safeAreaInset(edge: .bottom) {
-            // Plan 03 adds DownloadProgressBar here when container.downloadService.state.isActive
-            EmptyView()
+            if container.downloadService.state.isActive {
+                DownloadProgressBar(
+                    state: container.downloadService.state,
+                    onCancel: {
+                        Task {
+                            await container.downloadService.cancelDownload()
+                        }
+                    }
+                )
+            }
         }
     }
 
