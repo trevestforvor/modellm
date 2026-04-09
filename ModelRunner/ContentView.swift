@@ -15,7 +15,11 @@ struct ContentView: View {
     private let tabBarSurface = Color(hex: "#0D0C18")
 
     var body: some View {
-        TabView(selection: $selectedTab) {
+        ZStack {
+            // Root gradient — visible on all tabs through transparent backgrounds
+            AppBackground()
+
+            TabView(selection: $selectedTab) {
             // Tab 1: Browse Hugging Face models (Phase 2)
             BrowseView()
                 .tabItem {
@@ -83,15 +87,26 @@ struct ContentView: View {
                 )
             }
         }
+        } // ZStack
     }
 
     private func configureTabBarAppearance() {
-        let appearance = UITabBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        // #0D0C18 at 95% opacity
-        appearance.backgroundColor = UIColor(Color(hex: "#0D0C18").opacity(0.95))
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
+        // Tab bar: solid dark surface
+        let tabAppearance = UITabBarAppearance()
+        tabAppearance.configureWithOpaqueBackground()
+        tabAppearance.backgroundColor = UIColor(Color(hex: "#0D0C18").opacity(0.95))
+        UITabBar.appearance().standardAppearance = tabAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabAppearance
+
+        // Navigation bar: transparent so MeshGradient shows through
+        let navAppearance = UINavigationBarAppearance()
+        navAppearance.configureWithTransparentBackground()
+        navAppearance.backgroundColor = .clear
+        navAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        UINavigationBar.appearance().standardAppearance = navAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
+        UINavigationBar.appearance().compactAppearance = navAppearance
     }
 }
 

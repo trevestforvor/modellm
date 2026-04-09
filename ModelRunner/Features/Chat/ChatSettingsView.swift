@@ -16,25 +16,7 @@ struct ChatSettingsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // MeshGradient background — consistent with rest of app
-                if #available(iOS 18.0, *) {
-                    MeshGradient(
-                        width: 3, height: 3,
-                        points: [
-                            [0, 0], [0.5, 0], [1, 0],
-                            [0, 0.5], [0.5, 0.5], [1, 0.5],
-                            [0, 1], [0.5, 1], [1, 1]
-                        ],
-                        colors: [
-                            Color(hex: "#0D0C18"), Color(hex: "#12103A"), Color(hex: "#0D0C18"),
-                            Color(hex: "#150E2A"), Color(hex: "#1A1245"), Color(hex: "#140E26"),
-                            Color(hex: "#0D0C18"), Color(hex: "#100D30"), Color(hex: "#0D0C18")
-                        ]
-                    )
-                    .ignoresSafeArea()
-                } else {
-                    Color(hex: "#0D0C18").ignoresSafeArea()
-                }
+                AppBackground()
 
                 ScrollView {
                     VStack(spacing: 16) {

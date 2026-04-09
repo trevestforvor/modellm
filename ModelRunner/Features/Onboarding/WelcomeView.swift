@@ -116,28 +116,8 @@ struct WelcomeView: View {
         downloadedModels.min(by: { $0.fileSizeBytes < $1.fileSizeBytes })
     }
 
-    // MARK: - MeshGradient background (same as BrowseView — visual consistency)
-
-    @ViewBuilder
     private var meshBackground: some View {
-        if #available(iOS 18.0, *) {
-            MeshGradient(
-                width: 3, height: 3,
-                points: [
-                    [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
-                    [0.0, 0.5], [0.5, 0.5], [1.0, 0.5],
-                    [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
-                ],
-                colors: [
-                    Color(hex: "#172440"), Color(hex: "#0F0E1A"), Color(hex: "#122A32"),
-                    Color(hex: "#221942"), Color(hex: "#110F1C"), Color(hex: "#141E3A"),
-                    Color(hex: "#0F0E1A"), Color(hex: "#12242C"), Color(hex: "#1C153E")
-                ]
-            )
-            .ignoresSafeArea()
-        } else {
-            meshBase.ignoresSafeArea()
-        }
+        AppBackground()
     }
 }
 

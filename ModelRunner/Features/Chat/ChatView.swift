@@ -17,7 +17,7 @@ struct ChatView: View {
     var body: some View {
         ZStack {
             // MeshGradient background — same dark violet gradient used across the app
-            chatMeshGradient
+            AppBackground()
 
             if let vm = viewModel {
                 chatContent(vm: vm)
@@ -175,31 +175,7 @@ struct ChatView: View {
         .padding()
     }
 
-    // MARK: - MeshGradient background
-
-    @ViewBuilder
-    private var chatMeshGradient: some View {
-        if #available(iOS 18.0, *) {
-            MeshGradient(
-                width: 3,
-                height: 3,
-                points: [
-                    [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
-                    [0.0, 0.5], [0.5, 0.5], [1.0, 0.5],
-                    [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
-                ],
-                colors: [
-                    Color(hex: "#0D0C18"), Color(hex: "#141230"), Color(hex: "#0D0C18"),
-                    Color(hex: "#1A1040"), Color(hex: "#221850"), Color(hex: "#180E35"),
-                    Color(hex: "#0D0C18"), Color(hex: "#120B2E"), Color(hex: "#0D0C18")
-                ]
-            )
-            .ignoresSafeArea()
-        } else {
-            Color(hex: "#0D0C18")
-                .ignoresSafeArea()
-        }
-    }
+    // MARK: - Background (shared via AppBackground)
 
     // MARK: - Helpers
 

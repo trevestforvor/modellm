@@ -39,26 +39,8 @@ struct BrowseView: View {
         Task { await vm.loadInitialData() }
     }
 
-    @ViewBuilder
     private var meshBackground: some View {
-        if #available(iOS 18.0, *) {
-            MeshGradient(
-                width: 3, height: 3,
-                points: [
-                    [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
-                    [0.0, 0.5], [0.5, 0.5], [1.0, 0.5],
-                    [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
-                ],
-                colors: [
-                    Color(hex: "#172440"), Color(hex: "#0F0E1A"), Color(hex: "#122A32"),
-                    Color(hex: "#221942"), Color(hex: "#110F1C"), Color(hex: "#141E3A"),
-                    Color(hex: "#0F0E1A"), Color(hex: "#12242C"), Color(hex: "#1C153E")
-                ]
-            )
-            .ignoresSafeArea()
-        } else {
-            meshBase.ignoresSafeArea()
-        }
+        AppBackground()
     }
 }
 
@@ -74,34 +56,34 @@ private struct BrowseContentView: View {
     private let accent        = Color(hex: "#8B7CF0")
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    if viewModel.searchQuery.isEmpty {
-                        // Recommendations section
-                        if !viewModel.recommendations.isEmpty {
-                            recommendationsSection
-                        }
-                        // All Models section
-                        allModelsSection
-                    } else {
-                        // Search results
-                        searchResultsSection
-                    }
-                }
-                .padding(.horizontal, 16)
-                .padding(.top, 8)
-            }
-            .background(.clear)
-            .searchable(text: $viewModel.searchQuery, prompt: "Search models")
-            .navigationTitle("Browse")
-            .navigationBarTitleDisplayMode(.large)
-            .navigationDestination(for: AnnotatedModel.self) { model in
-                ModelDetailView(model: model)
-            }
-        }
-        .background {
+        ZStack {
             BrowseMeshBackground()
+
+            NavigationStack {
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        if viewModel.searchQuery.isEmpty {
+                            if !viewModel.recommendations.isEmpty {
+                                recommendationsSection
+                            }
+                            allModelsSection
+                        } else {
+                            searchResultsSection
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 8)
+                }
+                .scrollContentBackground(.hidden)
+                .background(.clear)
+                .searchable(text: $viewModel.searchQuery, prompt: "Search models")
+                .navigationTitle("Browse")
+                .navigationBarTitleDisplayMode(.large)
+                .toolbarBackground(.hidden, for: .navigationBar)
+                .navigationDestination(for: AnnotatedModel.self) { model in
+                    ModelDetailView(model: model)
+                }
+            }
         }
     }
 
@@ -251,28 +233,11 @@ private struct BrowseContentView: View {
     }
 }
 
-// MARK: - Mesh Background (extracted to avoid ViewBuilder complexity)
+// MARK: - Mesh Background (uses shared AppBackground)
 
 private struct BrowseMeshBackground: View {
     var body: some View {
-        if #available(iOS 18.0, *) {
-            MeshGradient(
-                width: 3, height: 3,
-                points: [
-                    [0.0, 0.0], [0.5, 0.0], [1.0, 0.0],
-                    [0.0, 0.5], [0.5, 0.5], [1.0, 0.5],
-                    [0.0, 1.0], [0.5, 1.0], [1.0, 1.0]
-                ],
-                colors: [
-                    Color(hex: "#172440"), Color(hex: "#0F0E1A"), Color(hex: "#122A32"),
-                    Color(hex: "#221942"), Color(hex: "#110F1C"), Color(hex: "#141E3A"),
-                    Color(hex: "#0F0E1A"), Color(hex: "#12242C"), Color(hex: "#1C153E")
-                ]
-            )
-            .ignoresSafeArea()
-        } else {
-            Color(hex: "#0F0E1A").ignoresSafeArea()
-        }
+        AppBackground()
     }
 }
 

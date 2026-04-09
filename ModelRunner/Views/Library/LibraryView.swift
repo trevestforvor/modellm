@@ -21,14 +21,19 @@ struct LibraryView: View {
 
     var body: some View {
         NavigationStack {
-            Group {
-                if models.isEmpty {
-                    emptyState
-                } else {
-                    modelList
+            ZStack {
+                AppBackground()
+
+                Group {
+                    if models.isEmpty {
+                        emptyState
+                    } else {
+                        modelList
+                    }
                 }
             }
             .navigationTitle("Library")
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
                 if !models.isEmpty {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -92,6 +97,7 @@ struct LibraryView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
     }
 
     private var storageHeader: some View {

@@ -44,6 +44,7 @@
 		CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000014CC030100; };
 		CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000017CC030100; };
 		CC03010001000018CC030100 /* LibraryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC03010001000019CC030100; };
+		CLMV8QED6BPIPKAT42M4CDY8 /* AppBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = VMK8PQOCMDVXC68ITB2SPUMY; };
 		CC04010001000001CC040100 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04010001000002CC040100; };
 		CC04010001000003CC040100 /* InferenceParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04010001000004CC040100; };
 		CC04010001000005CC040100 /* PromptFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04010001000006CC040100; };
@@ -120,6 +121,7 @@
 		CC03010001000014CC030100 /* DownloadProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProgressBar.swift; sourceTree = "<group>"; };
 		CC03010001000017CC030100 /* LibraryModelCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModelCard.swift; sourceTree = "<group>"; };
 		CC03010001000019CC030100 /* LibraryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryService.swift; sourceTree = "<group>"; };
+		VMK8PQOCMDVXC68ITB2SPUMY /* AppBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackground.swift; sourceTree = "<group>"; };
 		CC04010001000002CC040100 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		CC04010001000004CC040100 /* InferenceParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceParams.swift; sourceTree = "<group>"; };
 		CC04010001000006CC040100 /* PromptFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptFormatter.swift; sourceTree = "<group>"; };
@@ -178,8 +180,17 @@
 			children = (
 				CC03010001000011CC030100 /* Library */,
 				CC03010001000015CC030100 /* Download */,
+				E2B4C5D6F7A9B1C2D3E4F5A6 /* Shared */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E2B4C5D6F7A9B1C2D3E4F5A6 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				VMK8PQOCMDVXC68ITB2SPUMY /* AppBackground.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		CC03010001000015CC030100 /* Download */ = {
@@ -488,6 +499,7 @@
 				CC03010001000003CC030100 /* DownloadState.swift in Sources */,
 				CC03010001000005CC030100 /* DownloadService.swift in Sources */,
 				CC03010001000007CC030100 /* LibraryView.swift in Sources */,
+				CLMV8QED6BPIPKAT42M4CDY8 /* AppBackground.swift in Sources */,
 				CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */,
 				CC03010001000018CC030100 /* LibraryService.swift in Sources */,
 				CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */,
