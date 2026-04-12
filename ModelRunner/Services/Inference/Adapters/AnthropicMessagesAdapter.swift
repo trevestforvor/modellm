@@ -48,26 +48,13 @@ public struct AnthropicMessagesAdapter: APIAdapter, Sendable {
     ) -> AsyncThrowingStream<StreamToken, Error> {
         AsyncThrowingStream { continuation in
             Task {
-                var buffer = ""
                 do {
-                    for try await byte in bytes {
-                        let char = Character(UnicodeScalar(byte))
-                        if char == "\n" {
-                            let line = buffer
-                            buffer = ""
-                            if let token = parseLine(line) {
-                                if case .done = token {
-                                    continuation.yield(.done)
-                                    continuation.finish()
-                                    return
-                                }
-                                continuation.yield(token)
-                            }
-                        } else {
-                            buffer.append(char)
+                    for try await line in bytes.lines {
+                        if let token = parseLine(line) {
+                            continuation.yield(token)
+                            if case .done = token { break }
                         }
                     }
-                    continuation.yield(.done)
                     continuation.finish()
                 } catch {
                     continuation.finish(throwing: error)
