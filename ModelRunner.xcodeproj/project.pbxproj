@@ -68,6 +68,12 @@
 		CC05040001000001CC050400 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05040001000002CC050400; };
 		CC05030001000001CC050300 /* ConversationHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05030001000002CC050300; };
 		CC05030001000003CC050300 /* ChatViewModelPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05030001000004CC050300; };
+		CC06010001000001CC060100 /* InferenceBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000002CC060100; };
+		CC06010001000003CC060100 /* APIAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000004CC060100; };
+		CC06010001000005CC060100 /* OpenAIChatAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000006CC060100; };
+		CC06010001000007CC060100 /* OpenAILegacyAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000008CC060100; };
+		CC06010001000009CC060100 /* OpenAIChatAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000ACC060100; };
+		CC0601000100000BCC060100 /* OpenAILegacyAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000CCC060100; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +151,12 @@
 		CC05040001000002CC050400 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		CC05030001000002CC050300 /* ConversationHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationHistoryView.swift; sourceTree = "<group>"; };
 		CC05030001000004CC050300 /* ChatViewModelPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModelPersistenceTests.swift; sourceTree = "<group>"; };
+		CC06010001000002CC060100 /* InferenceBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceBackend.swift; sourceTree = "<group>"; };
+		CC06010001000004CC060100 /* APIAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAdapter.swift; sourceTree = "<group>"; };
+		CC06010001000006CC060100 /* OpenAIChatAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChatAdapter.swift; sourceTree = "<group>"; };
+		CC06010001000008CC060100 /* OpenAILegacyAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAILegacyAdapter.swift; sourceTree = "<group>"; };
+		CC0601000100000ACC060100 /* OpenAIChatAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChatAdapterTests.swift; sourceTree = "<group>"; };
+		CC0601000100000CCC060100 /* OpenAILegacyAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAILegacyAdapterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -238,8 +250,28 @@
 				CC04010001000006CC040100 /* PromptFormatter.swift */,
 				CC04010001000008CC040100 /* LlamaSession.swift */,
 				CC0401000100000ACC040100 /* InferenceService.swift */,
+				CC06010001000010CC060100 /* Backends */,
+				CC06010001000011CC060100 /* Adapters */,
 			);
 			path = Inference;
+			sourceTree = "<group>";
+		};
+		CC06010001000010CC060100 /* Backends */ = {
+			isa = PBXGroup;
+			children = (
+				CC06010001000002CC060100 /* InferenceBackend.swift */,
+			);
+			path = Backends;
+			sourceTree = "<group>";
+		};
+		CC06010001000011CC060100 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				CC06010001000004CC060100 /* APIAdapter.swift */,
+				CC06010001000006CC060100 /* OpenAIChatAdapter.swift */,
+				CC06010001000008CC060100 /* OpenAILegacyAdapter.swift */,
+			);
+			path = Adapters;
 			sourceTree = "<group>";
 		};
 		CC03010001000012CC030100 /* Download */ = {
@@ -346,8 +378,18 @@
 				CC0501000100000ACC050100 /* InferencePresetTests.swift */,
 				CC05030001000004CC050300 /* ChatViewModelPersistenceTests.swift */,
 				BB01AA0000000040BB01AA00 /* Fixtures */,
+				CC06010001000012CC060100 /* Adapters */,
 			);
 			path = ModelRunnerTests;
+			sourceTree = "<group>";
+		};
+		CC06010001000012CC060100 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				CC0601000100000ACC060100 /* OpenAIChatAdapterTests.swift */,
+				CC0601000100000CCC060100 /* OpenAILegacyAdapterTests.swift */,
+			);
+			path = Adapters;
 			sourceTree = "<group>";
 		};
 		BB01AA0000000040BB01AA00 /* Fixtures */ = {
@@ -521,6 +563,10 @@
 				CC05010001000005CC050100 /* InferencePreset.swift in Sources */,
 				CC05040001000001CC050400 /* WelcomeView.swift in Sources */,
 				CC05030001000001CC050300 /* ConversationHistoryView.swift in Sources */,
+				CC06010001000001CC060100 /* InferenceBackend.swift in Sources */,
+				CC06010001000003CC060100 /* APIAdapter.swift in Sources */,
+				CC06010001000005CC060100 /* OpenAIChatAdapter.swift in Sources */,
+				CC06010001000007CC060100 /* OpenAILegacyAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +588,8 @@
 				CC05010001000007CC050100 /* ConversationTests.swift in Sources */,
 				CC05010001000009CC050100 /* InferencePresetTests.swift in Sources */,
 				CC05030001000003CC050300 /* ChatViewModelPersistenceTests.swift in Sources */,
+				CC06010001000009CC060100 /* OpenAIChatAdapterTests.swift in Sources */,
+				CC0601000100000BCC060100 /* OpenAILegacyAdapterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
