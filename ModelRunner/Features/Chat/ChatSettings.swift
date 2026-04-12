@@ -5,10 +5,12 @@ import Foundation
 struct ChatSettings: Codable {
     var systemPrompt: String
     var selectedPreset: SystemPromptPreset
+    var enableThinking: Bool = false
 
     static let defaultSettings = ChatSettings(
         systemPrompt: SystemPromptPreset.helpful.prompt,
-        selectedPreset: .helpful
+        selectedPreset: .helpful,
+        enableThinking: false
     )
 
     private static let userDefaultsKey = "ChatSettings"
