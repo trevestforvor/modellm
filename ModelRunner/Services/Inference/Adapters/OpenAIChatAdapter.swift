@@ -35,13 +35,20 @@ public struct OpenAIChatAdapter: APIAdapter, Sendable {
             messageArray.append(["role": role, "content": msg.content])
         }
 
-        let body: [String: Any] = [
+        var body: [String: Any] = [
             "model": model,
             "messages": messageArray,
             "stream": true,
             "temperature": params.temperature,
             "top_p": params.topP
         ]
+
+        // Signal thinking preference to servers that support it.
+        // Servers that don't recognize these params will ignore them safely.
+        if enableThinking {
+            body["enable_thinking"] = true
+            body["reasoning_effort"] = "high"
+        }
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         return request
     }
