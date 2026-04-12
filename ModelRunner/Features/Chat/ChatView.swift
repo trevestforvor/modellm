@@ -50,9 +50,10 @@ struct ChatView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    showSettings = true
+                    startNewChat()
                 } label: {
-                    Image(systemName: "gear")
+                    Image(systemName: "plus")
+                        .font(.system(size: 16, weight: .medium))
                         .foregroundStyle(Color(hex: "#9896B0"))
                 }
                 .disabled(viewModel == nil)
@@ -136,7 +137,6 @@ struct ChatView: View {
                 },
                 onStop: { vm.stop() },
                 onToggleHistory: { vm.showingHistory.toggle() },
-                onNewChat: { startNewChat() },
                 enableThinking: Binding(
                     get: { vm.enableThinking },
                     set: { vm.enableThinking = $0 }

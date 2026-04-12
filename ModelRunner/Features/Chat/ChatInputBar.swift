@@ -7,7 +7,6 @@ struct ChatInputBar: View {
     let onSend: () -> Void
     let onStop: () -> Void
     var onToggleHistory: (() -> Void)? = nil
-    var onNewChat: (() -> Void)? = nil
     @Binding var enableThinking: Bool
 
     private var canSend: Bool {
@@ -70,21 +69,6 @@ struct ChatInputBar: View {
                 }
 
             actionButton
-
-            // New chat button
-            if let onNewChat {
-                Button(action: onNewChat) {
-                    Image(systemName: "plus")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(Color(hex: "#9896B0"))
-                        .frame(width: 34, height: 34)
-                        .background(
-                            Circle()
-                                .fill(Color(hex: "#1A1830").opacity(0.6))
-                                .overlay(Circle().strokeBorder(Color(hex: "#302E42"), lineWidth: 0.5))
-                        )
-                }
-            }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
