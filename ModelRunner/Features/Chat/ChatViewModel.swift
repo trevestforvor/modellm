@@ -79,6 +79,8 @@ final class ChatViewModel {
 
     func startNewConversation(for selectedModel: SelectedModel) {
         guard let modelContext else { return }
+        // Remove current conversation if it has no messages (user hit + without typing)
+        cleanupEmptyConversation()
         let sourceLabel: String
         if case .remote(let serverID) = selectedModel.source {
             // SwiftData can't filter by UUID in predicates — fetch all and filter in memory
@@ -102,6 +104,7 @@ final class ChatViewModel {
     /// Legacy: start conversation for a local DownloadedModel
     func startNewConversation(for model: DownloadedModel) {
         guard let modelContext else { return }
+        cleanupEmptyConversation()
         let conv = Conversation(
             modelRepoId: model.repoId,
             modelDisplayName: model.displayName,
@@ -145,6 +148,14 @@ final class ChatViewModel {
         } else {
             startNewConversation(for: model)
         }
+    }
+
+    /// Delete the active conversation if it has no messages (avoids empty history entries)
+    private func cleanupEmptyConversation() {
+        guard let conv = activeConversation, conv.messages.isEmpty else { return }
+        modelContext?.delete(conv)
+        try? modelContext?.save()
+        activeConversation = nil
     }
 
     func deleteConversation(_ conversation: Conversation) {
