@@ -235,7 +235,7 @@ struct ChatView: View {
                 serverName: nil,
                 tokPerSec: nil,
                 isOnline: true,
-                supportsThinking: false
+                thinkingCapability: .none
             )
             if let backend = container.buildBackend(for: pickerModel, modelContext: modelContext) {
                 let vm = ChatViewModel(backend: backend)

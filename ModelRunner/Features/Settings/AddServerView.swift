@@ -175,7 +175,8 @@ struct AddServerView: View {
             baseURL: urlString.trimmingCharacters(in: .whitespaces),
             supportedFormats: result.supportedFormats,
             activeFormat: result.supportedFormats.first ?? .openAIChat,
-            apiKeyRef: keyRef
+            apiKeyRef: keyRef,
+            thinkingCapabilities: result.thinkingCapabilities
         )
         modelContext.insert(server)
         dismiss()

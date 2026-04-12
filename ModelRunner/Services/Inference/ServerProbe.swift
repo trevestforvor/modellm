@@ -3,12 +3,23 @@ import OSLog
 
 private let logger = Logger(subsystem: "com.modelrunner", category: "ServerProbe")
 
+/// Thinking capability of a model, detected during server probe.
+public enum ThinkingCapability: String, Codable, Sendable {
+    /// Model does not produce reasoning_content
+    case none
+    /// Model always produces reasoning_content — toggle only controls display
+    case alwaysOn
+    /// Model respects enable_thinking param — toggle controls server behavior
+    case toggleable
+}
+
 public enum ServerProbe {
 
     public struct ProbeResult: Sendable {
         public let models: [String]
         public let supportedFormats: [APIFormat]
-        public let thinkingModelIDs: Set<String>
+        /// Thinking capability per model ID (only tested for the probe model)
+        public let thinkingCapabilities: [String: ThinkingCapability]
     }
 
     public static func probe(
@@ -29,7 +40,7 @@ public enum ServerProbe {
             throw ProbeError.noModelsFound
         }
 
-        let (formats, thinkingModels) = await probeFormats(
+        let (formats, thinkingCaps) = await probeFormats(
             baseURL: baseURL, model: probeModel, apiKey: apiKey, timeout: timeoutSeconds
         )
 
@@ -40,9 +51,11 @@ public enum ServerProbe {
         return ProbeResult(
             models: models,
             supportedFormats: formats.sorted { $0.priority < $1.priority },
-            thinkingModelIDs: thinkingModels
+            thinkingCapabilities: thinkingCaps
         )
     }
+
+    // MARK: - Phase 1: Model Discovery
 
     static func discoverModels(baseURL: URL, apiKey: String?, timeout: TimeInterval) async throws -> [String] {
         let url = baseURL.appendingPathComponent("v1/models")
@@ -82,10 +95,12 @@ public enum ServerProbe {
         return modelIDs
     }
 
+    // MARK: - Phase 2: Format Probing + Thinking Detection
+
     private static func probeFormats(
         baseURL: URL, model: String, apiKey: String?, timeout: TimeInterval
-    ) async -> ([APIFormat], Set<String>) {
-        let thinkingDetected = ThinkingDetector()
+    ) async -> ([APIFormat], [String: ThinkingCapability]) {
+        let thinkingDetector = ThinkingDetector()
 
         let formats = await withTaskGroup(of: APIFormat?.self) { group in
             let adapters: [(APIFormat, any APIAdapter)] = [
@@ -116,13 +131,22 @@ public enum ServerProbe {
                         if let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) {
                             logger.info("Format \(format.rawValue) supported on \(baseURL.absoluteString)")
 
+                            // Phase 3: Detect thinking capability (only for OpenAI Chat format)
                             if format == .openAIChat {
-                                if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                                   let choices = json["choices"] as? [[String: Any]],
-                                   let message = choices.first?["message"] as? [String: Any],
-                                   message["reasoning_content"] != nil {
-                                    await thinkingDetected.markThinking(model: model)
+                                let thinksWithoutFlag = responseHasThinking(data)
+
+                                if thinksWithoutFlag {
+                                    // Model thinks by default — check if we can disable it
+                                    let canToggle = await probeThinkingToggle(
+                                        baseURL: baseURL, model: model, apiKey: apiKey, timeout: timeout
+                                    )
+                                    await thinkingDetector.set(
+                                        model: model,
+                                        capability: canToggle ? .toggleable : .alwaysOn
+                                    )
+                                    logger.info("Thinking: \(canToggle ? "toggleable" : "always on") for \(model)")
                                 }
+                                // If no thinking in default response → .none (not stored)
                             }
 
                             return format
@@ -141,14 +165,72 @@ public enum ServerProbe {
             return supported
         }
 
-        let thinkingModels = await thinkingDetected.models
-        return (formats, thinkingModels)
+        let caps = await thinkingDetector.capabilities
+        return (formats, caps)
     }
 
-    private actor ThinkingDetector {
-        var models: Set<String> = []
-        func markThinking(model: String) { models.insert(model) }
+    // MARK: - Thinking Toggle Detection
+
+    /// Send a second request with enable_thinking=false to see if the model respects it.
+    private static func probeThinkingToggle(
+        baseURL: URL, model: String, apiKey: String?, timeout: TimeInterval
+    ) async -> Bool {
+        let adapter = OpenAIChatAdapter()
+        let dummyMessage = ChatMessage(role: .user, content: "hi")
+        let params = InferenceParams.default(contextWindowCap: 2048)
+
+        // Build request with enable_thinking explicitly false
+        var request = adapter.buildRequest(
+            baseURL: baseURL, model: model, messages: [dummyMessage],
+            params: params, enableThinking: false, apiKey: apiKey
+        )
+        request.timeoutInterval = timeout
+
+        // Override: non-streaming, max_tokens=1, and explicitly add enable_thinking=false
+        if var body = request.httpBody,
+           var json = try? JSONSerialization.jsonObject(with: body) as? [String: Any] {
+            json["stream"] = false
+            json["max_tokens"] = 1
+            json["enable_thinking"] = false
+            request.httpBody = try? JSONSerialization.data(withJSONObject: json)
+        }
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
+                return false
+            }
+            // If this request does NOT have reasoning_content, the toggle works
+            return !responseHasThinking(data)
+        } catch {
+            return false
+        }
     }
+
+    /// Check if a chat completion response contains non-empty reasoning_content
+    private static func responseHasThinking(_ data: Data) -> Bool {
+        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let choices = json["choices"] as? [[String: Any]],
+              let message = choices.first?["message"] as? [String: Any] else {
+            return false
+        }
+        // Check for reasoning_content — present and non-empty
+        if let reasoning = message["reasoning_content"] as? String, !reasoning.isEmpty {
+            return true
+        }
+        return false
+    }
+
+    // MARK: - Thinking Detector Actor
+
+    private actor ThinkingDetector {
+        var capabilities: [String: ThinkingCapability] = [:]
+        func set(model: String, capability: ThinkingCapability) {
+            capabilities[model] = capability
+        }
+    }
+
+    // MARK: - Errors
 
     public enum ProbeError: LocalizedError {
         case noModelsFound

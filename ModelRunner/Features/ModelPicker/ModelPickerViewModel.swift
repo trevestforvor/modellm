@@ -30,7 +30,11 @@ struct PickerModel: Identifiable {
     let serverName: String?
     let tokPerSec: Double?
     let isOnline: Bool
-    let supportsThinking: Bool
+    let thinkingCapability: ThinkingCapability
+
+    var supportsThinking: Bool {
+        thinkingCapability != .none
+    }
 
     func toSelectedModel() -> SelectedModel {
         SelectedModel(backendID: id, displayName: displayName, source: source)
@@ -87,7 +91,7 @@ final class ModelPickerViewModel {
                 serverName: nil,
                 tokPerSec: stats?.lastMeasuredTokPerSec,
                 isOnline: true,
-                supportsThinking: false
+                thinkingCapability: .none
             )
         }
     }
@@ -128,7 +132,7 @@ final class ModelPickerViewModel {
                     serverName: server.name,
                     tokPerSec: stats?.lastMeasuredTokPerSec,
                     isOnline: true,
-                    supportsThinking: false  // Thinking detection happens during AddServer probe, not here
+                    thinkingCapability: server.thinkingCapability(for: modelID)
                 )
             }
         } catch {
