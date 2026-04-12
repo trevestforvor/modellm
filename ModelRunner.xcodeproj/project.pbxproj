@@ -74,6 +74,9 @@
 		CC06010001000007CC060100 /* OpenAILegacyAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000008CC060100; };
 		CC06010001000009CC060100 /* OpenAIChatAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000ACC060100; };
 		CC0601000100000BCC060100 /* OpenAILegacyAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000CCC060100; };
+		FA0100000000001DFA010000 /* ServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000001EFA010000; };
+		FA0100000000002DFA010000 /* ModelUsageStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000002EFA010000; };
+		FA0100000000003DFA010000 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000003EFA010000; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +160,10 @@
 		CC06010001000008CC060100 /* OpenAILegacyAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAILegacyAdapter.swift; sourceTree = "<group>"; };
 		CC0601000100000ACC060100 /* OpenAIChatAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChatAdapterTests.swift; sourceTree = "<group>"; };
 		CC0601000100000CCC060100 /* OpenAILegacyAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAILegacyAdapterTests.swift; sourceTree = "<group>"; };
+		FA0100000000001EFA010000 /* ServerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerConnection.swift; sourceTree = "<group>"; };
+		FA0100000000002EFA010000 /* ModelUsageStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelUsageStats.swift; sourceTree = "<group>"; };
+		FA0100000000003EFA010000 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		FA0100000000004EFA010000 /* Keychain */ = {isa = PBXGroup; children = (FA0100000000003EFA010000 /* KeychainService.swift */,); name = Keychain; path = Keychain; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -183,6 +190,9 @@
 				CC05010001000002CC050100 /* Conversation.swift */,
 				CC05010001000004CC050100 /* Message.swift */,
 				CC05010001000006CC050100 /* InferencePreset.swift */,
+			
+				FA0100000000001EFA010000 /* ServerConnection.swift */,
+				FA0100000000002EFA010000 /* ModelUsageStats.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -239,6 +249,8 @@
 				CC03010001000012CC030100 /* Download */,
 				CC0301000100001ACC030100 /* Library */,
 				CC04010001000010CC040100 /* Inference */,
+			
+				FA0100000000004EFA010000 /* Keychain */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -567,6 +579,10 @@
 				CC06010001000003CC060100 /* APIAdapter.swift in Sources */,
 				CC06010001000005CC060100 /* OpenAIChatAdapter.swift in Sources */,
 				CC06010001000007CC060100 /* OpenAILegacyAdapter.swift in Sources */,
+			
+				FA0100000000001DFA010000 /* ServerConnection.swift in Sources */,
+				FA0100000000002DFA010000 /* ModelUsageStats.swift in Sources */,
+				FA0100000000003DFA010000 /* KeychainService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

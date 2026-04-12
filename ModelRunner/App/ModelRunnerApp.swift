@@ -42,7 +42,7 @@ struct ModelRunnerApp: App {
     // ModelContainer: DownloadedModel persists in Application Support (not Caches — see P-07)
     // isExcludedFromBackup is set per-file on GGUF blobs, not on the SwiftData store itself.
     private static let modelContainer: ModelContainer = {
-        let schema = Schema([DownloadedModel.self, Conversation.self, Message.self])
+        let schema = Schema([DownloadedModel.self, Conversation.self, Message.self, ServerConnection.self, ModelUsageStats.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
             return try ModelContainer(for: schema, configurations: [config])
