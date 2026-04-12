@@ -108,13 +108,16 @@ final class ModelPickerViewModel {
         }()
 
         do {
-            let result = try await ServerProbe.probe(baseURL: url, apiKey: apiKey)
+            // Use lightweight model discovery only — NOT full probe.
+            // Full probe sends 3+ HTTP inference requests per server which is slow
+            // and can time out, causing the server to silently disappear from the picker.
+            let models = try await ServerProbe.discoverModels(baseURL: url, apiKey: apiKey, timeout: 10)
 
             server.isActive = true
             server.lastCheckedAt = Date()
             try? modelContext.save()
 
-            return result.models.map { modelID in
+            return models.map { modelID in
                 let identity = "remote:\(server.id.uuidString):\(modelID)"
                 let stats = fetchStats(identity: identity, modelContext: modelContext)
                 return PickerModel(
@@ -125,7 +128,7 @@ final class ModelPickerViewModel {
                     serverName: server.name,
                     tokPerSec: stats?.lastMeasuredTokPerSec,
                     isOnline: true,
-                    supportsThinking: result.thinkingModelIDs.contains(modelID)
+                    supportsThinking: false  // Thinking detection happens during AddServer probe, not here
                 )
             }
         } catch {

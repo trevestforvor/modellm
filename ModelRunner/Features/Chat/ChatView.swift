@@ -183,10 +183,24 @@ struct ChatView: View {
             Text("No model selected")
                 .font(.headline)
                 .foregroundStyle(Color(hex: "#9896B0"))
-            Text("Go to Library and tap a model to load it")
+            Text("Tap \"Chat\" above to pick a model, or add a server in Settings")
                 .font(.subheadline)
                 .foregroundStyle(Color(hex: "#6B6980"))
                 .multilineTextAlignment(.center)
+
+            Button {
+                showModelPicker = true
+            } label: {
+                Text("Select Model")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color(hex: "#8B7CF0"))
+                    )
+            }
         }
         .padding()
     }

@@ -79,9 +79,10 @@ final class ChatViewModel {
         guard let modelContext else { return }
         let sourceLabel: String
         if case .remote(let serverID) = selectedModel.source {
-            // Look up server name
+            // Look up server name — compare uuidString to avoid SwiftData UUID predicate bug
+            let serverIDString = serverID.uuidString
             let descriptor = FetchDescriptor<ServerConnection>(
-                predicate: #Predicate { $0.id == serverID }
+                predicate: #Predicate { $0.id.uuidString == serverIDString }
             )
             sourceLabel = (try? modelContext.fetch(descriptor).first?.name) ?? "Remote"
         } else {
