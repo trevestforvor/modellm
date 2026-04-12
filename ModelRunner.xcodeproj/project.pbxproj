@@ -74,6 +74,8 @@
 		CC06010001000007CC060100 /* OpenAILegacyAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000008CC060100; };
 		CC06010001000009CC060100 /* OpenAIChatAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000ACC060100; };
 		CC0601000100000BCC060100 /* OpenAILegacyAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000CCC060100; };
+		CC0601000100000DCC060100 /* RemoteInferenceBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000ECC060100; };
+		CC0601000100000FCC060100 /* RemoteInferenceBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000010CC060200; };
 		FA0100000000001DFA010000 /* ServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000001EFA010000; };
 		FA0100000000002DFA010000 /* ModelUsageStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000002EFA010000; };
 		FA0100000000003DFA010000 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000003EFA010000; };
@@ -160,6 +162,8 @@
 		CC06010001000008CC060100 /* OpenAILegacyAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAILegacyAdapter.swift; sourceTree = "<group>"; };
 		CC0601000100000ACC060100 /* OpenAIChatAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChatAdapterTests.swift; sourceTree = "<group>"; };
 		CC0601000100000CCC060100 /* OpenAILegacyAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAILegacyAdapterTests.swift; sourceTree = "<group>"; };
+		CC0601000100000ECC060100 /* RemoteInferenceBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteInferenceBackend.swift; sourceTree = "<group>"; };
+		CC06010001000010CC060200 /* RemoteInferenceBackendTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteInferenceBackendTests.swift; sourceTree = "<group>"; };
 		FA0100000000001EFA010000 /* ServerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerConnection.swift; sourceTree = "<group>"; };
 		FA0100000000002EFA010000 /* ModelUsageStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelUsageStats.swift; sourceTree = "<group>"; };
 		FA0100000000003EFA010000 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				CC06010001000002CC060100 /* InferenceBackend.swift */,
+				CC0601000100000ECC060100 /* RemoteInferenceBackend.swift */,
 			);
 			path = Backends;
 			sourceTree = "<group>";
@@ -389,6 +394,7 @@
 				CC05010001000008CC050100 /* ConversationTests.swift */,
 				CC0501000100000ACC050100 /* InferencePresetTests.swift */,
 				CC05030001000004CC050300 /* ChatViewModelPersistenceTests.swift */,
+				CC06010001000010CC060200 /* RemoteInferenceBackendTests.swift */,
 				BB01AA0000000040BB01AA00 /* Fixtures */,
 				CC06010001000012CC060100 /* Adapters */,
 			);
@@ -579,6 +585,7 @@
 				CC06010001000003CC060100 /* APIAdapter.swift in Sources */,
 				CC06010001000005CC060100 /* OpenAIChatAdapter.swift in Sources */,
 				CC06010001000007CC060100 /* OpenAILegacyAdapter.swift in Sources */,
+				CC0601000100000DCC060100 /* RemoteInferenceBackend.swift in Sources */,
 			
 				FA0100000000001DFA010000 /* ServerConnection.swift in Sources */,
 				FA0100000000002DFA010000 /* ModelUsageStats.swift in Sources */,
@@ -606,6 +613,7 @@
 				CC05030001000003CC050300 /* ChatViewModelPersistenceTests.swift in Sources */,
 				CC06010001000009CC060100 /* OpenAIChatAdapterTests.swift in Sources */,
 				CC0601000100000BCC060100 /* OpenAILegacyAdapterTests.swift in Sources */,
+				CC0601000100000FCC060100 /* RemoteInferenceBackendTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
