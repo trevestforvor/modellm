@@ -30,22 +30,38 @@ final class ChatViewModel {
     private(set) var loadingState: ModelLoadState = .idle
     var settings: ChatSettings = ChatSettings.load()
 
-    // MARK: - Phase 5: persistence
+    // MARK: - Persistence
     var activeConversation: Conversation?
     var showingHistory: Bool = false
     private var modelContext: ModelContext?
 
+    // MARK: - Backend (protocol-based — works for both local and remote)
+    var backend: (any InferenceBackend)?
+
+    // MARK: - Legacy (local model support — kept until LocalInferenceBackend ships)
+    private var inferenceService: InferenceService?
+    private var inferenceParams: InferenceParams?
+
     // MARK: - Private
-    private let inferenceService: InferenceService
-    private let inferenceParams: InferenceParams
     private var generationTask: Task<Void, Never>?
     private var generationStart: ContinuousClock.Instant?
     private var tokenCount: Int = 0
+    private var thinkingStart: ContinuousClock.Instant?
 
-    // Context window protection: max tokens to keep in history
-    // Conservative: reserve 512 tokens for the new response
-    private var maxHistoryTokens: Int { Int(inferenceParams.contextWindowTokens) - 512 }
+    // Context window protection
+    private var maxHistoryTokens: Int {
+        Int(inferenceParams?.contextWindowTokens ?? 4096) - 512
+    }
 
+    // MARK: - Init
+
+    /// New init for protocol-based backends (remote models)
+    init(backend: any InferenceBackend) {
+        self.backend = backend
+        self.loadingState = .ready
+    }
+
+    /// Legacy init for local InferenceService (kept until LocalInferenceBackend ships)
     init(inferenceService: InferenceService, inferenceParams: InferenceParams) {
         self.inferenceService = inferenceService
         self.inferenceParams = inferenceParams
@@ -59,6 +75,31 @@ final class ChatViewModel {
 
     // MARK: - Conversation Management
 
+    func startNewConversation(for selectedModel: SelectedModel) {
+        guard let modelContext else { return }
+        let sourceLabel: String
+        if case .remote(let serverID) = selectedModel.source {
+            // Look up server name
+            let descriptor = FetchDescriptor<ServerConnection>(
+                predicate: #Predicate { $0.id == serverID }
+            )
+            sourceLabel = (try? modelContext.fetch(descriptor).first?.name) ?? "Remote"
+        } else {
+            sourceLabel = "On Device"
+        }
+        let conv = Conversation(
+            modelIdentity: selectedModel.modelIdentity,
+            modelDisplayName: selectedModel.displayName,
+            modelSourceLabel: sourceLabel,
+            enableThinking: settings.enableThinking
+        )
+        modelContext.insert(conv)
+        try? modelContext.save()
+        activeConversation = conv
+        messages = []
+    }
+
+    /// Legacy: start conversation for a local DownloadedModel
     func startNewConversation(for model: DownloadedModel) {
         guard let modelContext else { return }
         let conv = Conversation(
@@ -72,10 +113,24 @@ final class ChatViewModel {
         messages = []
     }
 
+    func loadMostRecentConversation(forIdentity modelIdentity: String, modelContext: ModelContext) {
+        self.modelContext = modelContext
+        var descriptor = FetchDescriptor<Conversation>(
+            predicate: #Predicate { $0.modelIdentity == modelIdentity },
+            sortBy: [SortDescriptor(\.updatedAt, order: .reverse)]
+        )
+        descriptor.fetchLimit = 1
+        if let recent = try? modelContext.fetch(descriptor).first {
+            activeConversation = recent
+            messages = recent.messages
+                .sorted { $0.createdAt < $1.createdAt }
+                .map { ChatMessage(role: $0.role == "user" ? .user : .assistant, content: $0.content) }
+        }
+    }
+
+    /// Legacy: load conversation for a local DownloadedModel
     func loadMostRecentConversation(for model: DownloadedModel, modelContext: ModelContext) {
         self.modelContext = modelContext
-        // Capture repoId as a local constant — #Predicate cannot reference properties
-        // from two different @Model types in the same closure (Swift Data limitation).
         let repoId = model.repoId
         var descriptor = FetchDescriptor<Conversation>(
             predicate: #Predicate { $0.modelRepoId == repoId },
@@ -84,7 +139,6 @@ final class ChatViewModel {
         descriptor.fetchLimit = 1
         if let recent = try? modelContext.fetch(descriptor).first {
             activeConversation = recent
-            // Rebuild in-memory messages array from persisted messages
             messages = recent.messages
                 .sorted { $0.createdAt < $1.createdAt }
                 .map { ChatMessage(role: $0.role == "user" ? .user : .assistant, content: $0.content) }
@@ -96,7 +150,6 @@ final class ChatViewModel {
     func deleteConversation(_ conversation: Conversation) {
         modelContext?.delete(conversation)
         try? modelContext?.save()
-        // If deleting the active conversation, clear state
         if activeConversation?.id == conversation.id {
             activeConversation = nil
             messages = []
@@ -116,7 +169,6 @@ final class ChatViewModel {
         if let conv = activeConversation {
             let persistedUser = Message(role: "user", content: text)
             conv.messages.append(persistedUser)
-            // Auto-title from first user message
             if conv.title == "New Conversation" {
                 conv.generateTitle(from: text)
             }
@@ -126,16 +178,21 @@ final class ChatViewModel {
 
         isGenerating = true
         generationTask = Task {
-            await self.runGeneration()
+            if backend != nil {
+                await runRemoteGeneration()
+            } else if inferenceService != nil {
+                await runLocalGeneration()
+            }
         }
     }
 
     func stop() {
         generationTask?.cancel()
-        Task {
-            await inferenceService.stopGeneration()
+        if let backend {
+            Task { await backend.stop() }
+        } else if let inferenceService {
+            Task { await inferenceService.stopGeneration() }
         }
-        // Mark last assistant message as no longer streaming
         if let idx = messages.indices.last, messages[idx].role == .assistant {
             messages[idx].isStreaming = false
         }
@@ -143,7 +200,9 @@ final class ChatViewModel {
         resetTokSAfterDelay()
     }
 
+    /// Legacy: load a local GGUF model
     func loadModel(url: URL) async {
+        guard let inferenceService, let inferenceParams else { return }
         loadingState = .loading(progress: 0)
         do {
             try await inferenceService.loadModel(at: url, params: inferenceParams)
@@ -154,31 +213,128 @@ final class ChatViewModel {
         }
     }
 
-    // MARK: - Private
+    // MARK: - Remote Generation (InferenceBackend protocol)
 
-    private func runGeneration() async {
-        // Ensure model is loaded
+    private func runRemoteGeneration() async {
+        guard let backend else { return }
+
+        let params = inferenceParams ?? InferenceParams.default(contextWindowCap: 4096)
+
+        var assistantMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
+        messages.append(assistantMessage)
+        let assistantIndex = messages.endIndex - 1
+
+        generationStart = .now
+        thinkingStart = nil
+        tokenCount = 0
+        tokensPerSecond = 0
+
+        let enableThinking = activeConversation?.enableThinking ?? settings.enableThinking
+
+        // Build messages to send — exclude the empty assistant placeholder we just added
+        let messagesToSend = Array(messages.dropLast())
+
+        let stream = backend.generate(
+            messages: messagesToSend,
+            params: params,
+            enableThinking: enableThinking
+        )
+
+        var isInThinkingPhase = false
+
+        do {
+            for try await token in stream {
+                if Task.isCancelled { break }
+
+                switch token {
+                case .thinking(let text):
+                    if !isInThinkingPhase {
+                        isInThinkingPhase = true
+                        thinkingStart = .now
+                    }
+                    messages[assistantIndex].thinkingContent += text
+                    tokenCount += 1
+                    updateToksPerSecond()
+
+                case .content(let text):
+                    if isInThinkingPhase {
+                        if let start = thinkingStart {
+                            let elapsed = start.duration(to: .now)
+                            let seconds = Double(elapsed.components.seconds) + Double(elapsed.components.attoseconds) / 1e18
+                            messages[assistantIndex].thinkingDuration = seconds
+                        }
+                        isInThinkingPhase = false
+                    }
+                    messages[assistantIndex].content += text
+                    tokenCount += 1
+                    updateToksPerSecond()
+
+                case .done:
+                    break
+                }
+            }
+        } catch {
+            logger.error("Remote generation error: \(error)")
+            if messages[assistantIndex].content.isEmpty {
+                messages[assistantIndex].content = "Error: \(error.localizedDescription)"
+            }
+        }
+
+        messages[assistantIndex].isStreaming = false
+        isGenerating = false
+
+        // Persist tok/s to ModelUsageStats
+        if let modelContext, tokensPerSecond > 0,
+           let remoteBackend = backend as? RemoteInferenceBackend {
+            let identity = remoteBackend.modelIdentity
+            var statsDescriptor = FetchDescriptor<ModelUsageStats>(
+                predicate: #Predicate { $0.modelIdentity == identity }
+            )
+            statsDescriptor.fetchLimit = 1
+            let stats: ModelUsageStats
+            if let existing = try? modelContext.fetch(statsDescriptor).first {
+                stats = existing
+            } else {
+                stats = ModelUsageStats(modelIdentity: identity)
+                modelContext.insert(stats)
+            }
+            stats.recordGeneration(tokPerSec: tokensPerSecond)
+            try? modelContext.save()
+        }
+
+        resetTokSAfterDelay()
+
+        // Persist assistant message
+        let assistantContent = messages[assistantIndex].content
+        if !assistantContent.isEmpty {
+            let persistedAssistant = Message(role: "assistant", content: assistantContent)
+            activeConversation?.messages.append(persistedAssistant)
+            activeConversation?.updatedAt = Date()
+            try? modelContext?.save()
+        }
+    }
+
+    // MARK: - Local Generation (legacy — InferenceService path)
+
+    private func runLocalGeneration() async {
+        guard let inferenceService, let inferenceParams else { return }
+
         let isLoaded = await inferenceService.isLoaded
         guard isLoaded else {
             isGenerating = false
             return
         }
 
-        // Build prompt with context window protection
         let prompt = buildPrompt()
 
-        // Add streaming assistant message placeholder
         var assistantMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
         messages.append(assistantMessage)
         let assistantIndex = messages.endIndex - 1
 
-        // Reset tok/s tracking
         generationStart = .now
         tokenCount = 0
         tokensPerSecond = 0
 
-        // Pass current inferenceParams so temperature/topP changes take effect
-        // without reloading the model from disk (sampler chain built per call).
         let stream = await inferenceService.generate(prompt: prompt, params: inferenceParams)
 
         do {
@@ -198,28 +354,31 @@ final class ChatViewModel {
 
         // Persist assistant message
         let assistantContent = messages[assistantIndex].content
-        let persistedAssistant = Message(role: "assistant", content: assistantContent)
-        activeConversation?.messages.append(persistedAssistant)
-        activeConversation?.updatedAt = Date()
-        try? modelContext?.save()
+        if !assistantContent.isEmpty {
+            let persistedAssistant = Message(role: "assistant", content: assistantContent)
+            activeConversation?.messages.append(persistedAssistant)
+            activeConversation?.updatedAt = Date()
+            try? modelContext?.save()
+        }
     }
 
+    // MARK: - Prompt Building (legacy local path)
+
     private func buildPrompt() -> String {
-        // Apply context window protection by rough character count
-        // Heuristic: ~4 chars per token
+        guard let inferenceParams else { return "" }
         let maxChars = maxHistoryTokens * 4
         var historyMessages = messages.filter { $0.role == .user || ($0.role == .assistant && !$0.isStreaming) }
 
-        // Trim oldest pairs until within budget
         var totalChars = historyMessages.reduce(0) { $0 + $1.content.count }
         while totalChars > maxChars && historyMessages.count > 2 {
             let removed = historyMessages.removeFirst()
             totalChars -= removed.content.count
         }
 
-        // Per-model system prompt from InferenceParams (sourced from SwiftData via DownloadedModel)
         return PromptFormatter.chatml(system: inferenceParams.systemPrompt, messages: historyMessages)
     }
+
+    // MARK: - Tok/s
 
     private func updateToksPerSecond() {
         guard let start = generationStart else { return }
