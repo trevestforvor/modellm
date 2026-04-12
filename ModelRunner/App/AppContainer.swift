@@ -90,14 +90,10 @@ final class AppContainer {
             return nil  // Local backend not yet implemented
         }
 
-        // SwiftData #Predicate can't reliably compare UUID values on iOS 17 —
-        // compare uuidString instead to avoid silent nil results.
-        let serverIDString = serverID.uuidString
-        var descriptor = FetchDescriptor<ServerConnection>(
-            predicate: #Predicate { $0.id.uuidString == serverIDString }
-        )
-        descriptor.fetchLimit = 1
-        guard let server = try? modelContext.fetch(descriptor).first,
+        // SwiftData #Predicate can't compare UUID values or traverse .uuidString —
+        // fetch all servers and filter in memory (server list is small).
+        let allServers = (try? modelContext.fetch(FetchDescriptor<ServerConnection>())) ?? []
+        guard let server = allServers.first(where: { $0.id == serverID }),
               let baseURL = server.parsedBaseURL else { return nil }
 
         let apiKey: String? = {
