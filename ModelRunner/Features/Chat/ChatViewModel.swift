@@ -150,12 +150,20 @@ final class ChatViewModel {
         }
     }
 
-    /// Delete the active conversation if it has no messages (avoids empty history entries)
+    /// Delete all conversations with no messages (avoids empty history entries)
     private func cleanupEmptyConversation() {
-        guard let conv = activeConversation, conv.messages.isEmpty else { return }
-        modelContext?.delete(conv)
-        try? modelContext?.save()
-        activeConversation = nil
+        guard let modelContext else { return }
+        let descriptor = FetchDescriptor<Conversation>()
+        guard let allConversations = try? modelContext.fetch(descriptor) else { return }
+        var didDelete = false
+        for conv in allConversations where conv.messages.isEmpty {
+            modelContext.delete(conv)
+            if conv.id == activeConversation?.id {
+                activeConversation = nil
+            }
+            didDelete = true
+        }
+        if didDelete { try? modelContext.save() }
     }
 
     func deleteConversation(_ conversation: Conversation) {
