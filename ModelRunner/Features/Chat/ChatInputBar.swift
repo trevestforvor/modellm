@@ -7,6 +7,7 @@ struct ChatInputBar: View {
     let onSend: () -> Void
     let onStop: () -> Void
     var onToggleHistory: (() -> Void)? = nil
+    @Binding var enableThinking: Bool
 
     private var canSend: Bool {
         !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && isModelLoaded && !isGenerating
@@ -27,6 +28,24 @@ struct ChatInputBar: View {
                                 .overlay(Circle().strokeBorder(Color(hex: "#302E42"), lineWidth: 0.5))
                         )
                 }
+            }
+
+            // Brain button — toggles thinking/reasoning mode
+            Button {
+                enableThinking.toggle()
+            } label: {
+                Image(systemName: "brain")
+                    .font(.system(size: 16))
+                    .foregroundStyle(enableThinking ? Color(hex: "#8B7CF0") : Color(hex: "#6B6980"))
+                    .frame(width: 36, height: 36)
+                    .background(
+                        Circle()
+                            .fill(enableThinking ? Color(hex: "#8B7CF0").opacity(0.15) : Color(hex: "#1A1830").opacity(0.6))
+                            .overlay(Circle().strokeBorder(
+                                enableThinking ? Color(hex: "#8B7CF0").opacity(0.3) : Color(hex: "#302E42"),
+                                lineWidth: 0.5
+                            ))
+                    )
             }
 
             TextField(isModelLoaded ? "Message..." : "Waiting for model...", text: $text, axis: .vertical)
