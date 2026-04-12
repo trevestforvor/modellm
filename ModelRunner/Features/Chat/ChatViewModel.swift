@@ -29,6 +29,8 @@ final class ChatViewModel {
     private(set) var tokensPerSecond: Double = 0
     private(set) var loadingState: ModelLoadState = .idle
     var settings: ChatSettings = ChatSettings.load()
+    /// Thinking toggle — controlled by the brain button in ChatInputBar
+    var enableThinking: Bool = false
 
     // MARK: - Persistence
     var activeConversation: Conversation?
@@ -227,7 +229,8 @@ final class ChatViewModel {
         tokenCount = 0
         tokensPerSecond = 0
 
-        let enableThinking = activeConversation?.enableThinking ?? settings.enableThinking
+        // Read from self.enableThinking — bound to the brain toggle in ChatInputBar
+        let thinkingEnabled = self.enableThinking
 
         // Build messages to send — exclude the empty assistant placeholder we just added
         let messagesToSend = Array(messages.dropLast())
@@ -235,7 +238,7 @@ final class ChatViewModel {
         let stream = backend.generate(
             messages: messagesToSend,
             params: params,
-            enableThinking: enableThinking
+            enableThinking: thinkingEnabled
         )
 
         var isInThinkingPhase = false
@@ -248,7 +251,7 @@ final class ChatViewModel {
                 case .thinking(let text):
                     // Only render thinking if enabled — some models always produce
                     // reasoning_content with no server-side toggle to disable it.
-                    if enableThinking {
+                    if thinkingEnabled {
                         if !isInThinkingPhase {
                             isInThinkingPhase = true
                             thinkingStart = .now

@@ -8,7 +8,6 @@ struct ChatView: View {
     @State private var inputText = ""
     @State private var showSettings = false
     @State private var showModelPicker = false
-    @State private var enableThinking = false
 
     /// Active model — set by ContentView from Library active model selection.
     /// Phase 4: passed from ContentView; Phase 5 wires persistent selection.
@@ -137,7 +136,10 @@ struct ChatView: View {
                 },
                 onStop: { vm.stop() },
                 onToggleHistory: { vm.showingHistory.toggle() },
-                enableThinking: $enableThinking
+                enableThinking: Binding(
+                    get: { vm.enableThinking },
+                    set: { vm.enableThinking = $0 }
+                )
             )
         }
         .onAppear {
@@ -260,10 +262,10 @@ struct ChatView: View {
 
     private func selectModel(_ pickerModel: PickerModel) {
         container.selectedModel = pickerModel.toSelectedModel()
-        enableThinking = pickerModel.supportsThinking
 
         if let backend = container.buildBackend(for: pickerModel, modelContext: modelContext) {
             let vm = ChatViewModel(backend: backend)
+            vm.enableThinking = pickerModel.supportsThinking
             vm.configure(modelContext: modelContext)
             let identity = pickerModel.toSelectedModel().modelIdentity
             vm.loadMostRecentConversation(forIdentity: identity, modelContext: modelContext)
