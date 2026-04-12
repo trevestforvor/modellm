@@ -7,6 +7,8 @@ struct ChatView: View {
     @State private var viewModel: ChatViewModel?
     @State private var inputText = ""
     @State private var showSettings = false
+    @State private var showModelPicker = false
+    @State private var enableThinking = false
 
     /// Active model — set by ContentView from Library active model selection.
     /// Phase 4: passed from ContentView; Phase 5 wires persistent selection.
@@ -28,14 +30,22 @@ struct ChatView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                VStack(spacing: 2) {
-                    Text("Chat")
-                        .font(.system(size: 18, weight: .bold))
-                        .foregroundStyle(.white)
-                    if !activeModelName.isEmpty && activeModelName != "No Model" {
-                        Text("\(activeModelName) · \(activeModelQuant)")
-                            .font(.system(size: 12))
-                            .foregroundStyle(Color(hex: "#6B6980"))
+                Button {
+                    showModelPicker = true
+                } label: {
+                    VStack(spacing: 2) {
+                        Text("Chat")
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundStyle(.white)
+                        if let selected = container.selectedModel {
+                            Text(selected.displayName)
+                                .font(.system(size: 12))
+                                .foregroundStyle(Color(hex: "#6B6980"))
+                        } else if !activeModelName.isEmpty && activeModelName != "No Model" {
+                            Text("\(activeModelName) · \(activeModelQuant)")
+                                .font(.system(size: 12))
+                                .foregroundStyle(Color(hex: "#6B6980"))
+                        }
                     }
                 }
             }
@@ -54,6 +64,11 @@ struct ChatView: View {
             // topP, and systemPrompt directly to SwiftData (per-model settings, D-10/D-11).
             if let model = activeModel(from: container) {
                 ChatSettingsView(model: model)
+            }
+        }
+        .sheet(isPresented: $showModelPicker) {
+            ModelPickerView { pickerModel in
+                selectModel(pickerModel)
             }
         }
         .task(id: activeModelURL) {
@@ -121,7 +136,8 @@ struct ChatView: View {
                     inputText = ""
                 },
                 onStop: { vm.stop() },
-                onToggleHistory: { vm.showingHistory.toggle() }
+                onToggleHistory: { vm.showingHistory.toggle() },
+                enableThinking: $enableThinking
             )
         }
         .onAppear {
@@ -193,6 +209,28 @@ struct ChatView: View {
     // MARK: - Setup
 
     private func setupViewModel() async {
+        // Check for remote model selection first
+        if let selected = container.selectedModel, selected.source.isRemote {
+            let pickerModel = PickerModel(
+                id: selected.backendID,
+                displayName: selected.displayName,
+                source: selected.source,
+                serverID: nil,
+                serverName: nil,
+                tokPerSec: nil,
+                isOnline: true,
+                supportsThinking: false
+            )
+            if let backend = container.buildBackend(for: pickerModel, modelContext: modelContext) {
+                let vm = ChatViewModel(backend: backend)
+                vm.configure(modelContext: modelContext)
+                vm.loadMostRecentConversation(forIdentity: selected.modelIdentity, modelContext: modelContext)
+                viewModel = vm
+                return
+            }
+        }
+
+        // Fall back to local model setup
         guard let url = activeModelURL else {
             viewModel = nil
             return
@@ -204,5 +242,21 @@ struct ChatView: View {
         )
         viewModel = vm
         await vm.loadModel(url: url)
+    }
+
+    private func selectModel(_ pickerModel: PickerModel) {
+        container.selectedModel = pickerModel.toSelectedModel()
+        enableThinking = pickerModel.supportsThinking
+
+        if let backend = container.buildBackend(for: pickerModel, modelContext: modelContext) {
+            let vm = ChatViewModel(backend: backend)
+            vm.configure(modelContext: modelContext)
+            let identity = pickerModel.toSelectedModel().modelIdentity
+            vm.loadMostRecentConversation(forIdentity: identity, modelContext: modelContext)
+            if vm.activeConversation == nil {
+                vm.startNewConversation(for: pickerModel.toSelectedModel())
+            }
+            viewModel = vm
+        }
     }
 }

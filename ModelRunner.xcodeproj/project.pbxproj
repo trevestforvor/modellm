@@ -79,6 +79,14 @@
 		FA0100000000001DFA010000 /* ServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000001EFA010000; };
 		FA0100000000002DFA010000 /* ModelUsageStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000002EFA010000; };
 		FA0100000000003DFA010000 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000003EFA010000; };
+		DD07010001000001DD070100 /* AnthropicMessagesAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000002DD070100; };
+		DD07010001000003DD070100 /* ServerProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000004DD070100; };
+		DD07010001000005DD070100 /* ServerProbeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000006DD070100; };
+		DD07010001000007DD070100 /* ModelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000008DD070100; };
+		DD07010001000009DD070100 /* ModelPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0701000100000ADD070100; };
+		DD0701000100000BDD070100 /* ServerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0701000100000CDD070100; };
+		DD0701000100000DDD070100 /* AddServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0701000100000EDD070100; };
+		DD0701000100000FDD070100 /* ServerDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000010DD070100; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,6 +175,14 @@
 		FA0100000000001EFA010000 /* ServerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerConnection.swift; sourceTree = "<group>"; };
 		FA0100000000002EFA010000 /* ModelUsageStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelUsageStats.swift; sourceTree = "<group>"; };
 		FA0100000000003EFA010000 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		DD07010001000002DD070100 /* AnthropicMessagesAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnthropicMessagesAdapter.swift; sourceTree = "<group>"; };
+		DD07010001000004DD070100 /* ServerProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerProbe.swift; sourceTree = "<group>"; };
+		DD07010001000006DD070100 /* ServerProbeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerProbeTests.swift; sourceTree = "<group>"; };
+		DD07010001000008DD070100 /* ModelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPickerView.swift; sourceTree = "<group>"; };
+		DD0701000100000ADD070100 /* ModelPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPickerViewModel.swift; sourceTree = "<group>"; };
+		DD0701000100000CDD070100 /* ServerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListView.swift; sourceTree = "<group>"; };
+		DD0701000100000EDD070100 /* AddServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddServerView.swift; sourceTree = "<group>"; };
+		DD07010001000010DD070100 /* ServerDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerDetailView.swift; sourceTree = "<group>"; };
 		FA0100000000004EFA010000 /* Keychain */ = {isa = PBXGroup; children = (FA0100000000003EFA010000 /* KeychainService.swift */,); name = Keychain; path = Keychain; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -268,6 +284,7 @@
 				CC0401000100000ACC040100 /* InferenceService.swift */,
 				CC06010001000010CC060100 /* Backends */,
 				CC06010001000011CC060100 /* Adapters */,
+				DD07010001000004DD070100 /* ServerProbe.swift */,
 			);
 			path = Inference;
 			sourceTree = "<group>";
@@ -287,6 +304,7 @@
 				CC06010001000004CC060100 /* APIAdapter.swift */,
 				CC06010001000006CC060100 /* OpenAIChatAdapter.swift */,
 				CC06010001000008CC060100 /* OpenAILegacyAdapter.swift */,
+				DD07010001000002DD070100 /* AnthropicMessagesAdapter.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -313,6 +331,8 @@
 				BB01AA0000000022BB01AA00 /* Browse */,
 				CC04030001000010CC040300 /* Chat */,
 				CC05040001000010CC050400 /* Onboarding */,
+				DD07010001000020DD070100 /* ModelPicker */,
+				DD07010001000030DD070100 /* Settings */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -352,6 +372,25 @@
 				BB01AA0000000067BB01AA00 /* ModelDetailView.swift */,
 			);
 			path = Browse;
+			sourceTree = "<group>";
+		};
+		DD07010001000020DD070100 /* ModelPicker */ = {
+			isa = PBXGroup;
+			children = (
+				DD07010001000008DD070100 /* ModelPickerView.swift */,
+				DD0701000100000ADD070100 /* ModelPickerViewModel.swift */,
+			);
+			path = ModelPicker;
+			sourceTree = "<group>";
+		};
+		DD07010001000030DD070100 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DD0701000100000CDD070100 /* ServerListView.swift */,
+				DD0701000100000EDD070100 /* AddServerView.swift */,
+				DD07010001000010DD070100 /* ServerDetailView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		BB01AA0000000021BB01AA00 /* HF */ = {
@@ -395,6 +434,7 @@
 				CC0501000100000ACC050100 /* InferencePresetTests.swift */,
 				CC05030001000004CC050300 /* ChatViewModelPersistenceTests.swift */,
 				CC06010001000010CC060200 /* RemoteInferenceBackendTests.swift */,
+				DD07010001000006DD070100 /* ServerProbeTests.swift */,
 				BB01AA0000000040BB01AA00 /* Fixtures */,
 				CC06010001000012CC060100 /* Adapters */,
 			);
@@ -590,6 +630,13 @@
 				FA0100000000001DFA010000 /* ServerConnection.swift in Sources */,
 				FA0100000000002DFA010000 /* ModelUsageStats.swift in Sources */,
 				FA0100000000003DFA010000 /* KeychainService.swift in Sources */,
+				DD07010001000001DD070100 /* AnthropicMessagesAdapter.swift in Sources */,
+				DD07010001000003DD070100 /* ServerProbe.swift in Sources */,
+				DD07010001000007DD070100 /* ModelPickerView.swift in Sources */,
+				DD07010001000009DD070100 /* ModelPickerViewModel.swift in Sources */,
+				DD0701000100000BDD070100 /* ServerListView.swift in Sources */,
+				DD0701000100000DDD070100 /* AddServerView.swift in Sources */,
+				DD0701000100000FDD070100 /* ServerDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +661,7 @@
 				CC06010001000009CC060100 /* OpenAIChatAdapterTests.swift in Sources */,
 				CC0601000100000BCC060100 /* OpenAILegacyAdapterTests.swift in Sources */,
 				CC0601000100000FCC060100 /* RemoteInferenceBackendTests.swift in Sources */,
+				DD07010001000005DD070100 /* ServerProbeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

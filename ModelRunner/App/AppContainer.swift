@@ -1,4 +1,5 @@
 import Foundation
+import SwiftData
 
 /// Central dependency container for ModelRunner.
 /// @Observable — SwiftUI views receive updates when properties change.
@@ -41,6 +42,20 @@ final class AppContainer {
     /// Quantization label of the active model (e.g. "Q4_K_M").
     var activeModelQuant: String? = nil
 
+    // MARK: - Unified Model Selection
+
+    /// Currently selected model — persisted to UserDefaults
+    var selectedModel: SelectedModel? {
+        didSet {
+            if let model = selectedModel,
+               let data = try? JSONEncoder().encode(model) {
+                UserDefaults.standard.set(data, forKey: "selectedModel")
+            } else {
+                UserDefaults.standard.removeObject(forKey: "selectedModel")
+            }
+        }
+    }
+
     // MARK: - Init
 
     private init() {
@@ -49,6 +64,12 @@ final class AppContainer {
             if let specs = await deviceService.specs {
                 self.compatibilityEngine = CompatibilityEngine(device: specs)
             }
+        }
+
+        // Restore selected model from UserDefaults
+        if let data = UserDefaults.standard.data(forKey: "selectedModel"),
+           let model = try? JSONDecoder().decode(SelectedModel.self, from: data) {
+            self.selectedModel = model
         }
     }
 
@@ -61,5 +82,39 @@ final class AppContainer {
             return InferenceParams.from(model: model, contextWindowCap: contextCap)
         }
         return InferenceParams.default(contextWindowCap: contextCap)
+    }
+
+    /// Build an InferenceBackend for the given picker model selection.
+    func buildBackend(for pickerModel: PickerModel, modelContext: ModelContext) -> (any InferenceBackend)? {
+        guard case .remote(let serverID) = pickerModel.source else {
+            return nil  // Local backend not yet implemented
+        }
+
+        var descriptor = FetchDescriptor<ServerConnection>(
+            predicate: #Predicate { $0.id == serverID }
+        )
+        descriptor.fetchLimit = 1
+        guard let server = try? modelContext.fetch(descriptor).first,
+              let baseURL = server.parsedBaseURL else { return nil }
+
+        let apiKey: String? = {
+            guard let ref = server.apiKeyRef else { return nil }
+            return KeychainService.retrieve(account: ref)
+        }()
+
+        let adapter: any APIAdapter = switch server.activeFormat {
+        case .openAIChat: OpenAIChatAdapter()
+        case .openAILegacy: OpenAILegacyAdapter()
+        case .anthropicMessages: AnthropicMessagesAdapter()
+        }
+
+        return RemoteInferenceBackend(
+            modelID: pickerModel.id,
+            serverID: server.id,
+            serverName: server.name,
+            baseURL: baseURL,
+            adapter: adapter,
+            apiKey: apiKey
+        )
     }
 }

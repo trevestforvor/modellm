@@ -8,7 +8,7 @@ struct ContentView: View {
     // Onboarding guided path: if set, activate this model and switch to Chat on appear
     @AppStorage("guidedOnboardingModelId") private var guidedOnboardingModelId: String = ""
 
-    enum Tab { case browse, library, chat }
+    enum Tab { case browse, library, chat, settings }
 
     private let accent        = Color(hex: "#8B7CF0")
     private let unselected    = Color(hex: "#6B6980")
@@ -45,6 +45,14 @@ struct ContentView: View {
                 Label("Chat", systemImage: "bubble.left.fill")
             }
             .tag(Tab.chat)
+
+            NavigationStack {
+                ServerListView()
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
+            }
+            .tag(Tab.settings)
         }
         .tint(accent)
         // Inject ModelContext into DownloadService so completed downloads create SwiftData records
