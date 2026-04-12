@@ -246,11 +246,15 @@ final class ChatViewModel {
 
                 switch token {
                 case .thinking(let text):
-                    if !isInThinkingPhase {
-                        isInThinkingPhase = true
-                        thinkingStart = .now
+                    // Only render thinking if enabled — some models always produce
+                    // reasoning_content with no server-side toggle to disable it.
+                    if enableThinking {
+                        if !isInThinkingPhase {
+                            isInThinkingPhase = true
+                            thinkingStart = .now
+                        }
+                        messages[assistantIndex].thinkingContent += text
                     }
-                    messages[assistantIndex].thinkingContent += text
                     tokenCount += 1
                     updateToksPerSecond()
 
