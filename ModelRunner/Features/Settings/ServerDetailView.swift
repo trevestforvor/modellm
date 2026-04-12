@@ -177,7 +177,16 @@ struct ServerDetailView: View {
                     }
                     server.isActive = true
                     server.lastCheckedAt = Date()
-                    redetectState = .success("\(result.supportedFormats.count) format(s) detected, \(result.models.count) model(s) found.")
+                    server.updateThinkingCapabilities(result.thinkingCapabilities)
+
+                    // Build status message
+                    let thinkingModels = result.thinkingCapabilities.filter { $0.value != .none }
+                    var status = "\(result.supportedFormats.count) format(s), \(result.models.count) model(s)"
+                    if !thinkingModels.isEmpty {
+                        let labels = thinkingModels.map { "\($0.key): \($0.value == .toggleable ? "toggleable" : "always on")" }
+                        status += ". Thinking: \(labels.joined(separator: ", "))"
+                    }
+                    redetectState = .success(status)
                 }
             } catch {
                 await MainActor.run {
