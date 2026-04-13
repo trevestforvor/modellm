@@ -262,14 +262,20 @@ final class ChatViewModel {
 
         var isInThinkingPhase = false
 
+        // Buffer tokens and flush to UI at ~20fps to avoid layout thrashing.
+        // At 129 tok/s, unbuffered updates cause 129 full SwiftUI re-renders/sec
+        // which freezes the main thread on ChatMessage array copies.
+        var contentBuffer = ""
+        var thinkingBuffer = ""
+        var lastFlush = ContinuousClock.now
+        let flushInterval = Duration.milliseconds(50)
+
         do {
             for try await token in stream {
                 if Task.isCancelled { break }
 
                 switch token {
                 case .thinking(let text):
-                    // Only render thinking if enabled — some models always produce
-                    // reasoning_content with no server-side toggle to disable it.
                     if thinkingEnabled {
                         if !isInThinkingPhase {
                             isInThinkingPhase = true
@@ -277,11 +283,10 @@ final class ChatViewModel {
                         }
                         let cleaned = Self.stripStopTokens(text)
                         if !cleaned.isEmpty {
-                            messages[assistantIndex].thinkingContent += cleaned
+                            thinkingBuffer += cleaned
                         }
                     }
                     tokenCount += 1
-                    updateToksPerSecond()
 
                 case .content(let text):
                     if isInThinkingPhase {
@@ -291,16 +296,35 @@ final class ChatViewModel {
                             messages[assistantIndex].thinkingDuration = seconds
                         }
                         isInThinkingPhase = false
+                        // Flush any remaining thinking buffer immediately on phase transition
+                        if !thinkingBuffer.isEmpty {
+                            messages[assistantIndex].thinkingContent += thinkingBuffer
+                            thinkingBuffer = ""
+                        }
                     }
                     let cleaned = Self.stripStopTokens(text)
                     if !cleaned.isEmpty {
-                        messages[assistantIndex].content += cleaned
+                        contentBuffer += cleaned
                     }
                     tokenCount += 1
-                    updateToksPerSecond()
 
                 case .done:
                     break
+                }
+
+                // Flush buffers to UI at throttled rate
+                let now = ContinuousClock.now
+                if now - lastFlush >= flushInterval {
+                    if !contentBuffer.isEmpty {
+                        messages[assistantIndex].content += contentBuffer
+                        contentBuffer = ""
+                    }
+                    if !thinkingBuffer.isEmpty {
+                        messages[assistantIndex].thinkingContent += thinkingBuffer
+                        thinkingBuffer = ""
+                    }
+                    updateToksPerSecond()
+                    lastFlush = now
                 }
             }
         } catch {
@@ -309,6 +333,15 @@ final class ChatViewModel {
                 messages[assistantIndex].content = "Error: \(error.localizedDescription)"
             }
         }
+
+        // Final flush — ensure all buffered tokens are rendered
+        if !contentBuffer.isEmpty {
+            messages[assistantIndex].content += contentBuffer
+        }
+        if !thinkingBuffer.isEmpty {
+            messages[assistantIndex].thinkingContent += thinkingBuffer
+        }
+        updateToksPerSecond()
 
         messages[assistantIndex].isStreaming = false
         isGenerating = false
