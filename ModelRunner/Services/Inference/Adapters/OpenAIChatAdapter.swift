@@ -40,7 +40,8 @@ public struct OpenAIChatAdapter: APIAdapter, Sendable {
             "messages": messageArray,
             "stream": true,
             "temperature": params.temperature,
-            "top_p": params.topP
+            "top_p": params.topP,
+            "max_tokens": 4096
         ]
 
         // Signal thinking preference to servers that support it.

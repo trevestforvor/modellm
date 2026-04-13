@@ -33,7 +33,8 @@ public struct OpenAILegacyAdapter: APIAdapter, Sendable {
             "prompt": prompt,
             "stream": true,
             "temperature": params.temperature,
-            "top_p": params.topP
+            "top_p": params.topP,
+            "max_tokens": 4096
         ]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         return request
