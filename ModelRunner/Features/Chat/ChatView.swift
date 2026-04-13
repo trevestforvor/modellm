@@ -29,6 +29,9 @@ struct ChatView: View {
                 noModelPrompt
             }
         }
+        .onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
@@ -207,6 +210,7 @@ struct ChatView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
             }
+            .scrollDismissesKeyboard(.interactively)
             // Auto-scroll when new messages are added
             .onChange(of: vm.messages.count) { _, _ in
                 scrollToBottom(proxy: proxy, vm: vm)
