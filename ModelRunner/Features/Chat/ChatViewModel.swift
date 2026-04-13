@@ -220,11 +220,12 @@ final class ChatViewModel {
         // Finalize streaming message into messages array
         if var final = streamingMessage {
             final.isStreaming = false
+            final.finalTokPerSec = tokensPerSecond
             messages.append(final)
             streamingMessage = nil
         }
         isGenerating = false
-        resetTokSAfterDelay()
+        // tok/s persists — no reset
     }
 
     /// Legacy: load a local GGUF model
@@ -354,6 +355,7 @@ final class ChatViewModel {
         let assistantContent = streamingMessage?.content ?? ""
         if var final = streamingMessage {
             final.isStreaming = false
+            final.finalTokPerSec = tokensPerSecond
             messages.append(final)
             streamingMessage = nil
         }
@@ -378,7 +380,7 @@ final class ChatViewModel {
             try? modelContext.save()
         }
 
-        resetTokSAfterDelay()
+        // tok/s persists — no reset
 
         // Persist assistant message
         if !assistantContent.isEmpty {
@@ -426,11 +428,12 @@ final class ChatViewModel {
         let assistantContent = streamingMessage?.content ?? ""
         if var final = streamingMessage {
             final.isStreaming = false
+            final.finalTokPerSec = tokensPerSecond
             messages.append(final)
             streamingMessage = nil
         }
         isGenerating = false
-        resetTokSAfterDelay()
+        // tok/s persists — no reset
 
         // Persist assistant message
         if !assistantContent.isEmpty {
@@ -481,10 +484,4 @@ final class ChatViewModel {
         }
     }
 
-    private func resetTokSAfterDelay() {
-        Task { @MainActor in
-            try? await Task.sleep(for: .seconds(2))
-            tokensPerSecond = 0
-        }
-    }
 }

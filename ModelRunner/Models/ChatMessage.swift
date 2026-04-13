@@ -18,6 +18,8 @@ public struct ChatMessage: Identifiable, Sendable {
     public var isStreaming: Bool
     /// Duration of thinking phase in seconds (first thinking token → first content token)
     public var thinkingDuration: TimeInterval?
+    /// Final measured tok/s — set when generation completes, persists on the message
+    public var finalTokPerSec: Double?
 
     public init(role: MessageRole, content: String, isStreaming: Bool = false, thinkingContent: String = "") {
         self.id = UUID()
