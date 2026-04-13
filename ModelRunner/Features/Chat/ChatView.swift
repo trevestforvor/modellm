@@ -177,6 +177,9 @@ struct ChatView: View {
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
+
+                Spacer()
+                    .frame(height: 15)
             }
             // Auto-scroll when new messages are added
             .onChange(of: vm.messages.count) { _, _ in
