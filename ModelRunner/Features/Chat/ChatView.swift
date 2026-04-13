@@ -126,8 +126,20 @@ struct ChatView: View {
                 .animation(.spring(duration: 0.3, bounce: 0.15), value: vm.showingHistory)
             }
 
-            // Input bar — always rendered; disabled when model not ready
-            // Clock button at leading edge toggles conversation history
+            // Tok/s indicator — pinned above input bar
+            if vm.tokensPerSecond > 0 || vm.streamingMessage?.finalTokPerSec != nil {
+                HStack {
+                    ToksPerSecondBadge(
+                        tokensPerSecond: vm.tokensPerSecond > 0 ? vm.tokensPerSecond : (vm.messages.last?.finalTokPerSec ?? 0),
+                        isGenerating: vm.isGenerating
+                    )
+                    Spacer()
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 4)
+            }
+
+            // Input bar
             ChatInputBar(
                 text: $inputText,
                 isGenerating: vm.isGenerating,
@@ -159,7 +171,7 @@ struct ChatView: View {
                     ForEach(vm.messages) { message in
                         ChatBubbleView(
                             message: message,
-                            tokensPerSecond: message.finalTokPerSec ?? 0,
+                            tokensPerSecond: 0,
                             isGenerating: false
                         )
                         .id(message.id)
@@ -169,7 +181,7 @@ struct ChatView: View {
                     if let streaming = vm.streamingMessage {
                         ChatBubbleView(
                             message: streaming,
-                            tokensPerSecond: vm.tokensPerSecond,
+                            tokensPerSecond: 0,
                             isGenerating: true
                         )
                         .id(streaming.id)
