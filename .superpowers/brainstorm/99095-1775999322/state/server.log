@@ -1,0 +1,8 @@
+{"type":"server-started","port":62362,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:62362","screen_dir":"/Users/trevest/Developer/models/.superpowers/brainstorm/99095-1775999322/content","state_dir":"/Users/trevest/Developer/models/.superpowers/brainstorm/99095-1775999322/state"}
+{"type":"screen-added","file":"/Users/trevest/Developer/models/.superpowers/brainstorm/99095-1775999322/content/tab-structure.html"}
+{"source":"user-event","type":"click","text":"A\n    \n      Two Tabs: Models + Chat\n      Models — one unified view with sections: \"My Models\" (downloaded + remote servers) at top, \"Browse Hugging Face\" below. Server management via \"+\" button. Grid of cards for My Models, list for Browse results.\n      Chat — conversation view with model picker.\n      This is what PocketPal and Enchanted do. Simplest possible navigation. Settings goes into a gear icon or long-press on models.","choice":"a","id":null,"timestamp":1775999431665}
+{"type":"screen-added","file":"/Users/trevest/Developer/models/.superpowers/brainstorm/99095-1775999322/content/model-layout.html"}
+{"type":"screen-added","file":"/Users/trevest/Developer/models/.superpowers/brainstorm/99095-1775999322/content/waiting.html"}
+{"type":"screen-added","file":"/Users/trevest/Developer/models/.superpowers/brainstorm/99095-1775999322/content/full-design.html"}
+{"type":"screen-added","file":"/Users/trevest/Developer/models/.superpowers/brainstorm/99095-1775999322/content/waiting-2.html"}
+{"type":"server-stopped","reason":"idle timeout"}

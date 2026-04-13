@@ -159,7 +159,7 @@ struct ChatView: View {
                     ForEach(vm.messages) { message in
                         ChatBubbleView(
                             message: message,
-                            tokensPerSecond: vm.tokensPerSecond,
+                            tokensPerSecond: message.isStreaming ? vm.tokensPerSecond : 0,
                             isGenerating: vm.isGenerating && message.isStreaming
                         )
                         .id(message.id)

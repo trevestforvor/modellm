@@ -49,10 +49,15 @@ final class ModelPickerViewModel {
 
     func load(modelContext: ModelContext) async {
         isLoading = true
+
+        // Batch-fetch ALL ModelUsageStats once to avoid N+1 per-model queries
+        let allStats = (try? modelContext.fetch(FetchDescriptor<ModelUsageStats>())) ?? []
+        let statsLookup = Dictionary(uniqueKeysWithValues: allStats.map { ($0.modelIdentity, $0) })
+
         var newSections: [ModelPickerSection] = []
 
         // Section 1: On-Device models
-        let localModels = fetchLocalModels(modelContext: modelContext)
+        let localModels = fetchLocalModels(modelContext: modelContext, statsLookup: statsLookup)
         if !localModels.isEmpty {
             newSections.append(ModelPickerSection(id: "local", title: "On Device", models: localModels))
         }
@@ -60,7 +65,7 @@ final class ModelPickerViewModel {
         // Section 2+: Remote servers
         let servers = fetchServers(modelContext: modelContext)
         for server in servers {
-            let remoteModels = await discoverRemoteModels(server: server, modelContext: modelContext)
+            let remoteModels = await discoverRemoteModels(server: server, modelContext: modelContext, statsLookup: statsLookup)
             if !remoteModels.isEmpty {
                 newSections.append(ModelPickerSection(
                     id: server.id.uuidString,
@@ -74,7 +79,7 @@ final class ModelPickerViewModel {
         isLoading = false
     }
 
-    private func fetchLocalModels(modelContext: ModelContext) -> [PickerModel] {
+    private func fetchLocalModels(modelContext: ModelContext, statsLookup: [String: ModelUsageStats]) -> [PickerModel] {
         let descriptor = FetchDescriptor<DownloadedModel>(
             sortBy: [SortDescriptor(\.lastUsedDate, order: .reverse)]
         )
@@ -82,7 +87,7 @@ final class ModelPickerViewModel {
 
         return models.map { model in
             let identity = "local:\(model.repoId)"
-            let stats = fetchStats(identity: identity, modelContext: modelContext)
+            let stats = statsLookup[identity]
             return PickerModel(
                 id: model.repoId,
                 displayName: "\(model.displayName) \(model.quantization)",
@@ -103,7 +108,7 @@ final class ModelPickerViewModel {
         return (try? modelContext.fetch(descriptor)) ?? []
     }
 
-    private func discoverRemoteModels(server: ServerConnection, modelContext: ModelContext) async -> [PickerModel] {
+    private func discoverRemoteModels(server: ServerConnection, modelContext: ModelContext, statsLookup: [String: ModelUsageStats]) async -> [PickerModel] {
         guard let url = server.parsedBaseURL else { return [] }
 
         let apiKey: String? = {
@@ -123,7 +128,7 @@ final class ModelPickerViewModel {
 
             return models.map { modelID in
                 let identity = "remote:\(server.id.uuidString):\(modelID)"
-                let stats = fetchStats(identity: identity, modelContext: modelContext)
+                let stats = statsLookup[identity]
                 return PickerModel(
                     id: modelID,
                     displayName: modelID,
@@ -153,13 +158,5 @@ final class ModelPickerViewModel {
                 thinkingCapability: .none
             )]
         }
-    }
-
-    private func fetchStats(identity: String, modelContext: ModelContext) -> ModelUsageStats? {
-        var descriptor = FetchDescriptor<ModelUsageStats>(
-            predicate: #Predicate { $0.modelIdentity == identity }
-        )
-        descriptor.fetchLimit = 1
-        return try? modelContext.fetch(descriptor).first
     }
 }

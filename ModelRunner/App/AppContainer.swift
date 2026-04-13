@@ -59,7 +59,7 @@ final class AppContainer {
     // MARK: - Init
 
     private init() {
-        Task {
+        Task { @MainActor in
             await deviceService.initialize()
             if let specs = await deviceService.specs {
                 self.compatibilityEngine = CompatibilityEngine(device: specs)

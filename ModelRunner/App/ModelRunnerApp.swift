@@ -5,7 +5,7 @@ import SwiftData
 
 /// Handles iOS re-launch events when a background download completes while the app is backgrounded.
 /// Critical: must call completionHandler AFTER reconnecting DownloadService — see P-01 in RESEARCH.md.
-class AppDelegate: NSObject, UIApplicationDelegate {
+@MainActor class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         handleEventsForBackgroundURLSession identifier: String,

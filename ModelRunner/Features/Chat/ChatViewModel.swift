@@ -196,11 +196,12 @@ final class ChatViewModel {
         }
 
         isGenerating = true
-        generationTask = Task {
-            if backend != nil {
-                await runRemoteGeneration()
-            } else if inferenceService != nil {
-                await runLocalGeneration()
+        generationTask = Task { [weak self] in
+            guard let self else { return }
+            if self.backend != nil {
+                await self.runRemoteGeneration()
+            } else if self.inferenceService != nil {
+                await self.runLocalGeneration()
             }
         }
     }

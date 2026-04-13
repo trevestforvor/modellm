@@ -1,0 +1,168 @@
+<h2>Full Design: Two-Tab Layout</h2>
+<p class="subtitle">Models tab (home) + Chat tab. Everything consolidated.</p>
+
+<div class="section">
+  <h3>Models Tab — Full Mockup</h3>
+</div>
+
+<div class="mockup">
+  <div class="mockup-header">Models Tab</div>
+  <div class="mockup-body" style="background: #0D0C18; padding: 0; max-width: 390px; margin: 0 auto;">
+
+    <!-- Status bar -->
+    <div style="padding: 8px 16px 4px; display: flex; justify-content: space-between; align-items: center;">
+      <span style="font-size: 15px; font-weight: 600; color: white;">9:41</span>
+      <div style="display: flex; gap: 6px;">
+        <span style="font-size: 12px; color: white;">●●●●</span>
+        <span style="font-size: 12px; color: white;">📶</span>
+        <span style="font-size: 12px; color: white;">🔋</span>
+      </div>
+    </div>
+
+    <!-- Nav bar -->
+    <div style="padding: 8px 16px 12px; display: flex; justify-content: space-between; align-items: center;">
+      <h2 style="margin: 0; font-size: 28px; font-weight: 700; color: white;">Models</h2>
+      <div style="width: 34px; height: 34px; border-radius: 50%; background: #1A1830; display: flex; align-items: center; justify-content: center; border: 1px solid #302E42;">
+        <span style="color: #9896B0; font-size: 14px;">⚙</span>
+      </div>
+    </div>
+
+    <!-- My Models section header -->
+    <div style="padding: 0 16px 8px; display: flex; justify-content: space-between; align-items: center;">
+      <span style="font-size: 13px; font-weight: 600; color: #9896B0; text-transform: uppercase; letter-spacing: 0.5px;">My Models</span>
+      <div style="padding: 4px 10px; background: #1A1830; border-radius: 8px; border: 1px dashed #302E42; display: flex; align-items: center; gap: 4px; cursor: pointer;">
+        <span style="font-size: 14px; color: #8B7CF0;">+</span>
+        <span style="font-size: 12px; color: #8B7CF0;">Add Server</span>
+      </div>
+    </div>
+
+    <!-- Card Grid -->
+    <div style="padding: 0 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <!-- Card 1: Remote model -->
+      <div style="background: #1A1830; border-radius: 14px; padding: 14px; border: 1px solid #302E42;">
+        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 10px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div>
+          <span style="font-size: 10px; color: #6B6980;">MacBook Pro</span>
+        </div>
+        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 3px; line-height: 1.2;">nemotron-3-nano-4b</div>
+        <div style="font-size: 11px; color: #6B6980; margin-bottom: 10px;">3.97B params</div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; color: #8B7CF0; font-family: monospace;">129 tok/s</span>
+          <span style="font-size: 9px; padding: 2px 6px; background: rgba(139,124,240,0.15); border-radius: 6px; color: #8B7CF0;">🧠 think</span>
+        </div>
+      </div>
+      <!-- Card 2: Local model -->
+      <div style="background: #1A1830; border-radius: 14px; padding: 14px; border: 1px solid #302E42;">
+        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 10px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #8B7CF0;"></div>
+          <span style="font-size: 10px; color: #6B6980;">On Device</span>
+        </div>
+        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 3px; line-height: 1.2;">Llama 3.2 3B</div>
+        <div style="font-size: 11px; color: #6B6980; margin-bottom: 10px;">Q4_K_M · 2.1 GB</div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; color: #8B7CF0; font-family: monospace;">12 tok/s</span>
+          <span style="font-size: 9px; padding: 2px 6px; background: rgba(34,197,94,0.15); border-radius: 6px; color: #22c55e;">Runs Well</span>
+        </div>
+      </div>
+      <!-- Card 3: Offline -->
+      <div style="background: #1A1830; border-radius: 14px; padding: 14px; border: 1px solid #302E42; opacity: 0.45;">
+        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 10px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></div>
+          <span style="font-size: 10px; color: #6B6980;">Home Server</span>
+        </div>
+        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 3px; line-height: 1.2;">deepseek-r1:14b</div>
+        <div style="font-size: 11px; color: #6B6980; margin-bottom: 10px;">14B params</div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; color: #6B6980; font-family: monospace;">— tok/s</span>
+          <span style="font-size: 9px; color: #ef4444;">offline</span>
+        </div>
+      </div>
+      <!-- Card 4: Another remote -->
+      <div style="background: #1A1830; border-radius: 14px; padding: 14px; border: 1px solid #302E42;">
+        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 10px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div>
+          <span style="font-size: 10px; color: #6B6980;">MacBook Pro</span>
+        </div>
+        <div style="font-size: 14px; font-weight: 600; color: white; margin-bottom: 3px; line-height: 1.2;">codestral:latest</div>
+        <div style="font-size: 11px; color: #6B6980; margin-bottom: 10px;">22B params</div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; color: #8B7CF0; font-family: monospace;">42 tok/s</span>
+          <span style="font-size: 9px; padding: 2px 6px; background: rgba(139,124,240,0.15); border-radius: 6px; color: #8B7CF0;">code</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="height: 1px; background: #302E42; margin: 20px 16px 12px;"></div>
+
+    <!-- Browse HF section -->
+    <div style="padding: 0 16px 8px;">
+      <span style="font-size: 13px; font-weight: 600; color: #9896B0; text-transform: uppercase; letter-spacing: 0.5px;">Browse Hugging Face</span>
+    </div>
+
+    <!-- Search bar -->
+    <div style="padding: 0 16px 12px;">
+      <div style="background: #1A1830; border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; border: 1px solid #302E42;">
+        <span style="color: #6B6980; font-size: 14px;">🔍</span>
+        <span style="color: #6B6980; font-size: 14px;">Search GGUF models...</span>
+      </div>
+    </div>
+
+    <!-- HF Browse list (different format — list, not cards) -->
+    <div style="padding: 0 16px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="background: #1A1830; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px;">
+        <div style="flex: 1;">
+          <div style="font-size: 14px; font-weight: 600; color: white;">Phi-4-mini GGUF</div>
+          <div style="font-size: 11px; color: #6B6980; margin-top: 2px;">bartowski · 3.8B · Q4_K_M available</div>
+          <div style="font-size: 11px; color: #6B6980; margin-top: 2px;">⬇ 124K downloads</div>
+        </div>
+        <span style="font-size: 9px; padding: 3px 8px; background: rgba(34,197,94,0.15); border-radius: 6px; color: #22c55e; white-space: nowrap;">Runs Well</span>
+      </div>
+      <div style="background: #1A1830; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px;">
+        <div style="flex: 1;">
+          <div style="font-size: 14px; font-weight: 600; color: white;">Qwen2.5-7B GGUF</div>
+          <div style="font-size: 11px; color: #6B6980; margin-top: 2px;">Qwen · 7.6B · Q3_K_S available</div>
+          <div style="font-size: 11px; color: #6B6980; margin-top: 2px;">⬇ 89K downloads</div>
+        </div>
+        <span style="font-size: 9px; padding: 3px 8px; background: rgba(250,204,21,0.15); border-radius: 6px; color: #facc15; white-space: nowrap;">Runs Slow</span>
+      </div>
+      <div style="background: #1A1830; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; opacity: 0.45;">
+        <div style="flex: 1;">
+          <div style="font-size: 14px; font-weight: 600; color: white;">Llama-3.3-70B GGUF</div>
+          <div style="font-size: 11px; color: #6B6980; margin-top: 2px;">bartowski · 70B · Q2_K only</div>
+          <div style="font-size: 11px; color: #6B6980; margin-top: 2px;">⬇ 201K downloads</div>
+        </div>
+        <span style="font-size: 9px; padding: 3px 8px; background: rgba(239,68,68,0.15); border-radius: 6px; color: #ef4444; white-space: nowrap;">Too Large</span>
+      </div>
+    </div>
+
+    <!-- Bottom spacing for tab bar -->
+    <div style="height: 20px;"></div>
+
+    <!-- Tab bar -->
+    <div style="background: rgba(13,12,24,0.95); padding: 8px 0 24px; display: flex; justify-content: space-around; border-top: 1px solid #302E42;">
+      <div style="text-align: center;">
+        <div style="font-size: 22px;">⊞</div>
+        <div style="font-size: 10px; color: #8B7CF0; margin-top: 2px;">Models</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 22px; opacity: 0.4;">💬</div>
+        <div style="font-size: 10px; color: #6B6980; margin-top: 2px;">Chat</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>Design Decisions</h3>
+  <ul style="font-size: 13px; color: #9896B0; line-height: 1.8;">
+    <li><strong>My Models = card grid</strong> (2-per-row) — downloaded + remote, unified. Each card shows source (green dot + name), model name, size/quant, tok/s, and capability badge.</li>
+    <li><strong>"+ Add Server"</strong> button in the My Models section header — not a separate tab or screen.</li>
+    <li><strong>Browse HF = list format</strong> (not cards) — browse results are denser and benefit from list layout. Shows model name, publisher, param count, download count, and compatibility badge.</li>
+    <li><strong>Compatibility badges are front-and-center</strong> — green "Runs Well", yellow "Runs Slow", red "Too Large" on every HF browse result. This is the core differentiator.</li>
+    <li><strong>Tap a My Models card → switch to Chat tab</strong> with that model loaded.</li>
+    <li><strong>Tap a Browse result → detail view</strong> with download options and full compatibility info.</li>
+    <li><strong>Gear icon top-right</strong> → settings sheet (inference defaults, about, future prefs).</li>
+    <li><strong>Offline models dimmed</strong> at 45% opacity with red "offline" badge.</li>
+  </ul>
+</div>

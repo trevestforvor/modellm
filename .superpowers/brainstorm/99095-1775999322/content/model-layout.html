@@ -1,0 +1,137 @@
+<h2>Model Card Layout: "My Models" Section</h2>
+<p class="subtitle">This is the top section of the Models tab — downloaded models + remote server models, unified.</p>
+
+<div class="section">
+  <p>The research found every mobile LLM app uses lists, not grids. But you specifically asked for cards. Let me show both so we can compare honestly.</p>
+</div>
+
+<div class="split">
+  <div class="mockup" data-choice="grid" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="mockup-header">A: Card Grid (2-per-row)</div>
+    <div class="mockup-body" style="background: #0D0C18; padding: 12px;">
+      <!-- Grid of cards -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <!-- Card 1 -->
+        <div style="background: #1A1830; border-radius: 14px; padding: 14px; border: 1px solid #302E42;">
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div>
+            <span style="font-size: 10px; color: #6B6980;">MacBook Pro</span>
+          </div>
+          <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px;">nemotron-3-nano-4b</div>
+          <div style="font-size: 11px; color: #6B6980; margin-bottom: 8px;">3.97B params</div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 11px; color: #8B7CF0; font-family: monospace;">129 tok/s</span>
+            <span style="font-size: 10px; padding: 2px 6px; background: #8B7CF0; border-radius: 6px; color: white;">🧠</span>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div style="background: #1A1830; border-radius: 14px; padding: 14px; border: 1px solid #302E42;">
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div>
+            <span style="font-size: 10px; color: #6B6980;">On Device</span>
+          </div>
+          <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px;">Llama 3.2 3B</div>
+          <div style="font-size: 11px; color: #6B6980; margin-bottom: 8px;">Q4_K_M · 2.1 GB</div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 11px; color: #8B7CF0; font-family: monospace;">12.4 tok/s</span>
+            <span style="font-size: 10px; padding: 2px 6px; background: #22c55e; border-radius: 6px; color: white;">Runs Well</span>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div style="background: #1A1830; border-radius: 14px; padding: 14px; border: 1px solid #302E42;">
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></div>
+            <span style="font-size: 10px; color: #6B6980;">Home Server</span>
+          </div>
+          <div style="font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px;">deepseek-r1:14b</div>
+          <div style="font-size: 11px; color: #6B6980; margin-bottom: 8px;">14B params</div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 11px; color: #6B6980; font-family: monospace;">— tok/s</span>
+            <span style="font-size: 10px; color: #ef4444;">offline</span>
+          </div>
+        </div>
+        <!-- Card 4: Add -->
+        <div style="background: #13111F; border-radius: 14px; padding: 14px; border: 1px dashed #302E42; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80px;">
+          <div style="font-size: 24px; color: #6B6980;">+</div>
+          <div style="font-size: 11px; color: #6B6980; margin-top: 4px;">Add Server</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup" data-choice="list" onclick="toggleSelect(this)" style="cursor:pointer">
+    <div class="mockup-header">B: Compact List</div>
+    <div class="mockup-body" style="background: #0D0C18; padding: 12px;">
+      <!-- List items -->
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <!-- Item 1 -->
+        <div style="background: #1A1830; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0;"></div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600; color: white;">nemotron-3-nano-4b</div>
+            <div style="font-size: 12px; color: #6B6980;">MacBook Pro · 3.97B</div>
+          </div>
+          <div style="text-align: right; flex-shrink: 0;">
+            <div style="font-size: 12px; color: #8B7CF0; font-family: monospace;">129 tok/s</div>
+            <div style="font-size: 10px; color: #6B6980;">🧠</div>
+          </div>
+        </div>
+        <!-- Item 2 -->
+        <div style="background: #1A1830; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0;"></div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600; color: white;">Llama 3.2 3B</div>
+            <div style="font-size: 12px; color: #6B6980;">On Device · Q4_K_M · 2.1 GB</div>
+          </div>
+          <div style="text-align: right; flex-shrink: 0;">
+            <div style="font-size: 12px; color: #8B7CF0; font-family: monospace;">12.4 tok/s</div>
+            <div style="font-size: 10px; color: #22c55e;">Runs Well</div>
+          </div>
+        </div>
+        <!-- Item 3 -->
+        <div style="background: #1A1830; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; opacity: 0.5;">
+          <div style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444; flex-shrink: 0;"></div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 600; color: white;">deepseek-r1:14b</div>
+            <div style="font-size: 12px; color: #6B6980;">Home Server · 14B</div>
+          </div>
+          <div style="text-align: right; flex-shrink: 0;">
+            <div style="font-size: 12px; color: #6B6980; font-family: monospace;">— tok/s</div>
+            <div style="font-size: 10px; color: #ef4444;">offline</div>
+          </div>
+        </div>
+        <!-- Add button -->
+        <div style="background: #13111F; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px dashed #302E42;">
+          <span style="font-size: 16px; color: #6B6980;">+</span>
+          <span style="font-size: 13px; color: #6B6980;">Add Server</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 20px;">
+  <h3>Trade-offs</h3>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+    <div>
+      <h4 style="color: #8B7CF0;">Grid Cards</h4>
+      <ul style="font-size: 13px; color: #9896B0;">
+        <li>Visually distinctive — feels premium</li>
+        <li>Good with 2-6 models</li>
+        <li>Gets awkward with 10+ models (lots of scrolling)</li>
+        <li>Less info density per model</li>
+        <li>Your preference from earlier</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color: #8B7CF0;">Compact List</h4>
+      <ul style="font-size: 13px; color: #9896B0;">
+        <li>Scales to any number of models</li>
+        <li>More info visible at a glance</li>
+        <li>What every competitor does</li>
+        <li>Feels more utilitarian</li>
+        <li>Better for quick model switching</li>
+      </ul>
+    </div>
+  </div>
+</div>
