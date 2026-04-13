@@ -113,10 +113,13 @@ struct ChatBubbleView: View {
     private var assistantContent: some View {
         Group {
             if message.isStreaming {
-                (Text(message.content) + Text("\u{258B}").foregroundStyle(Color(hex: "#8B7CF0")))
+                // During streaming: show content + blinking cursor
+                (Text(LocalizedStringKey(message.content)) + Text("\u{258B}").foregroundStyle(Color(hex: "#8B7CF0")))
                     .font(.body)
             } else {
-                markdownContent(message.content)
+                // After streaming: same markdown rendering via LocalizedStringKey
+                Text(LocalizedStringKey(message.content))
+                    .font(.body)
             }
         }
         .padding(.horizontal, 12)
@@ -126,16 +129,5 @@ struct ChatBubbleView: View {
                 .fill(Color(hex: "#1A1830"))
         )
         .foregroundStyle(.white)
-    }
-
-    @ViewBuilder
-    private func markdownContent(_ text: String) -> some View {
-        if let attributed = try? AttributedString(markdown: text) {
-            Text(attributed)
-                .font(.body)
-        } else {
-            Text(text)
-                .font(.body)
-        }
     }
 }
