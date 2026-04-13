@@ -3,7 +3,10 @@ import SwiftData
 
 struct ConversationHistoryView: View {
     @Query(sort: \Conversation.updatedAt, order: .reverse)
-    private var conversations: [Conversation]
+    private var allConversations: [Conversation]
+
+    /// Current model identity — only show conversations for this model
+    var currentModelIdentity: String?
 
     let onSelect: (Conversation) -> Void
     let onDismiss: () -> Void
@@ -12,9 +15,16 @@ struct ConversationHistoryView: View {
     @State private var conversationToDelete: Conversation?
     @State private var showDeleteAlert = false
 
-    // Group conversations by model for section headers
+    /// Filter to current model, then group by model for section headers
+    private var conversations: [Conversation] {
+        guard let identity = currentModelIdentity, !identity.isEmpty else {
+            return allConversations
+        }
+        return allConversations.filter { $0.modelIdentity == identity }
+    }
+
     private var grouped: [(modelId: String, displayName: String, convs: [Conversation])] {
-        let dict = Dictionary(grouping: conversations, by: \.modelRepoId)
+        let dict = Dictionary(grouping: conversations, by: \.modelIdentity)
         return dict.map { (modelId: $0.key, displayName: $0.value.first?.modelDisplayName ?? $0.key, convs: $0.value) }
             .sorted { lhs, rhs in
                 let lDate = lhs.convs.first?.updatedAt ?? .distantPast

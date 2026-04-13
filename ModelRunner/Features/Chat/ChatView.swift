@@ -102,6 +102,7 @@ struct ChatView: View {
                 ZStack(alignment: .bottom) {
                     if vm.showingHistory {
                         ConversationHistoryView(
+                            currentModelIdentity: container.selectedModel?.modelIdentity ?? vm.activeConversation?.modelIdentity,
                             onSelect: { conversation in
                                 vm.activeConversation = conversation
                                 vm.messages = conversation.messages
