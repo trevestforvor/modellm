@@ -1,5 +1,8 @@
 import SwiftUI
 import SwiftData
+import OSLog
+
+private let logger = Logger(subsystem: "com.modelrunner", category: "ChatView")
 
 struct ChatView: View {
     @Environment(AppContainer.self) private var container
@@ -288,13 +291,27 @@ struct ChatView: View {
             viewModel = nil
             return
         }
-        let model = activeModel(from: container)
-        let vm = ChatViewModel(
-            inferenceService: container.inferenceService,
-            inferenceParams: container.inferenceParams(activeModel: model)
-        )
+        guard let model = activeModel(from: container) else {
+            viewModel = nil
+            return
+        }
+        let localBackend = container.buildLocalBackend(for: model)
+        let vm = ChatViewModel(backend: localBackend)
+        vm.configure(modelContext: modelContext)
+
+        let identity = "local:\(model.repoId)"
+        vm.loadMostRecentConversation(forIdentity: identity, modelContext: modelContext)
+        if vm.activeConversation == nil {
+            let selected = SelectedModel(backendID: model.repoId, displayName: model.displayName, source: .local)
+            vm.startNewConversation(for: selected)
+        }
         viewModel = vm
-        await vm.loadModel(url: url)
+
+        do {
+            try await localBackend.loadModel()
+        } catch {
+            logger.error("Local model load failed: \(error)")
+        }
     }
 
     private func selectModel(_ pickerModel: PickerModel) {

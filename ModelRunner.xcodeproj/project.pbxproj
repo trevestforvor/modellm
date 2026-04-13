@@ -73,6 +73,7 @@
 		CC06010001000009CC060100 /* OpenAIChatAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000ACC060100 /* OpenAIChatAdapterTests.swift */; };
 		CC0601000100000BCC060100 /* OpenAILegacyAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000CCC060100 /* OpenAILegacyAdapterTests.swift */; };
 		CC0601000100000DCC060100 /* RemoteInferenceBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0601000100000ECC060100 /* RemoteInferenceBackend.swift */; };
+		FF09AB0001000002FF09AB00 /* LocalInferenceBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF09AB0001000001FF09AB00 /* LocalInferenceBackend.swift */; };
 		CC0601000100000FCC060100 /* RemoteInferenceBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000010CC060200 /* RemoteInferenceBackendTests.swift */; };
 		CLMV8QED6BPIPKAT42M4CDY8 /* AppBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = VMK8PQOCMDVXC68ITB2SPUMY /* AppBackground.swift */; };
 		DD07010001000001DD070100 /* AnthropicMessagesAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000002DD070100 /* AnthropicMessagesAdapter.swift */; };
@@ -173,6 +174,7 @@
 		CC0601000100000ACC060100 /* OpenAIChatAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChatAdapterTests.swift; sourceTree = "<group>"; };
 		CC0601000100000CCC060100 /* OpenAILegacyAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAILegacyAdapterTests.swift; sourceTree = "<group>"; };
 		CC0601000100000ECC060100 /* RemoteInferenceBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteInferenceBackend.swift; sourceTree = "<group>"; };
+		FF09AB0001000001FF09AB00 /* LocalInferenceBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalInferenceBackend.swift; sourceTree = "<group>"; };
 		CC06010001000010CC060200 /* RemoteInferenceBackendTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteInferenceBackendTests.swift; sourceTree = "<group>"; };
 		DD07010001000002DD070100 /* AnthropicMessagesAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnthropicMessagesAdapter.swift; sourceTree = "<group>"; };
 		DD07010001000004DD070100 /* ServerProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerProbe.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 			children = (
 				CC06010001000002CC060100 /* InferenceBackend.swift */,
 				CC0601000100000ECC060100 /* RemoteInferenceBackend.swift */,
+				FF09AB0001000001FF09AB00 /* LocalInferenceBackend.swift */,
 			);
 			path = Backends;
 			sourceTree = "<group>";
@@ -712,6 +715,7 @@
 				CC06010001000005CC060100 /* OpenAIChatAdapter.swift in Sources */,
 				CC06010001000007CC060100 /* OpenAILegacyAdapter.swift in Sources */,
 				CC0601000100000DCC060100 /* RemoteInferenceBackend.swift in Sources */,
+				FF09AB0001000002FF09AB00 /* LocalInferenceBackend.swift in Sources */,
 				FA0100000000001DFA010000 /* ServerConnection.swift in Sources */,
 				FA0100000000002DFA010000 /* ModelUsageStats.swift in Sources */,
 				FA0100000000003DFA010000 /* KeychainService.swift in Sources */,

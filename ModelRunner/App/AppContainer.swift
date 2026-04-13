@@ -84,6 +84,17 @@ final class AppContainer {
         return InferenceParams.default(contextWindowCap: contextCap)
     }
 
+    func buildLocalBackend(for model: DownloadedModel) -> LocalInferenceBackend {
+        let params = inferenceParams(activeModel: model)
+        return LocalInferenceBackend(
+            repoId: model.repoId,
+            displayName: model.displayName,
+            modelURL: URL(filePath: model.localPath),
+            inferenceService: inferenceService,
+            inferenceParams: params
+        )
+    }
+
     /// Build an InferenceBackend for the given picker model selection.
     func buildBackend(for pickerModel: PickerModel, modelContext: ModelContext) -> (any InferenceBackend)? {
         guard case .remote(let serverID) = pickerModel.source else {
