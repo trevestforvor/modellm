@@ -14,7 +14,7 @@ struct ChatInputBar: View {
     }
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(alignment: .bottom, spacing: 8) {
             // Clock button — toggles conversation history overlay
             if let onToggleHistory {
                 Button(action: onToggleHistory) {
