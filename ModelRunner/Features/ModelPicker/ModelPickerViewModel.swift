@@ -140,7 +140,18 @@ final class ModelPickerViewModel {
             server.isActive = false
             server.lastCheckedAt = Date()
             try? modelContext.save()
-            return []
+
+            // Show an offline placeholder card so the server doesn't vanish from the grid
+            return [PickerModel(
+                id: "offline-\(server.id.uuidString)",
+                displayName: server.name,
+                source: .remote(serverID: server.id),
+                serverID: server.id,
+                serverName: server.name,
+                tokPerSec: nil,
+                isOnline: false,
+                thinkingCapability: .none
+            )]
         }
     }
 
