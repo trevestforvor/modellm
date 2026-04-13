@@ -182,8 +182,8 @@ struct ChatView: View {
             .onChange(of: vm.messages.count) { _, _ in
                 scrollToBottom(proxy: proxy, vm: vm)
             }
-            // Auto-scroll as streaming content grows
-            .onChange(of: vm.streamingMessage?.content.count) { _, _ in
+            // Auto-scroll on each streaming buffer flush
+            .onChange(of: vm.streamingFlushCount) { _, _ in
                 scrollToBottom(proxy: proxy, vm: vm)
             }
         }

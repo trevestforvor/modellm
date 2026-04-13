@@ -29,6 +29,8 @@ final class ChatViewModel {
     /// The actively streaming message — rendered separately from the ForEach to avoid
     /// full array re-diffing on every token. Nil when not streaming.
     var streamingMessage: ChatMessage?
+    /// Incremented on each buffer flush — drives auto-scroll in ChatView
+    var streamingFlushCount: Int = 0
     private(set) var isGenerating: Bool = false
     private(set) var tokensPerSecond: Double = 0
     private(set) var loadingState: ModelLoadState = .idle
@@ -332,6 +334,7 @@ final class ChatViewModel {
                         thinkingBuffer = ""
                     }
                     updateToksPerSecond()
+                    streamingFlushCount += 1
                     lastFlush = now
                 }
             }
