@@ -111,8 +111,6 @@ private struct BrowseEmbeddedView: View {
     let container: AppContainer
     @State private var viewModel: HFBrowseViewModel?
 
-    @State private var engineReady = false
-
     var body: some View {
         Group {
             if let vm = viewModel {
@@ -129,17 +127,9 @@ private struct BrowseEmbeddedView: View {
         }
         .onAppear {
             initViewModelIfNeeded()
-            engineReady = container.compatibilityEngine != nil
         }
-        .onChange(of: engineReady) { _, ready in
+        .onChange(of: container.compatibilityEngine != nil) { _, ready in
             if ready { initViewModelIfNeeded() }
-        }
-        .task {
-            // Poll for engine ready instead of observing — avoids continuous re-eval
-            while container.compatibilityEngine == nil {
-                try? await Task.sleep(for: .milliseconds(200))
-            }
-            engineReady = true
         }
     }
 

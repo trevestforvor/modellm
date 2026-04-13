@@ -425,6 +425,12 @@ final class ChatViewModel {
             }
         } catch {
             logger.error("Generation error: \(error)")
+            if var msg = streamingMessage {
+                if msg.content.isEmpty {
+                    msg.content = "Error: \(error.localizedDescription)"
+                }
+                streamingMessage = msg
+            }
         }
 
         // Move streaming message into completed messages array

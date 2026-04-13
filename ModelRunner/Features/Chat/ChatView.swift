@@ -52,14 +52,24 @@ struct ChatView: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    startNewChat()
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundStyle(Color(hex: "#9896B0"))
+                HStack(spacing: 12) {
+                    if activeModel(from: container) != nil || container.selectedModel != nil {
+                        Button {
+                            showSettings = true
+                        } label: {
+                            Image(systemName: "slider.horizontal.3")
+                                .foregroundStyle(Color(hex: "#9896B0"))
+                        }
+                    }
+                    Button {
+                        startNewChat()
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundStyle(Color(hex: "#9896B0"))
+                    }
+                    .disabled(viewModel == nil)
                 }
-                .disabled(viewModel == nil)
             }
         }
         .sheet(isPresented: $showSettings) {
