@@ -319,6 +319,7 @@ final class ChatViewModel {
                     tokenCount += 1
 
                 case .done:
+                    print("[STREAM] received .done after \(self.tokenCount) tokens")
                     break
                 }
 
@@ -339,11 +340,13 @@ final class ChatViewModel {
                 }
             }
         } catch {
-            logger.error("Remote generation error: \(error)")
+            print("[STREAM] ERROR after \(self.tokenCount) tokens: \(error)")
             if streamingMessage?.content.isEmpty == true {
                 streamingMessage?.content = "Error: \(error.localizedDescription)"
             }
         }
+
+        print("[STREAM] ended: \(self.tokenCount) tokens, cancelled=\(Task.isCancelled), contentLen=\(self.streamingMessage?.content.count ?? 0), buf=\(contentBuffer.count)")
 
         // Final flush — ensure all buffered tokens are rendered
         if !contentBuffer.isEmpty {

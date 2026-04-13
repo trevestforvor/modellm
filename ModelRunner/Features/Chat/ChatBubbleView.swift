@@ -111,14 +111,30 @@ struct ChatBubbleView: View {
     }
 
     private var assistantContent: some View {
-        Text(LocalizedStringKey(message.content))
+        markdownText(message.content)
             .font(.body)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(
-            UnevenRoundedRectangle(cornerRadii: assistantCornerRadii)
-                .fill(Color(hex: "#1A1830"))
-        )
-        .foregroundStyle(.white)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background(
+                UnevenRoundedRectangle(cornerRadii: assistantCornerRadii)
+                    .fill(Color(hex: "#1A1830"))
+            )
+            .foregroundStyle(.white)
+    }
+
+    /// Render markdown safely — falls back to plain text if markdown is malformed
+    /// (e.g., unclosed ** or ` during streaming). LocalizedStringKey silently
+    /// truncates on broken markdown, which causes responses to appear cut off.
+    @ViewBuilder
+    private func markdownText(_ text: String) -> some View {
+        if message.isStreaming {
+            // During streaming, markdown is likely incomplete — show plain text
+            Text(text)
+        } else if let attributed = try? AttributedString(markdown: text, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)) {
+            Text(attributed)
+        } else {
+            // Markdown parse failed — show plain text
+            Text(text)
+        }
     }
 }
