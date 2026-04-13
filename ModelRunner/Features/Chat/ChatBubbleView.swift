@@ -111,17 +111,8 @@ struct ChatBubbleView: View {
     }
 
     private var assistantContent: some View {
-        Group {
-            if message.isStreaming {
-                // During streaming: show content + blinking cursor
-                (Text(LocalizedStringKey(message.content)) + Text("\u{258B}").foregroundStyle(Color(hex: "#8B7CF0")))
-                    .font(.body)
-            } else {
-                // After streaming: same markdown rendering via LocalizedStringKey
-                Text(LocalizedStringKey(message.content))
-                    .font(.body)
-            }
-        }
+        Text(LocalizedStringKey(message.content))
+            .font(.body)
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
         .background(
