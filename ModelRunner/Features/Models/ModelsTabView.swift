@@ -7,6 +7,7 @@ struct ModelsTabView: View {
     @State private var pickerVM = ModelPickerViewModel()
     @State private var showAddServer = false
     @State private var showSettings = false
+    @State private var showLibrary = false
 
     let onSelectModel: (PickerModel) -> Void
 
@@ -24,6 +25,22 @@ struct ModelsTabView: View {
                         )
                         .padding(.horizontal, 16)
                         .padding(.top, 8)
+
+                        if hasDownloadedModels {
+                            Button {
+                                showLibrary = true
+                            } label: {
+                                HStack {
+                                    Image(systemName: "internaldrive")
+                                        .font(.system(size: 14))
+                                    Text("Manage Downloads")
+                                        .font(.system(size: 13))
+                                }
+                                .foregroundStyle(Color(hex: "#9896B0"))
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                        }
 
                         Rectangle()
                             .fill(Color(hex: "#302E42"))
@@ -65,6 +82,11 @@ struct ModelsTabView: View {
                     SettingsView()
                 }
             }
+            .sheet(isPresented: $showLibrary) {
+                NavigationStack {
+                    LibraryView()
+                }
+            }
             .task {
                 await pickerVM.load(modelContext: modelContext)
             }
@@ -76,6 +98,10 @@ struct ModelsTabView: View {
 
     private var allMyModels: [PickerModel] {
         pickerVM.sections.flatMap(\.models)
+    }
+
+    private var hasDownloadedModels: Bool {
+        pickerVM.sections.contains { $0.id == "local" && !$0.models.isEmpty }
     }
 }
 
