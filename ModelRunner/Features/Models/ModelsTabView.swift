@@ -85,6 +85,8 @@ private struct BrowseEmbeddedView: View {
     let container: AppContainer
     @State private var viewModel: HFBrowseViewModel?
 
+    @State private var engineReady = false
+
     var body: some View {
         Group {
             if let vm = viewModel {
@@ -99,9 +101,19 @@ private struct BrowseEmbeddedView: View {
                 .padding(.top, 20)
             }
         }
-        .onAppear { initViewModelIfNeeded() }
-        .onChange(of: container.compatibilityEngine != nil) { _, _ in
+        .onAppear {
             initViewModelIfNeeded()
+            engineReady = container.compatibilityEngine != nil
+        }
+        .onChange(of: engineReady) { _, ready in
+            if ready { initViewModelIfNeeded() }
+        }
+        .task {
+            // Poll for engine ready instead of observing — avoids continuous re-eval
+            while container.compatibilityEngine == nil {
+                try? await Task.sleep(for: .milliseconds(200))
+            }
+            engineReady = true
         }
     }
 
@@ -149,8 +161,8 @@ private struct BrowseEmbeddedContent: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
 
-            // Results
-            LazyVStack(spacing: 8) {
+            // Results — use VStack (not LazyVStack) to avoid nested lazy layout thrashing
+            VStack(spacing: 8) {
                 if viewModel.isSearching && viewModel.searchResults.isEmpty {
                     HStack {
                         Spacer()
