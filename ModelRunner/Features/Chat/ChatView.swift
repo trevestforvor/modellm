@@ -159,22 +159,41 @@ struct ChatView: View {
                     ForEach(vm.messages) { message in
                         ChatBubbleView(
                             message: message,
-                            tokensPerSecond: message.isStreaming ? vm.tokensPerSecond : 0,
-                            isGenerating: vm.isGenerating && message.isStreaming
+                            tokensPerSecond: 0,
+                            isGenerating: false
                         )
                         .id(message.id)
+                    }
+
+                    // Streaming message — rendered outside ForEach to avoid array re-diffing
+                    if let streaming = vm.streamingMessage {
+                        ChatBubbleView(
+                            message: streaming,
+                            tokensPerSecond: vm.tokensPerSecond,
+                            isGenerating: true
+                        )
+                        .id(streaming.id)
                     }
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
             }
-            // Auto-scroll to latest message as tokens stream in
+            // Auto-scroll when new messages are added
             .onChange(of: vm.messages.count) { _, _ in
-                if let last = vm.messages.last {
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        proxy.scrollTo(last.id, anchor: .bottom)
-                    }
-                }
+                scrollToBottom(proxy: proxy, vm: vm)
+            }
+            // Auto-scroll as streaming content grows
+            .onChange(of: vm.streamingMessage?.content.count) { _, _ in
+                scrollToBottom(proxy: proxy, vm: vm)
+            }
+        }
+    }
+
+    private func scrollToBottom(proxy: ScrollViewProxy, vm: ChatViewModel) {
+        let targetID = vm.streamingMessage?.id ?? vm.messages.last?.id
+        if let id = targetID {
+            withAnimation(.easeOut(duration: 0.2)) {
+                proxy.scrollTo(id, anchor: .bottom)
             }
         }
     }

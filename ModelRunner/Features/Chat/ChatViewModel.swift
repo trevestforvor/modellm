@@ -24,7 +24,11 @@ enum ModelLoadState: Equatable {
 @MainActor
 final class ChatViewModel {
     // MARK: - State (observable)
+    /// Completed messages — stable, not mutated during streaming
     var messages: [ChatMessage] = []
+    /// The actively streaming message — rendered separately from the ForEach to avoid
+    /// full array re-diffing on every token. Nil when not streaming.
+    var streamingMessage: ChatMessage?
     private(set) var isGenerating: Bool = false
     private(set) var tokensPerSecond: Double = 0
     private(set) var loadingState: ModelLoadState = .idle
@@ -213,8 +217,11 @@ final class ChatViewModel {
         } else if let inferenceService {
             Task { await inferenceService.stopGeneration() }
         }
-        if let idx = messages.indices.last, messages[idx].role == .assistant {
-            messages[idx].isStreaming = false
+        // Finalize streaming message into messages array
+        if var final = streamingMessage {
+            final.isStreaming = false
+            messages.append(final)
+            streamingMessage = nil
         }
         isGenerating = false
         resetTokSAfterDelay()
@@ -240,9 +247,8 @@ final class ChatViewModel {
 
         let params = inferenceParams ?? InferenceParams.default(contextWindowCap: 4096)
 
-        var assistantMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
-        messages.append(assistantMessage)
-        let assistantIndex = messages.endIndex - 1
+        // Use streamingMessage instead of appending to messages array — avoids ForEach re-diffing
+        streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
 
         generationStart = .now
         thinkingStart = nil
@@ -252,8 +258,8 @@ final class ChatViewModel {
         // Read from self.enableThinking — bound to the brain toggle in ChatInputBar
         let thinkingEnabled = self.enableThinking
 
-        // Build messages to send — exclude the empty assistant placeholder we just added
-        let messagesToSend = Array(messages.dropLast())
+        // All completed messages — no placeholder in the array
+        let messagesToSend = messages
 
         let stream = backend.generate(
             messages: messagesToSend,
@@ -294,12 +300,12 @@ final class ChatViewModel {
                         if let start = thinkingStart {
                             let elapsed = start.duration(to: .now)
                             let seconds = Double(elapsed.components.seconds) + Double(elapsed.components.attoseconds) / 1e18
-                            messages[assistantIndex].thinkingDuration = seconds
+                            streamingMessage?.thinkingDuration = seconds
                         }
                         isInThinkingPhase = false
                         // Flush any remaining thinking buffer immediately on phase transition
                         if !thinkingBuffer.isEmpty {
-                            messages[assistantIndex].thinkingContent += thinkingBuffer
+                            streamingMessage?.thinkingContent += thinkingBuffer
                             thinkingBuffer = ""
                         }
                     }
@@ -317,11 +323,11 @@ final class ChatViewModel {
                 let now = ContinuousClock.now
                 if now - lastFlush >= flushInterval {
                     if !contentBuffer.isEmpty {
-                        messages[assistantIndex].content += contentBuffer
+                        streamingMessage?.content += contentBuffer
                         contentBuffer = ""
                     }
                     if !thinkingBuffer.isEmpty {
-                        messages[assistantIndex].thinkingContent += thinkingBuffer
+                        streamingMessage?.thinkingContent += thinkingBuffer
                         thinkingBuffer = ""
                     }
                     updateToksPerSecond()
@@ -330,21 +336,27 @@ final class ChatViewModel {
             }
         } catch {
             logger.error("Remote generation error: \(error)")
-            if messages[assistantIndex].content.isEmpty {
-                messages[assistantIndex].content = "Error: \(error.localizedDescription)"
+            if streamingMessage?.content.isEmpty == true {
+                streamingMessage?.content = "Error: \(error.localizedDescription)"
             }
         }
 
         // Final flush — ensure all buffered tokens are rendered
         if !contentBuffer.isEmpty {
-            messages[assistantIndex].content += contentBuffer
+            streamingMessage?.content += contentBuffer
         }
         if !thinkingBuffer.isEmpty {
-            messages[assistantIndex].thinkingContent += thinkingBuffer
+            streamingMessage?.thinkingContent += thinkingBuffer
         }
         updateToksPerSecond()
 
-        messages[assistantIndex].isStreaming = false
+        // Move streaming message into completed messages array
+        let assistantContent = streamingMessage?.content ?? ""
+        if var final = streamingMessage {
+            final.isStreaming = false
+            messages.append(final)
+            streamingMessage = nil
+        }
         isGenerating = false
 
         // Persist tok/s to ModelUsageStats
@@ -369,7 +381,6 @@ final class ChatViewModel {
         resetTokSAfterDelay()
 
         // Persist assistant message
-        let assistantContent = messages[assistantIndex].content
         if !assistantContent.isEmpty {
             let persistedAssistant = Message(role: "assistant", content: assistantContent)
             activeConversation?.messages.append(persistedAssistant)
@@ -391,9 +402,8 @@ final class ChatViewModel {
 
         let prompt = buildPrompt()
 
-        var assistantMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
-        messages.append(assistantMessage)
-        let assistantIndex = messages.endIndex - 1
+        // Use streamingMessage instead of appending to messages array — avoids ForEach re-diffing
+        streamingMessage = ChatMessage(role: .assistant, content: "", isStreaming: true)
 
         generationStart = .now
         tokenCount = 0
@@ -404,7 +414,7 @@ final class ChatViewModel {
         do {
             for try await token in stream {
                 if Task.isCancelled { break }
-                messages[assistantIndex].content += token
+                streamingMessage?.content += token
                 tokenCount += 1
                 updateToksPerSecond()
             }
@@ -412,12 +422,17 @@ final class ChatViewModel {
             logger.error("Generation error: \(error)")
         }
 
-        messages[assistantIndex].isStreaming = false
+        // Move streaming message into completed messages array
+        let assistantContent = streamingMessage?.content ?? ""
+        if var final = streamingMessage {
+            final.isStreaming = false
+            messages.append(final)
+            streamingMessage = nil
+        }
         isGenerating = false
         resetTokSAfterDelay()
 
         // Persist assistant message
-        let assistantContent = messages[assistantIndex].content
         if !assistantContent.isEmpty {
             let persistedAssistant = Message(role: "assistant", content: assistantContent)
             activeConversation?.messages.append(persistedAssistant)
