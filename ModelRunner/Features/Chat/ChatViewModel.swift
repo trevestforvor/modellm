@@ -275,7 +275,10 @@ final class ChatViewModel {
                             isInThinkingPhase = true
                             thinkingStart = .now
                         }
-                        messages[assistantIndex].thinkingContent += text
+                        let cleaned = Self.stripStopTokens(text)
+                        if !cleaned.isEmpty {
+                            messages[assistantIndex].thinkingContent += cleaned
+                        }
                     }
                     tokenCount += 1
                     updateToksPerSecond()
@@ -289,7 +292,10 @@ final class ChatViewModel {
                         }
                         isInThinkingPhase = false
                     }
-                    messages[assistantIndex].content += text
+                    let cleaned = Self.stripStopTokens(text)
+                    if !cleaned.isEmpty {
+                        messages[assistantIndex].content += cleaned
+                    }
                     tokenCount += 1
                     updateToksPerSecond()
 
@@ -400,6 +406,19 @@ final class ChatViewModel {
         }
 
         return PromptFormatter.chatml(system: inferenceParams.systemPrompt, messages: historyMessages)
+    }
+
+    // MARK: - Token Cleanup
+
+    /// Strip ChatML stop tokens that some models output as visible text
+    private static let stopTokenPatterns = ["<|im_end|>", "<|im_start|>", "<|endoftext|>", "</s>"]
+
+    private static func stripStopTokens(_ text: String) -> String {
+        var result = text
+        for pattern in stopTokenPatterns {
+            result = result.replacingOccurrences(of: pattern, with: "")
+        }
+        return result
     }
 
     // MARK: - Tok/s
