@@ -63,6 +63,21 @@ struct ContentView: View {
 
     private func selectModelAndChat(_ pickerModel: PickerModel) {
         container.selectedModel = pickerModel.toSelectedModel()
+
+        // For local models, also wire the legacy activeModelURL path
+        // so ChatView's setupViewModel can create the InferenceService-based ViewModel
+        if case .local = pickerModel.source {
+            let repoId = pickerModel.id
+            let descriptor = FetchDescriptor<DownloadedModel>(
+                predicate: #Predicate { $0.repoId == repoId }
+            )
+            if let model = try? modelContext.fetch(descriptor).first {
+                container.activeModelURL = URL(filePath: model.localPath)
+                container.activeModelName = model.displayName
+                container.activeModelQuant = model.quantization
+            }
+        }
+
         selectedTab = .chat
     }
 
