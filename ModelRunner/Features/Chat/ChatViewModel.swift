@@ -356,6 +356,12 @@ final class ChatViewModel {
             streamingMessage?.thinkingContent += thinkingBuffer
         }
         updateToksPerSecond()
+        streamingFlushCount += 1
+
+        // Yield to let SwiftUI render the final streaming state before transitioning.
+        // Without this, SwiftUI coalesces the final content update with the move to
+        // messages[], and the completed bubble may render with stale layout dimensions.
+        try? await Task.sleep(for: .milliseconds(50))
 
         // Move streaming message into completed messages array
         let assistantContent = streamingMessage?.content ?? ""
@@ -366,6 +372,7 @@ final class ChatViewModel {
             streamingMessage = nil
         }
         isGenerating = false
+        streamingFlushCount += 1  // trigger final scroll to completed message
 
         // Persist tok/s to ModelUsageStats
         if let modelContext, tokensPerSecond > 0,
