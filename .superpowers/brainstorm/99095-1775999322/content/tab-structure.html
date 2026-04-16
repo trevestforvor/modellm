@@ -1,0 +1,45 @@
+<h2>Tab Structure: How Many Tabs?</h2>
+<p class="subtitle">Every competitor uses 2-3 primary destinations max. Four tabs feels bloated for this app's scope.</p>
+
+<div class="section">
+  <p>Current ModelRunner has 4 tabs: <strong>Browse</strong> (HF search) + <strong>Library</strong> (downloaded) + <strong>Chat</strong> + <strong>Settings</strong> (just server management). The research shows competitors consolidate aggressively.</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Two Tabs: Models + Chat</h3>
+      <p><strong>Models</strong> — one unified view with sections: "My Models" (downloaded + remote servers) at top, "Browse Hugging Face" below. Server management via "+" button. Grid of cards for My Models, list for Browse results.</p>
+      <p><strong>Chat</strong> — conversation view with model picker.</p>
+      <p style="color: #9896B0; margin-top: 8px;"><em>This is what PocketPal and Enchanted do. Simplest possible navigation. Settings goes into a gear icon or long-press on models.</em></p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Three Tabs: Models + Chat + Settings</h3>
+      <p><strong>Models</strong> — same unified view as Option A (local + remote + browse in sections).</p>
+      <p><strong>Chat</strong> — conversation view.</p>
+      <p><strong>Settings</strong> — app preferences, inference defaults, about screen. NOT server management (that lives in Models).</p>
+      <p style="color: #9896B0; margin-top: 8px;"><em>Keeps a dedicated place for future settings (theme, default params, notifications). More room to grow.</em></p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Three Tabs: Discover + Library + Chat</h3>
+      <p><strong>Discover</strong> — browse HF models with compatibility badges (the core differentiator).</p>
+      <p><strong>Library</strong> — "My stuff": downloaded models as cards + remote servers as cards. Unified "what I can use right now" view. Server "+" button here.</p>
+      <p><strong>Chat</strong> — conversation view.</p>
+      <p style="color: #9896B0; margin-top: 8px;"><em>LM Studio pattern. Separates "finding new models" from "using what I have." Settings via gear icon in Library or Chat.</em></p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>My Recommendation: Option A</h3>
+  <p>Two tabs is bold but right. The current "Browse" tab is barely functional (HF API not wired), and "Library" is empty (no downloads yet). Merging them into one "Models" tab with sections gives you a single, powerful home screen. Settings can live behind a gear icon — you don't need a whole tab for server URLs and inference defaults.</p>
+</div>

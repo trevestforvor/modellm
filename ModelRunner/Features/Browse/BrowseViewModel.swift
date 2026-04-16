@@ -100,10 +100,10 @@ final class HFBrowseViewModel {
 
     private func onSearchQueryChanged(_ query: String) {
         searchTask?.cancel()
-        searchTask = Task {
-            try? await Task.sleep(nanoseconds: debounceMilliseconds * 1_000_000)
-            guard !Task.isCancelled else { return }
-            await performSearch(query: query, reset: true)
+        searchTask = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: self?.debounceMilliseconds ?? 350 * 1_000_000)
+            guard !Task.isCancelled, let self else { return }
+            await self.performSearch(query: query, reset: true)
         }
     }
 

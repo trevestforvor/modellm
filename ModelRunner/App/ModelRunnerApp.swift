@@ -5,7 +5,7 @@ import SwiftData
 
 /// Handles iOS re-launch events when a background download completes while the app is backgrounded.
 /// Critical: must call completionHandler AFTER reconnecting DownloadService — see P-01 in RESEARCH.md.
-class AppDelegate: NSObject, UIApplicationDelegate {
+@MainActor class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         handleEventsForBackgroundURLSession identifier: String,
@@ -42,7 +42,7 @@ struct ModelRunnerApp: App {
     // ModelContainer: DownloadedModel persists in Application Support (not Caches — see P-07)
     // isExcludedFromBackup is set per-file on GGUF blobs, not on the SwiftData store itself.
     private static let modelContainer: ModelContainer = {
-        let schema = Schema([DownloadedModel.self, Conversation.self, Message.self])
+        let schema = Schema([DownloadedModel.self, Conversation.self, Message.self, ServerConnection.self, ModelUsageStats.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
             return try ModelContainer(for: schema, configurations: [config])

@@ -1,5 +1,6 @@
 import Foundation
 import OSLog
+import llama
 
 // MARK: - Inference Errors
 
@@ -41,14 +42,6 @@ private let sessionLogger = Logger(subsystem: "com.modelrunner", category: "Llam
 /// Wraps llama_model* and llama_context* lifetime.
 ///
 /// NOT Sendable — accessed exclusively through the InferenceService actor.
-/// When the llama.cpp XCFramework is linked, replace the stub implementations
-/// with actual C API calls:
-///   - llama_load_model_from_file(url.path, modelParams) → self.model
-///   - llama_new_context_with_model(model, ctxParams) → self.ctx
-///   - deinit: llama_free(ctx); llama_free_model(model)
-///
-/// - Note: LlamaFramework import is staged — uncomment `import LlamaFramework`
-///   after the XCFramework binary target is linked to the ModelRunner target.
 final class LlamaSession {
 
     // MARK: - Stored Properties
@@ -58,10 +51,10 @@ final class LlamaSession {
     /// Checked by the decode loop to exit after the current token.
     var isCancelled: Bool = false
 
-    // MARK: - llama.cpp C Pointers (staged — populated after XCFramework linked)
-    //
-    // private var model: OpaquePointer?  // llama_model*
-    // private var ctx: OpaquePointer?    // llama_context*
+    // MARK: - llama.cpp C Pointers
+
+    private var model: OpaquePointer?  // llama_model* (incomplete type → OpaquePointer)
+    private var ctx: OpaquePointer?    // llama_context* (incomplete type → OpaquePointer)
 
     // MARK: - Init
 
@@ -73,35 +66,32 @@ final class LlamaSession {
         self.modelURL = modelURL
         self.params = params
 
-        // Guard: file must exist on disk before we attempt to load.
         guard FileManager.default.fileExists(atPath: modelURL.path) else {
             throw InferenceError.modelLoadFailed("File not found: \(modelURL.lastPathComponent)")
         }
 
-        sessionLogger.info("LlamaSession: model file found at \(modelURL.lastPathComponent)")
+        llama_backend_init()
 
-        // --- XCFramework integration point ---
-        // When LlamaFramework is linked, replace this block with:
-        //
-        //   llama_backend_init()
-        //
-        //   var modelParams = llama_model_default_params()
-        //   modelParams.n_gpu_layers = params.gpuLayers
-        //   guard let model = llama_load_model_from_file(modelURL.path, modelParams) else {
-        //       throw InferenceError.modelLoadFailed("llama_load_model_from_file returned nil")
-        //   }
-        //   self.model = model
-        //
-        //   var ctxParams = llama_context_default_params()
-        //   ctxParams.n_ctx = UInt32(params.contextWindowTokens)
-        //   ctxParams.n_batch = UInt32(params.batchSize)
-        //   guard let ctx = llama_new_context_with_model(model, ctxParams) else {
-        //       llama_free_model(model)
-        //       throw InferenceError.contextCreationFailed
-        //   }
-        //   self.ctx = ctx
-        //
-        // Until then: session is a valid stub (file exists, no C pointers allocated).
+        var modelParams = llama_model_default_params()
+        modelParams.n_gpu_layers = params.gpuLayers
+        guard let loadedModel = llama_model_load_from_file(modelURL.path, modelParams) else {
+            throw InferenceError.modelLoadFailed(
+                "llama_model_load_from_file returned nil for \(modelURL.lastPathComponent)"
+            )
+        }
+        self.model = loadedModel
+        sessionLogger.info("Model loaded: \(modelURL.lastPathComponent)")
+
+        var ctxParams = llama_context_default_params()
+        ctxParams.n_ctx = UInt32(params.contextWindowTokens)
+        ctxParams.n_batch = UInt32(params.batchSize)
+        guard let newCtx = llama_new_context_with_model(loadedModel, ctxParams) else {
+            llama_model_free(loadedModel)
+            self.model = nil
+            throw InferenceError.contextCreationFailed
+        }
+        self.ctx = newCtx
+        sessionLogger.info("Context created: n_ctx=\(params.contextWindowTokens), n_batch=\(params.batchSize)")
     }
 
     // MARK: - Sampler Chain
@@ -110,52 +100,21 @@ final class LlamaSession {
     ///
     /// Called at the start of each generate() call — NOT at init time.
     /// This allows temperature/top-p changes to take effect without reloading
-    /// the 2–4 GB model from disk.
+    /// the model from disk.
     ///
     /// Ordering: top-p filters the distribution first, then temperature scales it.
-    ///
-    /// When LlamaFramework is linked, replace this stub with:
-    /// ```
-    /// var sparams = llama_sampler_chain_default_params()
-    /// let chain = llama_sampler_chain_init(sparams)!
-    /// llama_sampler_chain_add(chain, llama_sampler_init_top_p(params.topP, 1))
-    /// llama_sampler_chain_add(chain, llama_sampler_init_temp(params.temperature))
-    /// llama_sampler_chain_add(chain, llama_sampler_init_dist(LLAMA_DEFAULT_SEED))
-    /// return chain
-    /// ```
-    ///
-    /// - Parameter params: Inference parameters with temperature and topP values.
-    /// - Returns: Opaque pointer to llama_sampler* chain. Caller must free with llama_sampler_free().
-    ///
-    /// NOTE: Return type is OpaquePointer to match the llama.cpp b5046+ C API for llama_sampler*.
-    /// If the linked XCFramework exposes an older API (llama_context_params.temp field instead of
-    /// sampler chain), set ctxParams.temp = params.temperature at context creation time instead.
-    func buildSamplerChain(params: InferenceParams) -> OpaquePointer? {
-        // Stub: XCFramework not yet linked. Returns nil — callers must handle nil gracefully.
-        // When LlamaFramework is linked:
-        //   var sparams = llama_sampler_chain_default_params()
-        //   guard let chain = llama_sampler_chain_init(sparams) else { return nil }
-        //   llama_sampler_chain_add(chain, llama_sampler_init_top_p(params.topP, 1))
-        //   llama_sampler_chain_add(chain, llama_sampler_init_temp(params.temperature))
-        //   llama_sampler_chain_add(chain, llama_sampler_init_dist(LLAMA_DEFAULT_SEED))
-        //   return chain
-        sessionLogger.debug("buildSamplerChain: XCFramework not linked — returning nil stub. temperature=\(params.temperature) topP=\(params.topP)")
-        return nil
+    func buildSamplerChain(params: InferenceParams) -> UnsafeMutablePointer<llama_sampler>? {
+        let sparams = llama_sampler_chain_default_params()
+        guard let chain = llama_sampler_chain_init(sparams) else { return nil }
+        llama_sampler_chain_add(chain, llama_sampler_init_top_p(params.topP, 1))
+        llama_sampler_chain_add(chain, llama_sampler_init_temp(params.temperature))
+        llama_sampler_chain_add(chain, llama_sampler_init_dist(LLAMA_DEFAULT_SEED))
+        return chain
     }
 
-    // MARK: - Decode Loop Stub
+    // MARK: - Decode Loop
 
     /// Generate tokens by running the llama.cpp decode loop.
-    ///
-    /// When LlamaFramework is linked, replace this stub with:
-    ///   1. llama_tokenize(ctx, prompt, tokens, maxTokens, addBos: true)
-    ///   2. llama_batch_init(batchSize, 0, 1)
-    ///   3. Build sampler chain: let chain = buildSamplerChain(params: params); defer { if let chain { llama_sampler_free(chain) } }
-    ///   4. for each batch: llama_decode(ctx, batch)
-    ///   5. llama_sampler_sample(chain, ctx, -1) → token
-    ///   6. if token == llama_token_eos(model) → break
-    ///   7. llama_token_to_piece(ctx, token) → String → yield via continuation
-    ///   8. if isCancelled → break
     ///
     /// - Parameter prompt: Fully formatted prompt string (e.g., from PromptFormatter.chatml).
     /// - Parameter params: Inference parameters — used to build sampler chain per invocation.
@@ -165,28 +124,101 @@ final class LlamaSession {
         params: InferenceParams,
         continuation: AsyncThrowingStream<String, Error>.Continuation
     ) {
+        guard let model, let ctx else {
+            continuation.finish(throwing: InferenceError.noActiveSession)
+            return
+        }
+
         // Build sampler chain per generate() call — not at init.
         // This ensures temperature/topP changes from ChatSettingsView take effect immediately.
         let chain = buildSamplerChain(params: params)
-        defer {
-            // When LlamaFramework is linked: if let chain { llama_sampler_free(chain) }
-            if chain != nil {
-                sessionLogger.debug("runDecodeLoop: sampler chain freed")
+        defer { if let chain { llama_sampler_free(chain) } }
+
+        guard let chain else {
+            continuation.finish(throwing: InferenceError.noActiveSession)
+            return
+        }
+
+        // Get vocab for tokenization and EOS checks
+        guard let vocab = llama_model_get_vocab(model) else {
+            continuation.finish(throwing: InferenceError.tokenizationFailed)
+            return
+        }
+
+        // Tokenize the prompt
+        let promptBytes = Array(prompt.utf8)
+        let maxTokens = Int32(promptBytes.count) + 256
+        var tokens = [llama_token](repeating: 0, count: Int(maxTokens))
+        let nTokens = llama_tokenize(
+            vocab, prompt, Int32(promptBytes.count),
+            &tokens, maxTokens, true, true
+        )
+        guard nTokens > 0 else {
+            continuation.finish(throwing: InferenceError.tokenizationFailed)
+            return
+        }
+        tokens = Array(tokens.prefix(Int(nTokens)))
+
+        sessionLogger.info("Tokenized prompt: \(nTokens) tokens")
+
+        // Process prompt using batch_get_one (simpler API for single-sequence)
+        var tokenArray = tokens  // mutable copy for pointer
+        let promptBatch = llama_batch_get_one(&tokenArray, nTokens)
+        if llama_decode(ctx, promptBatch) != 0 {
+            sessionLogger.error("Failed to decode prompt batch")
+            continuation.finish(throwing: InferenceError.tokenizationFailed)
+            return
+        }
+
+        // Generate tokens one at a time
+        var nGenerated: Int32 = 0
+        let nCtx = Int32(params.contextWindowTokens)
+
+        while !isCancelled {
+            let newToken = llama_sampler_sample(chain, ctx, -1)
+
+            // Check for end of generation
+            if llama_vocab_is_eog(vocab, newToken) {
+                sessionLogger.info("EOS reached after \(nGenerated) tokens")
+                break
+            }
+
+            // Convert token to string piece
+            var buf = [CChar](repeating: 0, count: 256)
+            let nChars = llama_token_to_piece(vocab, newToken, &buf, Int32(buf.count), 0, true)
+            if nChars > 0 {
+                buf[Int(nChars)] = 0  // null terminate
+                let piece = String(cString: buf)
+                continuation.yield(piece)
+            }
+
+            // Decode the single new token
+            var singleToken = [newToken]
+            let nextBatch = llama_batch_get_one(&singleToken, 1)
+            if llama_decode(ctx, nextBatch) != 0 {
+                sessionLogger.error("Decode failed at token \(nGenerated)")
+                break
+            }
+
+            nGenerated += 1
+
+            // Context window check
+            if nTokens + nGenerated >= nCtx {
+                sessionLogger.warning("Context window full at \(nTokens + nGenerated) tokens")
+                break
             }
         }
 
-        // Stub: no XCFramework linked yet. Finish immediately with no tokens.
-        // This is correct for unit tests that verify state (no model = no tokens).
-        sessionLogger.info("LlamaSession.runDecodeLoop: XCFramework not yet linked — finishing stream immediately. temperature=\(params.temperature) topP=\(params.topP)")
         continuation.finish()
+        sessionLogger.info("Generation complete: \(nGenerated) tokens generated")
     }
 
     // MARK: - Deinit
 
     deinit {
-        // When LlamaFramework is linked:
-        //   if let ctx { llama_free(ctx) }
-        //   if let model { llama_free_model(model) }
+        if let ctx { llama_free(ctx) }
+        if let model { llama_model_free(model) }
+        llama_backend_free()
         sessionLogger.debug("LlamaSession deallocated: \(self.modelURL.lastPathComponent)")
     }
 }

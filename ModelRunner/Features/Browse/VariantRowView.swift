@@ -25,7 +25,6 @@ struct VariantRowView: View {
             ToksBadgeView(result: variant.result)
         }
         .frame(minHeight: 44)
-        .contentShape(Rectangle())  // Makes full row tappable (Phase 3 will add tap action)
     }
 }
 

@@ -561,6 +561,6 @@ func tabItem(icon: String, label: String, isSelected: Bool) -> some View {
 //   LoadingScreen()  — Model loading state with progress ring
 
 PlaygroundPage.current.setLiveView(
-    LoadingScreen()
+    ChatScreen()
         .frame(width: 390, height: 844)
 )
