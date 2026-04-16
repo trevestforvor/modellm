@@ -93,6 +93,14 @@
 		FA0100000000003DFA010000 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0100000000003EFA010000 /* KeychainService.swift */; };
 		FF09010001000001FF090100 /* llama.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF09010001000002FF090100 /* llama.xcframework */; };
 		FF09010001000003FF090100 /* llama.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF09010001000002FF090100 /* llama.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA09010001000001AA090100 /* TranscriptionBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09010001000002AA090100 /* TranscriptionBackend.swift */; };
+		AA09010001000003AA090100 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09010001000004AA090100 /* AudioRecorder.swift */; };
+		AA09010001000005AA090100 /* WhisperKitTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09010001000006AA090100 /* WhisperKitTranscriber.swift */; };
+		AA09010001000007AA090100 /* AppleSpeechTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA09010001000008AA090100 /* AppleSpeechTranscriber.swift */; };
+		AA09010001000009AA090100 /* SpeechSpikeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0901000100000AAA090100 /* SpeechSpikeViewModel.swift */; };
+		AA0901000100000BAA090100 /* EngineResultRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0901000100000CAA090100 /* EngineResultRow.swift */; };
+		AA0901000100000DAA090100 /* SpeechSpikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0901000100000EAA090100 /* SpeechSpikeView.swift */; };
+		AA09010001000032AA090100 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA09010001000031AA090100 /* WhisperKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +202,13 @@
 		FA0100000000003EFA010000 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		VMK8PQOCMDVXC68ITB2SPUMY /* AppBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackground.swift; sourceTree = "<group>"; };
 		FF09010001000002FF090100 /* llama.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = llama.xcframework; sourceTree = "<group>"; };
+		AA09010001000002AA090100 /* TranscriptionBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionBackend.swift; sourceTree = "<group>"; };
+		AA09010001000004AA090100 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		AA09010001000006AA090100 /* WhisperKitTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperKitTranscriber.swift; sourceTree = "<group>"; };
+		AA09010001000008AA090100 /* AppleSpeechTranscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSpeechTranscriber.swift; sourceTree = "<group>"; };
+		AA0901000100000AAA090100 /* SpeechSpikeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpikeViewModel.swift; sourceTree = "<group>"; };
+		AA0901000100000CAA090100 /* EngineResultRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineResultRow.swift; sourceTree = "<group>"; };
+		AA0901000100000EAA090100 /* SpeechSpikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpikeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -216,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF09010001000001FF090100 /* llama.xcframework in Frameworks */,
+				AA09010001000032AA090100 /* WhisperKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +299,7 @@
 				CC0301000100001ACC030100 /* Library */,
 				CC04010001000010CC040100 /* Inference */,
 				FA0100000000004EFA010000 /* Keychain */,
+				AA09010001000020AA090100 /* Speech */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -296,6 +313,7 @@
 				DD07010001000020DD070100 /* ModelPicker */,
 				DD07010001000030DD070100 /* Settings */,
 				EE08010001000020EE080100 /* Models */,
+				AA09010001000021AA090100 /* Speech */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -540,6 +558,27 @@
 			path = Keychain;
 			sourceTree = "<group>";
 		};
+		AA09010001000020AA090100 /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				AA09010001000002AA090100 /* TranscriptionBackend.swift */,
+				AA09010001000004AA090100 /* AudioRecorder.swift */,
+				AA09010001000006AA090100 /* WhisperKitTranscriber.swift */,
+				AA09010001000008AA090100 /* AppleSpeechTranscriber.swift */,
+			);
+			path = Speech;
+			sourceTree = "<group>";
+		};
+		AA09010001000021AA090100 /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				AA0901000100000AAA090100 /* SpeechSpikeViewModel.swift */,
+				AA0901000100000CAA090100 /* EngineResultRow.swift */,
+				AA0901000100000EAA090100 /* SpeechSpikeView.swift */,
+			);
+			path = Speech;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -574,6 +613,9 @@
 			dependencies = (
 			);
 			name = ModelRunner;
+			packageProductDependencies = (
+				AA09010001000031AA090100 /* WhisperKit */,
+			);
 			productName = ModelRunner;
 			productReference = 0D40A96AF56D4A488D50719E /* ModelRunner.app */;
 			productType = "com.apple.product-type.application";
@@ -606,6 +648,9 @@
 				Base,
 			);
 			mainGroup = A1B2C3D4E5F60002A2B3C4D5;
+			packageReferences = (
+				AA09010001000030AA090100 /* XCRemoteSwiftPackageReference "WhisperKit" */,
+			);
 			productRefGroup = E99E5DF8436E40A0A45FA7B7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -729,6 +774,13 @@
 				DD0701000100000BDD070100 /* ServerListView.swift in Sources */,
 				DD0701000100000DDD070100 /* AddServerView.swift in Sources */,
 				DD0701000100000FDD070100 /* ServerDetailView.swift in Sources */,
+				AA09010001000001AA090100 /* TranscriptionBackend.swift in Sources */,
+				AA09010001000003AA090100 /* AudioRecorder.swift in Sources */,
+				AA09010001000005AA090100 /* WhisperKitTranscriber.swift in Sources */,
+				AA09010001000007AA090100 /* AppleSpeechTranscriber.swift in Sources */,
+				AA09010001000009AA090100 /* SpeechSpikeViewModel.swift in Sources */,
+				AA0901000100000BAA090100 /* EngineResultRow.swift in Sources */,
+				AA0901000100000DAA090100 /* SpeechSpikeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,6 +829,8 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ModelRunner uses the microphone to capture speech for on-device transcription testing.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "ModelRunner uses on-device speech recognition to compare transcription engines.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -948,6 +1002,8 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ModelRunner uses the microphone to capture speech for on-device transcription testing.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "ModelRunner uses on-device speech recognition to compare transcription engines.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -997,6 +1053,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AA09010001000030AA090100 /* XCRemoteSwiftPackageReference "WhisperKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argmaxinc/WhisperKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AA09010001000031AA090100 /* WhisperKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA09010001000030AA090100 /* XCRemoteSwiftPackageReference "WhisperKit" */;
+			productName = WhisperKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1B2C3D4E5F60001A2B3C4D5 /* Project object */;
 }

@@ -48,6 +48,15 @@ struct ModelsTabView: View {
                             .padding(.horizontal, 16)
                             .padding(.vertical, 20)
 
+                        SpeechSpikeView()
+                            .padding(.bottom, 8)
+
+                        Rectangle()
+                            .fill(Color(hex: "#302E42"))
+                            .frame(height: 1)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 20)
+
                         Text("BROWSE HUGGING FACE")
                             .font(.system(size: 13, weight: .semibold))
                             .foregroundStyle(Color(hex: "#9896B0"))
