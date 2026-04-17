@@ -97,8 +97,7 @@ struct ChatRootView: View {
                 } label: {
                     VStack(spacing: 2) {
                         Text(currentModelDisplayName)
-                            .font(.title3.weight(.semibold))
-                            .fontDesign(.serif)
+                            .font(.title3.weight(.bold))
                             .foregroundStyle(.white)
                             .lineLimit(1)
                             .truncationMode(.middle)
