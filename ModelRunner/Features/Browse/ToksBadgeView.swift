@@ -38,7 +38,7 @@ struct ToksBadgeView: View {
     var body: some View {
         if result.tier != .incompatible {
             Text(badgeText)
-                .font(.system(.caption, design: .monospaced).weight(.semibold))
+                .font(.appMonoSmall)
                 .foregroundStyle(badgeColor)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 4)
@@ -51,24 +51,6 @@ struct ToksBadgeView: View {
     }
 }
 
-// MARK: - Color(hex:) Extension
-
-extension Color {
-    /// Initializes a Color from a hex string like "#34D399" or "34D399".
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let r, g, b: UInt64
-        switch hex.count {
-        case 6:
-            (r, g, b) = ((int >> 16) & 0xFF, (int >> 8) & 0xFF, int & 0xFF)
-        default:
-            (r, g, b) = (0, 0, 0)
-        }
-        self.init(red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255)
-    }
-}
 
 #Preview {
     VStack(spacing: 16) {

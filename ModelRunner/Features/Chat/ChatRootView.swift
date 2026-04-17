@@ -73,23 +73,13 @@ struct ChatRootView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                HStack(spacing: 14) {
-                    Button {
-                        showSettingsSheet = true
-                    } label: {
-                        Image(systemName: "gear")
-                            .foregroundStyle(Color(hex: "#9896B0"))
-                    }
-                    .accessibilityLabel("Settings")
-                    Button {
-                        viewModel?.showingHistory.toggle()
-                    } label: {
-                        Image(systemName: "bubble.left")
-                            .foregroundStyle(Color(hex: "#9896B0"))
-                    }
-                    .accessibilityLabel("Conversation history")
-                    .disabled(viewModel == nil)
+                Button {
+                    showSettingsSheet = true
+                } label: {
+                    Image(systemName: "gear")
+                        .foregroundStyle(Color(hex: "#9896B0"))
                 }
+                .accessibilityLabel("Settings")
             }
             ToolbarItem(placement: .principal) {
                 Button {
@@ -97,13 +87,13 @@ struct ChatRootView: View {
                 } label: {
                     VStack(spacing: 2) {
                         Text(currentModelDisplayName)
-                            .font(.outfit(.title3, weight: .semibold))
+                            .font(.appTitle)
                             .foregroundStyle(.white)
                             .lineLimit(1)
                             .truncationMode(.middle)
                         if let subtitle = currentModelSubtitle {
                             Text(subtitle)
-                                .font(.figtree(.caption))
+                                .font(.appCaption)
                                 .foregroundStyle(Color(hex: "#6B6980"))
                                 .lineLimit(1)
                         }
@@ -113,10 +103,23 @@ struct ChatRootView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    viewModel?.showingHistory.toggle()
+                } label: {
+                    Image(systemName: "bubble.left")
+                        .foregroundStyle(Color(hex: "#9896B0"))
+                }
+                .accessibilityLabel("Conversation history")
+                .disabled(viewModel == nil)
+            }
+            if #available(iOS 26.0, *) {
+                ToolbarSpacer(.fixed, placement: .topBarTrailing)
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
                     startNewChat()
                 } label: {
                     Image(systemName: "square.and.pencil")
-                        .font(.system(size: 16, weight: .medium))
+                        .font(.iconLG)
                         .foregroundStyle(Color(hex: "#9896B0"))
                 }
                 .accessibilityLabel("New chat")
@@ -317,10 +320,10 @@ struct ChatRootView: View {
     private var noModelPrompt: some View {
         VStack(spacing: 16) {
             Image(systemName: "cpu")
-                .font(.system(size: 48))
+                .font(.iconXL)
                 .foregroundStyle(Color(hex: "#302E42"))
             Text("Loading model...")
-                .font(.outfit(.headline, weight: .semibold))
+                .font(.appHeadline)
                 .foregroundStyle(Color(hex: "#9896B0"))
             ProgressView()
                 .tint(Color(hex: "#4D6CF2"))
@@ -373,10 +376,13 @@ struct ChatRootView: View {
     }
 
     /// Resolve active DownloadedModel from container.activeModelURL for persistence wiring.
+    /// Matches on filename — the stored `localPath` goes stale across reinstalls (sandbox
+    /// UUIDs change) so a path-based predicate would miss after reinstall.
     private func activeDownloadedModel() -> DownloadedModel? {
         guard let url = container.activeModelURL else { return nil }
+        let filename = url.lastPathComponent
         var descriptor = FetchDescriptor<DownloadedModel>(
-            predicate: #Predicate { $0.localPath == url.path }
+            predicate: #Predicate { $0.filename == filename }
         )
         descriptor.fetchLimit = 1
         return try? modelContext.fetch(descriptor).first

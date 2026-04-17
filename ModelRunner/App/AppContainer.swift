@@ -89,7 +89,7 @@ final class AppContainer {
         return LocalInferenceBackend(
             repoId: model.repoId,
             displayName: model.displayName,
-            modelURL: URL(filePath: model.localPath),
+            modelURL: model.resolvedFileURL,
             inferenceService: inferenceService,
             inferenceParams: params
         )

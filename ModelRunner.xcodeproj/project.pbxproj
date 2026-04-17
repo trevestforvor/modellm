@@ -109,6 +109,9 @@
 		FONT000000000003FONT0000 /* Figtree-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FONT000000000004FONT0000 /* Figtree-VariableFont_wght.ttf */; };
 		FONT000000000005FONT0000 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FONT000000000006FONT0000 /* AppFont.swift */; };
 		APPR000000000001APPR0000 /* AppAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPR000000000002APPR0000 /* AppAppearance.swift */; };
+		CLRH000000000001CLRH0000 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CLRH000000000002CLRH0000 /* Color+Hex.swift */; };
+		APPC000000000001APPC0000 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPC000000000002APPC0000 /* AppColor.swift */; };
+		APCD000000000001APCD0000 /* AppCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = APCD000000000002APCD0000 /* AppCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +227,9 @@
 		FONT000000000002FONT0000 /* Outfit-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		FONT000000000004FONT0000 /* Figtree-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Figtree-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		FONT000000000006FONT0000 /* AppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFont.swift; sourceTree = "<group>"; };
+		CLRH000000000002CLRH0000 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		APPC000000000002APPC0000 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
+		APCD000000000002APCD0000 /* AppCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCard.swift; sourceTree = "<group>"; };
 		APPR000000000002APPR0000 /* AppAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -516,6 +522,9 @@
 				SH01000000000004SH010000 /* Haptics.swift */,
 				FONT000000000006FONT0000 /* AppFont.swift */,
 				APPR000000000002APPR0000 /* AppAppearance.swift */,
+				CLRH000000000002CLRH0000 /* Color+Hex.swift */,
+				APPC000000000002APPC0000 /* AppColor.swift */,
+				APCD000000000002APCD0000 /* AppCard.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -801,6 +810,9 @@
 				SH01000000000003SH010000 /* Haptics.swift in Sources */,
 				FONT000000000005FONT0000 /* AppFont.swift in Sources */,
 				APPR000000000001APPR0000 /* AppAppearance.swift in Sources */,
+				CLRH000000000001CLRH0000 /* Color+Hex.swift in Sources */,
+				APPC000000000001APPC0000 /* AppColor.swift in Sources */,
+				APCD000000000001APCD0000 /* AppCard.swift in Sources */,
 				CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */,
 				CC03010001000018CC030100 /* LibraryService.swift in Sources */,
 				CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */,

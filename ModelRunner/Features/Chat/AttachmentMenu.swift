@@ -25,7 +25,7 @@ struct AttachmentMenu: View {
             .disabled(!supportsVision)
         } label: {
             Image(systemName: "plus")
-                .font(.system(size: 16, weight: .semibold))
+                .font(.iconLG)
                 .foregroundStyle(Color(hex: "#9896B0"))
                 .frame(width: 36, height: 36)
                 .background(

@@ -20,7 +20,7 @@ struct BrowseView: View {
                         ProgressView()
                             .tint(accent)
                         Text("Initializing…")
-                            .font(.figtree(.subheadline))
+                            .font(.appSubheadline)
                             .foregroundStyle(secondaryText)
                     }
                 }
@@ -74,6 +74,7 @@ private struct BrowseContentView: View {
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
                 }
+                .scrollDismissesKeyboard(.interactively)
             }
             .scrollContentBackground(.hidden)
             .toolbarBackground(.hidden, for: .navigationBar)
@@ -91,7 +92,7 @@ private struct BrowseContentView: View {
     private var recommendationsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(recommendationsHeader)
-                .font(.outfit(.title2, weight: .semibold))
+                .font(.appTitle)
                 .foregroundStyle(primaryText)
                 .padding(.top, 20)
                 .padding(.bottom, 2)
@@ -117,7 +118,7 @@ private struct BrowseContentView: View {
     private var allModelsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("All Models")
-                .font(.outfit(.title2, weight: .semibold))
+                .font(.appTitle)
                 .foregroundStyle(primaryText)
                 .padding(.top, 8)
 
@@ -164,7 +165,7 @@ private struct BrowseContentView: View {
                 }
 
                 // Infinite scroll trigger
-                if viewModel.hasMoreResults {
+                if viewModel.hasMoreResults && !viewModel.isLoadingNextPage && !viewModel.didEncounterEmptyNextPage {
                     HStack { Spacer(); ProgressView().tint(accent); Spacer() }
                         .padding(.vertical, 16)
                         .onAppear {
@@ -180,13 +181,13 @@ private struct BrowseContentView: View {
     private func errorView(error: HFBrowseError) -> some View {
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
-                .font(.outfit(.largeTitle, weight: .regular))
+                .font(.iconXL)
                 .foregroundStyle(tertiaryText)
             Text("Couldn't load models")
-                .font(.outfit(.headline, weight: .semibold))
+                .font(.appHeadline)
                 .foregroundStyle(primaryText)
             Text("Check your connection and try again.")
-                .font(.figtree(.body))
+                .font(.appBody)
                 .foregroundStyle(secondaryText)
                 .multilineTextAlignment(.center)
             Button("Try Again") {
@@ -204,13 +205,13 @@ private struct BrowseContentView: View {
     private var emptyStateView: some View {
         VStack(spacing: 16) {
             Image(systemName: "magnifyingglass")
-                .font(.outfit(.largeTitle, weight: .regular))
+                .font(.iconXL)
                 .foregroundStyle(tertiaryText)
             Text("No models found")
-                .font(.outfit(.headline, weight: .semibold))
+                .font(.appHeadline)
                 .foregroundStyle(primaryText)
             Text("Try a different search term or browse all models.")
-                .font(.figtree(.body))
+                .font(.appBody)
                 .foregroundStyle(secondaryText)
                 .multilineTextAlignment(.center)
             Button("Browse All Models") {

@@ -72,4 +72,34 @@ final class DownloadedModel {
     var relativeLastUsed: String {
         lastUsedDate.formatted(.relative(presentation: .named))
     }
+
+    /// Canonical on-disk URL, recomputed against the current sandbox.
+    ///
+    /// Every app install gets a fresh container UUID, so the `localPath` stored at download
+    /// time goes stale after reinstall. This property ignores the stored string and rebuilds
+    /// the path from `repoId + filename` — which are stable — against the current
+    /// Application Support directory. Also falls back to `Bundle.main` so bundled models
+    /// installed via BundledModelInstaller still resolve.
+    var resolvedFileURL: URL {
+        // 1. Cheapest: whatever we stored, if it still exists on disk.
+        if !localPath.isEmpty, FileManager.default.fileExists(atPath: localPath) {
+            return URL(filePath: localPath)
+        }
+
+        // 2. Bundled model? BundledModelInstaller stores `Bundle.main.url(forResource:)`.
+        if let bundled = Bundle.main.url(forResource: filename, withExtension: nil) {
+            return bundled
+        }
+
+        // 3. Downloaded model — mirror DownloadService's destination layout exactly.
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let safeRepo = repoId.replacingOccurrences(of: "/", with: "--")
+        return appSupport
+            .appending(path: "huggingface/hub/\(safeRepo)/blobs/\(filename)", directoryHint: .notDirectory)
+    }
+
+    /// Whether the model file exists on disk at the resolved path.
+    var existsOnDisk: Bool {
+        FileManager.default.fileExists(atPath: resolvedFileURL.path)
+    }
 }

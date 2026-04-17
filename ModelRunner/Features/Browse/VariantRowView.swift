@@ -2,35 +2,38 @@ import SwiftUI
 
 struct VariantRowView: View {
     let variant: AnnotatedVariant
-
-    private let primaryText   = Color(hex: "#EDEDF4")
-    private let secondaryText = Color(hex: "#9896B0")
+    var isSelected: Bool = false
 
     var body: some View {
         HStack(spacing: 12) {
-            // Quantization type — left aligned
             Text(variant.quantType == .unknown ? variant.filename : variant.quantType.rawValue)
-                .font(.figtree(.subheadline, weight: .medium))
-                .foregroundStyle(primaryText)
+                .font(.appSubheadline)
+                .foregroundStyle(Color.appTextPrimary)
 
             Spacer()
 
-            // File size — SF Mono for data precision (DESIGN.md)
             Text(variant.formattedFileSize)
-                .font(.system(.caption, design: .monospaced))
-                .foregroundStyle(secondaryText)
+                .font(.appMonoSmall)
+                .foregroundStyle(Color.appTextSecondary)
 
-            // Compatibility badge
             ToksBadgeView(result: variant.result)
+
+            Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                .font(.iconMD)
+                .foregroundStyle(isSelected ? Color.appAccent : Color.appTextTertiary)
+                .accessibilityHidden(true)
         }
         .frame(minHeight: 44)
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 
 #Preview {
     List {
         Text("VariantRowView Preview")
-            .foregroundStyle(.white)
+            .foregroundStyle(Color.appTextPrimary)
     }
-    .background(Color(hex: "#0D0C18"))
+    .background(Color.appPage)
 }

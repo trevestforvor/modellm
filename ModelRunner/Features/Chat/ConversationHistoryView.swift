@@ -46,7 +46,7 @@ struct ConversationHistoryView: View {
                         ForEach(grouped, id: \.modelId) { group in
                             // Section header
                             Text(group.displayName)
-                                .font(.footnote.weight(.semibold))
+                                .font(.appCaption)
                                 .foregroundStyle(Color(hex: "#9896B0"))
                                 .padding(.horizontal, 16)
                                 .padding(.top, 12)
@@ -85,12 +85,12 @@ struct ConversationHistoryView: View {
     private var historyHeader: some View {
         HStack {
             Text("Conversations")
-                .font(.headline)
+                .font(.appHeadline)
                 .foregroundStyle(.primary)
             Spacer()
             Button(action: onDismiss) {
                 Image(systemName: "xmark")
-                    .font(.system(size: 14, weight: .medium))
+                    .font(.iconMD)
                     .foregroundStyle(Color(hex: "#9896B0"))
                     .frame(width: 28, height: 28)
                     .background(
@@ -112,16 +112,16 @@ struct ConversationHistoryView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(conv.title)
-                        .font(.body)
+                        .font(.appBody)
                         .foregroundStyle(.primary)
                         .lineLimit(1)
                 }
                 Spacer()
                 Text(relativeDate(conv.updatedAt))
-                    .font(.caption.monospaced())
+                    .font(.appMonoSmall)
                     .foregroundStyle(Color(hex: "#6B6980"))
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .medium))
+                    .font(.iconMD)
                     .foregroundStyle(Color(hex: "#6B6980"))
             }
             .padding(.horizontal, 16)
@@ -143,13 +143,13 @@ struct ConversationHistoryView: View {
     private var emptyState: some View {
         VStack(spacing: 8) {
             Image(systemName: "bubble.left.and.bubble.right")
-                .font(.system(size: 32))
+                .font(.iconXL)
                 .foregroundStyle(Color(hex: "#6B6980"))
             Text("No conversations yet")
-                .font(.body)
+                .font(.appBody)
                 .foregroundStyle(Color(hex: "#9896B0"))
             Text("Start typing to begin")
-                .font(.footnote)
+                .font(.appCaption)
                 .foregroundStyle(Color(hex: "#6B6980"))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

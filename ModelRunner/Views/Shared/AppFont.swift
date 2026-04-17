@@ -14,6 +14,23 @@ extension Font {
     static func figtree(_ style: Font.TextStyle, weight: Font.Weight = .regular) -> Font {
         .custom("Figtree", size: style.pointSize, relativeTo: style).weight(weight)
     }
+
+    // MARK: Semantic tokens
+
+    static let appTitle: Font         = outfit(.title3, weight: .semibold)
+    static let appHeadline: Font      = outfit(.headline, weight: .semibold)
+    static let appBody: Font          = figtree(.body)
+    static let appBodyEmphasized: Font = figtree(.body, weight: .medium)
+    static let appSubheadline: Font   = figtree(.subheadline)
+    static let appCaption: Font       = figtree(.caption)
+    static let appMono: Font          = Font.system(.body, design: .monospaced)
+    static let appMonoSmall: Font     = Font.system(.caption, design: .monospaced)
+
+    // MARK: Icon sizes (used with Image systemName)
+
+    static let iconXL: Font = .system(size: 28)
+    static let iconLG: Font = .system(size: 22)
+    static let iconMD: Font = .system(size: 18)
 }
 
 private extension Font.TextStyle {

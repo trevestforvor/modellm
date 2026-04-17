@@ -11,7 +11,7 @@ struct SpeechSpikeView: View {
                     .padding(.top, 12)
             } label: {
                 Text("SPEECH SPIKE")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(.appCaption)
                     .foregroundStyle(Color(hex: "#9896B0"))
                     .tracking(0.5)
             }
@@ -35,7 +35,7 @@ struct SpeechSpikeView: View {
                                   : Color(hex: "#4D6CF2"))
                             .frame(width: 64, height: 64)
                         Image(systemName: viewModel.recorder.isRecording ? "stop.fill" : "mic.fill")
-                            .font(.system(size: 24, weight: .semibold))
+                            .font(.iconXL)
                             .foregroundStyle(.white)
                     }
                 }
@@ -46,19 +46,19 @@ struct SpeechSpikeView: View {
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(viewModel.recorder.isRecording ? "Recording…" : "Tap mic to start, tap again to stop")
-                        .font(.figtree(.footnote, weight: .medium))
+                        .font(.appCaption)
                         .foregroundStyle(.white)
                     if let err = viewModel.recorder.errorMessage {
                         Text(err)
-                            .font(.figtree(.caption2))
+                            .font(.appCaption)
                             .foregroundStyle(Color(red: 0.95, green: 0.45, blue: 0.45))
                     } else if let err = viewModel.errorMessage {
                         Text(err)
-                            .font(.figtree(.caption2))
+                            .font(.appCaption)
                             .foregroundStyle(Color(red: 0.95, green: 0.45, blue: 0.45))
                     } else {
                         Text("Compares 3 STT engines on the same clip.")
-                            .font(.figtree(.caption2))
+                            .font(.appCaption)
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                 }
@@ -70,7 +70,7 @@ struct SpeechSpikeView: View {
                         viewModel.clearResults()
                     } label: {
                         Text("Clear")
-                            .font(.figtree(.caption, weight: .semibold))
+                            .font(.appCaption)
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                     .accessibilityLabel("Clear results")
@@ -92,7 +92,7 @@ struct SpeechSpikeView: View {
                         ProgressView()
                             .tint(Color(hex: "#4D6CF2"))
                         Text("Transcribing…")
-                            .font(.figtree(.caption))
+                            .font(.appCaption)
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                     .padding(12)

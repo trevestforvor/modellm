@@ -11,18 +11,18 @@ struct LibraryModelCard: View {
             // Active model indicator (D-10)
             if model.isActive {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.title3)
-                    .foregroundStyle(.green)
+                    .font(.appTitle)
+                    .foregroundStyle(Color.appGood)
             } else {
                 Image(systemName: "circle")
-                    .font(.title3)
-                    .foregroundStyle(.tertiary)
+                    .font(.appTitle)
+                    .foregroundStyle(Color.appTextTertiary)
             }
 
             VStack(alignment: .leading, spacing: 4) {
                 // Model name
                 Text(model.displayName)
-                    .font(.figtree(.body, weight: .medium))
+                    .font(.appBodyEmphasized)
                     .lineLimit(2)
 
                 // Quantization + file size
@@ -30,22 +30,22 @@ struct LibraryModelCard: View {
                     QuantizationBadge(quantization: model.quantization)
 
                     Text(model.formattedSize)
-                        .font(.figtree(.caption))
-                        .foregroundStyle(.secondary)
+                        .font(.appCaption)
+                        .foregroundStyle(Color.appTextSecondary)
                 }
 
                 // Last used + conversation count (D-08)
                 HStack(spacing: 8) {
                     Text(model.relativeLastUsed)
-                        .font(.figtree(.caption))
-                        .foregroundStyle(.tertiary)
+                        .font(.appCaption)
+                        .foregroundStyle(Color.appTextTertiary)
 
                     if model.conversationCount > 0 {
                         Text("·")
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(Color.appTextTertiary)
                         Text("\(model.conversationCount) chat\(model.conversationCount == 1 ? "" : "s")")
-                            .font(.figtree(.caption))
-                            .foregroundStyle(.tertiary)
+                            .font(.appCaption)
+                            .foregroundStyle(Color.appTextTertiary)
                     }
                 }
             }
@@ -54,8 +54,8 @@ struct LibraryModelCard: View {
 
             // Chevron hint for tap-to-activate (Phase 4 will also navigate to Chat)
             Image(systemName: "chevron.right")
-                .font(.caption)
-                .foregroundStyle(.tertiary)
+                .font(.iconMD)
+                .foregroundStyle(Color.appTextTertiary)
         }
         .padding(.vertical, 4)
         .contentShape(Rectangle())
@@ -70,11 +70,14 @@ private struct QuantizationBadge: View {
 
     var body: some View {
         Text(quantization)
-            .font(.figtree(.caption2, weight: .semibold))
+            .font(.appCaption)
+            .foregroundStyle(Color.appAccent)
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
-            .background(Color.secondary.opacity(0.15))
-            .clipShape(Capsule())
+            .background(
+                Capsule()
+                    .fill(Color.appAccent.opacity(0.12))
+            )
     }
 }
 

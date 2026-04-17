@@ -47,11 +47,11 @@ struct ServerDetailView: View {
                     if !server.parsedSupportedFormats.isEmpty {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Supported Formats")
-                                .font(.caption)
+                                .font(.appCaption)
                                 .foregroundStyle(secondaryText)
                             ForEach(server.parsedSupportedFormats) { format in
                                 Text("• \(format.displayName)")
-                                    .font(.caption)
+                                    .font(.appCaption)
                                     .foregroundStyle(secondaryText)
                             }
                         }
@@ -100,7 +100,7 @@ struct ServerDetailView: View {
                                 .foregroundStyle(secondaryText)
                             Spacer()
                             Text(lastChecked, style: .relative)
-                                .font(.figtree(.subheadline))
+                                .font(.appSubheadline)
                                 .foregroundStyle(secondaryText)
                         }
                     }
@@ -132,7 +132,7 @@ struct ServerDetailView: View {
                     .tint(accent)
                     .scaleEffect(0.8)
                 Text("Probing server…")
-                    .font(.figtree(.subheadline))
+                    .font(.appSubheadline)
                     .foregroundStyle(secondaryText)
             }
 
@@ -140,9 +140,9 @@ struct ServerDetailView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Label(msg, systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
-                    .font(.figtree(.subheadline))
+                    .font(.appSubheadline)
                 Button("Re-detect Again") { runRedetect() }
-                    .font(.figtree(.caption))
+                    .font(.appCaption)
                     .foregroundStyle(accent)
             }
 
@@ -150,9 +150,9 @@ struct ServerDetailView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Label(msg, systemImage: "xmark.circle.fill")
                     .foregroundStyle(.red)
-                    .font(.figtree(.subheadline))
+                    .font(.appSubheadline)
                 Button("Try Again") { runRedetect() }
-                    .font(.figtree(.caption))
+                    .font(.appCaption)
                     .foregroundStyle(accent)
             }
         }

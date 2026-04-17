@@ -10,21 +10,21 @@ struct MyModelCard: View {
                     .fill(sourceDotColor)
                     .frame(width: 8, height: 8)
                 Text(sourceLabel)
-                    .font(.system(size: 10))
+                    .font(.appCaption)
                     .foregroundStyle(Color(hex: "#6B6980"))
                 Spacer()
             }
             .padding(.bottom, 10)
 
             Text(model.displayName)
-                .font(.outfit(.callout, weight: .semibold))
+                .font(.appHeadline)
                 .foregroundStyle(.white)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
 
             if let serverName = model.serverName {
                 Text(serverName)
-                    .font(.figtree(.caption2))
+                    .font(.appCaption)
                     .foregroundStyle(Color(hex: "#6B6980"))
                     .padding(.top, 3)
             }
@@ -34,11 +34,11 @@ struct MyModelCard: View {
             HStack {
                 if let tokPerSec = model.tokPerSec {
                     Text(String(format: "%.0f tok/s", tokPerSec))
-                        .font(.caption.monospaced())
+                        .font(.appMonoSmall)
                         .foregroundStyle(Color(hex: "#4D6CF2"))
                 } else {
                     Text("— tok/s")
-                        .font(.caption.monospaced())
+                        .font(.appMonoSmall)
                         .foregroundStyle(Color(hex: "#6B6980"))
                 }
 
@@ -74,7 +74,7 @@ struct MyModelCard: View {
     private var capabilityBadge: some View {
         if !model.isOnline {
             Text("offline")
-                .font(.system(size: 9))
+                .font(.appCaption)
                 .foregroundStyle(Color(hex: "#ef4444"))
         } else if model.supportsThinking {
             badgePill(text: "🧠 think", color: Color(hex: "#4D6CF2"))
@@ -85,7 +85,7 @@ struct MyModelCard: View {
 
     private func badgePill(text: String, color: Color) -> some View {
         Text(text)
-            .font(.system(size: 9))
+            .font(.appCaption)
             .foregroundStyle(color)
             .padding(.horizontal, 6)
             .padding(.vertical, 2)

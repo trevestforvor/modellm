@@ -50,27 +50,27 @@ struct ChatBubbleView: View {
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "brain")
-                        .font(.system(size: 12))
+                        .font(.iconMD)
                     if isThinkingExpanded || message.isStreaming {
                         Text("Thinking")
-                            .font(.figtree(.footnote, weight: .medium))
+                            .font(.appCaption)
                     } else if let duration = message.thinkingDuration {
                         Text("Thought for \(String(format: "%.1f", duration))s")
-                            .font(.figtree(.footnote, weight: .medium))
+                            .font(.appCaption)
                     } else {
                         Text("Thinking")
-                            .font(.figtree(.footnote, weight: .medium))
+                            .font(.appCaption)
                     }
                     Spacer()
                     Image(systemName: isThinkingExpanded ? "chevron.up" : "chevron.down")
-                        .font(.system(size: 10))
+                        .font(.iconMD)
                 }
                 .foregroundStyle(Color(hex: "#6B6980"))
             }
 
             if isThinkingExpanded || message.isStreaming {
                 Text(message.thinkingContent)
-                    .font(.figtree(.footnote))
+                    .font(.appCaption)
                     .foregroundStyle(Color(hex: "#6B6980"))
                     .italic()
                     .transition(.opacity.combined(with: .move(edge: .top)))
@@ -106,7 +106,7 @@ struct ChatBubbleView: View {
                     .fill(Color(hex: "#4D6CF2"))
             )
             .foregroundStyle(.white)
-            .font(.figtree(.body))
+            .font(.appBody)
     }
 
     private var assistantBubble: some View {
@@ -115,7 +115,7 @@ struct ChatBubbleView: View {
 
     private var assistantContent: some View {
         markdownText(message.content)
-            .font(.figtree(.body))
+            .font(.appBody)
             .lineSpacing(3)
             .foregroundStyle(Color(hex: "#EDEDF4"))
             .padding(.horizontal, 16)
@@ -164,7 +164,7 @@ struct ChatBubbleView: View {
                               action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: system)
-                .font(.system(size: 14, weight: .medium))
+                .font(.iconMD)
                 .foregroundStyle(active ? (flashColor ?? Color(hex: "#4D6CF2")) : Color(hex: "#6B6980"))
                 .frame(width: 32, height: 32)
                 .contentShape(Rectangle())

@@ -14,7 +14,7 @@ struct MyModelsSection: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text("MY MODELS")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(.appCaption)
                     .foregroundStyle(Color(hex: "#9896B0"))
                     .tracking(0.5)
 
@@ -23,9 +23,9 @@ struct MyModelsSection: View {
                 Button(action: onAddServer) {
                     HStack(spacing: 4) {
                         Image(systemName: "plus")
-                            .font(.system(size: 12))
+                            .font(.iconMD)
                         Text("Add Server")
-                            .font(.system(size: 12))
+                            .font(.appCaption)
                     }
                     .foregroundStyle(Color(hex: "#4D6CF2"))
                     .padding(.horizontal, 10)
@@ -44,13 +44,13 @@ struct MyModelsSection: View {
             if models.isEmpty {
                 VStack(spacing: 12) {
                     Image(systemName: "cpu")
-                        .font(.system(size: 36))
+                        .font(.iconXL)
                         .foregroundStyle(Color(hex: "#302E42"))
                     Text("No models yet")
-                        .font(.figtree(.body, weight: .medium))
+                        .font(.appBodyEmphasized)
                         .foregroundStyle(Color(hex: "#9896B0"))
                     Text("Add a remote server or download a model to get started")
-                        .font(.figtree(.footnote))
+                        .font(.appCaption)
                         .foregroundStyle(Color(hex: "#6B6980"))
                         .multilineTextAlignment(.center)
                 }

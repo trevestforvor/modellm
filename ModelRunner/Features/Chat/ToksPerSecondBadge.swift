@@ -17,7 +17,7 @@ struct ToksPerSecondBadge: View {
     var body: some View {
         if tokensPerSecond > 0 {
             Text(text)
-                .font(.system(.caption2, design: .monospaced))  // SF Mono 11pt equivalent
+                .font(.appMonoSmall)
                 .foregroundStyle(color)
                 .animation(.easeOut(duration: 0.5), value: isGenerating)
         }

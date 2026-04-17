@@ -3,39 +3,29 @@ import SwiftUI
 struct ModelCardView: View {
     let model: AnnotatedModel
 
-    private let cardBackground = Color(hex: "#0D0C18")
-    private let primaryText    = Color(hex: "#EDEDF4")
-    private let secondaryText  = Color(hex: "#9896B0")
-
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
             VStack(alignment: .leading, spacing: 6) {
-                // Model name
                 Text(model.displayName)
-                    .font(.outfit(.headline, weight: .semibold))
-                    .foregroundStyle(primaryText)
+                    .font(.appHeadline)
+                    .foregroundStyle(Color.appTextPrimary)
                     .lineLimit(1)
 
-                // Metadata row: params · quant · size · downloads
                 Text(metadataText)
-                    .font(.figtree(.subheadline))
-                    .foregroundStyle(secondaryText)
+                    .font(.appSubheadline)
+                    .foregroundStyle(Color.appTextSecondary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            // Tok/s badge — primaryResult is the best compatible variant
             if let primary = model.primaryResult {
                 ToksBadgeView(result: primary.result)
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(cardBackground)
-        )
+        .background(AppCardBackground(cornerRadius: 16))
         .accessibilityElement(children: .combine)
     }
 
@@ -67,8 +57,8 @@ struct ModelCardView: View {
 #Preview {
     VStack(spacing: 8) {
         Text("ModelCardView Preview")
-            .foregroundStyle(.white)
+            .foregroundStyle(Color.appTextPrimary)
     }
     .padding()
-    .background(Color(hex: "#0D0C18"))
+    .background(Color.appPage)
 }

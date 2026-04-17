@@ -69,6 +69,7 @@ struct LibraryView: View {
             Section {
                 storageHeader
             }
+            .listRowBackground(Color.clear)
 
             // Model list
             Section {
@@ -95,6 +96,7 @@ struct LibraryView: View {
                     }
                 }
             }
+            .listRowBackground(Color.clear)
         }
         .listStyle(.insetGrouped)
         .scrollContentBackground(.hidden)
@@ -104,10 +106,10 @@ struct LibraryView: View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Models: \(models.count)")
-                    .font(.figtree(.subheadline, weight: .medium))
+                    .font(.appSubheadline)
                 Text("\(libraryService.formattedTotalStorage(models: models)) used · \(libraryService.formattedFreeStorage(freeBytes: freeStorageBytes)) free")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .font(.appCaption)
+                    .foregroundStyle(Color.appTextSecondary)
             }
             Spacer()
         }
@@ -117,15 +119,15 @@ struct LibraryView: View {
     private var emptyState: some View {
         VStack(spacing: 16) {
             Image(systemName: "internaldrive")
-                .font(.system(size: 56))
-                .foregroundStyle(.tertiary)
+                .font(.iconXL)
+                .foregroundStyle(Color.appTextTertiary)
 
             Text("No Models Downloaded")
-                .font(.outfit(.title3, weight: .semibold))
+                .font(.appTitle)
 
             Text("Browse Hugging Face models and download one that's compatible with your device.")
-                .font(.figtree(.subheadline))
-                .foregroundStyle(.secondary)
+                .font(.appSubheadline)
+                .foregroundStyle(Color.appTextSecondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)
         }

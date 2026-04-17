@@ -32,7 +32,7 @@ struct ChatInputBar: View {
                 enableThinking.toggle()
             } label: {
                 Image(systemName: "brain")
-                    .font(.system(size: 16))
+                    .font(.iconLG)
                     .foregroundStyle(enableThinking ? Color(hex: "#4D6CF2") : Color(hex: "#6B6980"))
                     .frame(width: 36, height: 36)
                     .background(
@@ -61,7 +61,7 @@ struct ChatInputBar: View {
                         )
                 )
                 .foregroundStyle(.white)
-                .font(.figtree(.body))
+                .font(.appBody)
                 .disabled(!isModelLoaded)
                 .opacity(isModelLoaded ? 1 : 0.5)
                 .onSubmit {
@@ -102,7 +102,7 @@ struct ChatInputBar: View {
                     .frame(width: 34, height: 34)
 
                 Image(systemName: isGenerating ? "stop.fill" : "arrow.up")
-                    .font(.system(size: isGenerating ? 12 : 14, weight: .bold))
+                    .font(.iconMD)
                     .foregroundStyle(.white)
             }
         }

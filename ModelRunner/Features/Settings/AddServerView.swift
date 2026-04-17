@@ -69,20 +69,20 @@ struct AddServerView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("Add Server")
-                    .font(.outfit(.headline, weight: .semibold))
+                    .font(.appHeadline)
                     .foregroundStyle(.white)
             }
             ToolbarItem(placement: .topBarLeading) {
                 Button { dismiss() } label: {
                     Text("Cancel")
-                        .font(.figtree(.body, weight: .medium))
+                        .font(.appBodyEmphasized)
                         .foregroundStyle(secondaryText)
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button { saveServer() } label: {
                     Text("Add")
-                        .font(.figtree(.body, weight: .semibold))
+                        .font(.appBodyEmphasized)
                         .foregroundStyle(canAdd ? accent : Color(hex: "#6B6980"))
                 }
                 .disabled(!canAdd)
@@ -105,7 +105,7 @@ struct AddServerView: View {
                 ProgressView()
                     .tint(accent)
                 Text("Detecting server capabilities…")
-                    .font(.figtree(.subheadline))
+                    .font(.appSubheadline)
                     .foregroundStyle(Color(hex: "#9896B0"))
             }
 
@@ -113,21 +113,21 @@ struct AddServerView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Label("\(result.models.count) model(s) detected", systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
-                    .font(.figtree(.subheadline))
+                    .font(.appSubheadline)
 
                 ForEach(result.supportedFormats) { format in
                     HStack {
                         Image(systemName: "checkmark")
                             .foregroundStyle(.green)
-                            .font(.figtree(.caption))
+                            .font(.appCaption)
                         Text(format.displayName)
-                            .font(.figtree(.caption))
+                            .font(.appCaption)
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                 }
 
                 Button("Re-detect") { runProbe() }
-                    .font(.figtree(.caption))
+                    .font(.appCaption)
                     .foregroundStyle(accent)
                     .padding(.top, 4)
             }
@@ -136,10 +136,10 @@ struct AddServerView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Label(message, systemImage: "xmark.circle.fill")
                     .foregroundStyle(.red)
-                    .font(.figtree(.subheadline))
+                    .font(.appSubheadline)
 
                 Button("Try Again") { runProbe() }
-                    .font(.figtree(.caption))
+                    .font(.appCaption)
                     .foregroundStyle(accent)
             }
         }

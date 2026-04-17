@@ -34,15 +34,14 @@ struct DownloadProgressBar: View {
             HStack(spacing: 12) {
                 // Download icon
                 Image(systemName: isPaused ? "pause.circle.fill" : "arrow.down.circle.fill")
-                    .font(.title3)
+                    .font(.iconXL)
                     .foregroundStyle(Color.accentColor)
                     .symbolEffect(.pulse, isActive: !isPaused)
 
                 // Model name + progress stats
                 VStack(alignment: .leading, spacing: 2) {
                     Text(modelName)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
+                        .font(.appSubheadline)
                         .lineLimit(1)
 
                     HStack(spacing: 6) {
@@ -52,8 +51,8 @@ struct DownloadProgressBar: View {
 
                         // Throughput
                         Text(DownloadService.formattedThroughput(throughput))
-                            .font(.caption2)
-                            .foregroundStyle(.secondary)
+                            .font(.appCaption)
+                            .foregroundStyle(Color.appTextSecondary)
                             .monospacedDigit()
                             .frame(width: 60, alignment: .trailing)
                     }
@@ -64,8 +63,8 @@ struct DownloadProgressBar: View {
                     onCancel()
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .font(.title3)
-                        .foregroundStyle(.secondary)
+                        .font(.iconXL)
+                        .foregroundStyle(Color.appTextSecondary)
                 }
                 .buttonStyle(.plain)
             }
@@ -73,7 +72,7 @@ struct DownloadProgressBar: View {
             .padding(.vertical, 10)
             .frame(height: 64)
         }
-        .background(.regularMaterial)
+        .background(Color.appSurface)
     }
 }
 

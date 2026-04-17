@@ -28,17 +28,13 @@ struct ChatSettingsView: View {
                     .padding(.vertical, 20)
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Model Settings")
+            .toolbarBackground(.hidden, for: .navigationBar)
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text("Model Settings")
-                        .font(.outfit(.headline, weight: .semibold))
-                        .foregroundStyle(.white)
-                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button { dismiss() } label: {
                         Text("Done")
-                            .font(.figtree(.body, weight: .medium))
+                            .font(.appBodyEmphasized)
                             .foregroundStyle(Color(hex: "#4D6CF2"))
                     }
                 }
@@ -51,7 +47,7 @@ struct ChatSettingsView: View {
     private var presetSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("STYLE")
-                .font(.system(size: 12, weight: .semibold))
+                .font(.appCaption)
                 .tracking(1.2)
                 .foregroundStyle(Color(hex: "#9896B0"))
 
@@ -62,7 +58,7 @@ struct ChatSettingsView: View {
                         preset.apply(to: model)
                     } label: {
                         Text(preset.rawValue)
-                            .font(.system(size: 14, weight: .medium))
+                            .font(.appSubheadline)
                             .foregroundStyle(isSelected ? .white : Color(hex: "#9896B0"))
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
@@ -107,7 +103,7 @@ struct ChatSettingsView: View {
             },
             label: {
                 Text("Advanced")
-                    .font(.system(size: 15, weight: .medium))
+                    .font(.appSubheadline)
                     .foregroundStyle(.white)
             }
         )
@@ -120,11 +116,11 @@ struct ChatSettingsView: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Text("Temperature")
-                    .font(.system(size: 15))
+                    .font(.appSubheadline)
                     .foregroundStyle(.white)
                 Spacer()
                 Text(String(format: "%.1f", model.temperature))
-                    .font(.system(size: 14, design: .monospaced))
+                    .font(.appMonoSmall)
                     .foregroundStyle(Color(hex: "#9896B0"))
             }
             Slider(
@@ -135,11 +131,11 @@ struct ChatSettingsView: View {
             .tint(Color(hex: "#4D6CF2"))
             HStack {
                 Text("0.0")
-                    .font(.system(size: 12))
+                    .font(.appCaption)
                     .foregroundStyle(Color(hex: "#6B6980"))
                 Spacer()
                 Text("2.0")
-                    .font(.system(size: 12))
+                    .font(.appCaption)
                     .foregroundStyle(Color(hex: "#6B6980"))
             }
         }
@@ -149,11 +145,11 @@ struct ChatSettingsView: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
                 Text("Top-P")
-                    .font(.system(size: 15))
+                    .font(.appSubheadline)
                     .foregroundStyle(.white)
                 Spacer()
                 Text(String(format: "%.2f", model.topP))
-                    .font(.system(size: 14, design: .monospaced))
+                    .font(.appMonoSmall)
                     .foregroundStyle(Color(hex: "#9896B0"))
             }
             Slider(
@@ -164,11 +160,11 @@ struct ChatSettingsView: View {
             .tint(Color(hex: "#4D6CF2"))
             HStack {
                 Text("0.0")
-                    .font(.system(size: 12))
+                    .font(.appCaption)
                     .foregroundStyle(Color(hex: "#6B6980"))
                 Spacer()
                 Text("1.0")
-                    .font(.system(size: 12))
+                    .font(.appCaption)
                     .foregroundStyle(Color(hex: "#6B6980"))
             }
         }
@@ -179,7 +175,7 @@ struct ChatSettingsView: View {
     private var systemPromptSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("SYSTEM PROMPT")
-                .font(.system(size: 12, weight: .semibold))
+                .font(.appCaption)
                 .tracking(1.2)
                 .foregroundStyle(Color(hex: "#9896B0"))
 
@@ -192,7 +188,7 @@ struct ChatSettingsView: View {
                             model.systemPrompt = preset.prompt
                         } label: {
                             Text(preset.displayName)
-                                .font(.system(size: 13, weight: .medium))
+                                .font(.appCaption)
                                 .foregroundStyle(isSelected ? .white : Color(hex: "#9896B0"))
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 6)
@@ -216,7 +212,7 @@ struct ChatSettingsView: View {
             // Editable text field
             TextEditor(text: $model.systemPrompt)
                 .frame(minHeight: 100)
-                .font(.system(size: 15))
+                .font(.appSubheadline)
                 .foregroundStyle(.white)
                 .scrollContentBackground(.hidden)
                 .padding(10)

@@ -38,9 +38,9 @@ struct ModelsTabView: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "internaldrive")
-                                        .font(.system(size: 14))
+                                        .font(.iconMD)
                                     Text("Manage Downloads")
-                                        .font(.figtree(.footnote))
+                                        .font(.appCaption)
                                 }
                                 .foregroundStyle(Color(hex: "#9896B0"))
                             }
@@ -65,7 +65,7 @@ struct ModelsTabView: View {
                             .padding(.vertical, 20)
 
                         Text("BROWSE HUGGING FACE")
-                            .font(.system(size: 13, weight: .semibold))
+                            .font(.appCaption)
                             .foregroundStyle(Color(hex: "#9896B0"))
                             .tracking(0.5)
                             .padding(.horizontal, 16)
@@ -75,6 +75,7 @@ struct ModelsTabView: View {
                     }
                     .padding(.bottom, 20)
                 }
+                .scrollDismissesKeyboard(.interactively)
             }
             .navigationTitle("Models")
             .toolbarBackground(.hidden, for: .navigationBar)
@@ -160,6 +161,7 @@ private struct BrowseEmbeddedView: View {
 
 private struct BrowseEmbeddedContent: View {
     @Bindable var viewModel: HFBrowseViewModel
+    @FocusState private var isSearchFocused: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -167,17 +169,18 @@ private struct BrowseEmbeddedContent: View {
             HStack(spacing: 8) {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(Color(hex: "#6B6980"))
-                    .font(.system(size: 14))
+                    .font(.iconMD)
                 TextField("Search GGUF models...", text: $viewModel.searchQuery)
                     .foregroundStyle(.white)
-                    .font(.figtree(.callout))
+                    .font(.appBody)
+                    .focused($isSearchFocused)
                 if !viewModel.searchQuery.isEmpty {
                     Button {
                         viewModel.searchQuery = ""
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(Color(hex: "#6B6980"))
-                            .font(.system(size: 14))
+                            .font(.iconMD)
                     }
                     .accessibilityLabel("Clear search")
                 }
@@ -207,7 +210,7 @@ private struct BrowseEmbeddedContent: View {
                 } else if viewModel.searchResults.isEmpty && !viewModel.isSearching {
                     if viewModel.searchQuery.isEmpty && !viewModel.recommendations.isEmpty {
                         Text("Recommended for Your Device")
-                            .font(.outfit(.headline, weight: .semibold))
+                            .font(.appHeadline)
                             .foregroundStyle(.white)
                             .padding(.horizontal, 16)
                             .padding(.bottom, 8)
@@ -229,7 +232,7 @@ private struct BrowseEmbeddedContent: View {
                         .padding(.horizontal, 16)
                     }
 
-                    if viewModel.hasMoreResults {
+                    if viewModel.hasMoreResults && !viewModel.isLoadingNextPage && !viewModel.didEncounterEmptyNextPage {
                         HStack {
                             Spacer()
                             ProgressView().tint(Color(hex: "#4D6CF2"))
@@ -241,6 +244,12 @@ private struct BrowseEmbeddedContent: View {
                         }
                     }
                 }
+            }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") { isSearchFocused = false }
             }
         }
         .navigationDestination(for: AnnotatedModel.self) { model in
@@ -266,10 +275,10 @@ struct SettingsView: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(activeModel.displayName)
-                                    .font(.figtree(.body, weight: .medium))
+                                    .font(.appBodyEmphasized)
                                     .foregroundStyle(.white)
                                 Text("Temperature, Top-P, System Prompt")
-                                    .font(.figtree(.caption))
+                                    .font(.appCaption)
                                     .foregroundStyle(Color(hex: "#6B6980"))
                             }
                         }
@@ -288,17 +297,13 @@ struct SettingsView: View {
         }
         .scrollContentBackground(.hidden)
         .background(AppBackground())
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Settings")
+        .toolbarBackground(.hidden, for: .navigationBar)
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text("Settings")
-                    .font(.outfit(.headline, weight: .semibold))
-                    .foregroundStyle(.white)
-            }
             ToolbarItem(placement: .confirmationAction) {
                 Button { dismiss() } label: {
                     Text("Done")
-                        .font(.figtree(.body, weight: .medium))
+                        .font(.appBodyEmphasized)
                         .foregroundStyle(Color(hex: "#4D6CF2"))
                 }
             }
@@ -307,10 +312,12 @@ struct SettingsView: View {
 
     /// Resolve the active local DownloadedModel from container.activeModelURL.
     /// Remote-only selections return nil — there's nothing to edit per-model for them yet.
+    /// Matches on filename — `localPath` goes stale across reinstalls (sandbox UUIDs change).
     private func activeDownloadedModel() -> DownloadedModel? {
         guard let url = container.activeModelURL else { return nil }
+        let filename = url.lastPathComponent
         var descriptor = FetchDescriptor<DownloadedModel>(
-            predicate: #Predicate { $0.localPath == url.path }
+            predicate: #Predicate { $0.filename == filename }
         )
         descriptor.fetchLimit = 1
         return try? modelContext.fetch(descriptor).first

@@ -48,6 +48,7 @@ final class HFBrowseViewModel {
 
     var searchResults: [AnnotatedModel] = []
     var hasMoreResults: Bool = false
+    var didEncounterEmptyNextPage: Bool = false
 
     // MARK: Private
 
@@ -112,6 +113,7 @@ final class HFBrowseViewModel {
             nextPageOffset = 0
             searchResults = []
             currentSearchQuery = query
+            didEncounterEmptyNextPage = false
         }
         guard !isSearching else { return }
         isSearching = true
@@ -134,10 +136,14 @@ final class HFBrowseViewModel {
     }
 
     func loadNextPage() async {
-        guard hasMoreResults && !isLoadingNextPage && !isSearching else { return }
+        guard hasMoreResults && !isLoadingNextPage && !isSearching && !didEncounterEmptyNextPage else { return }
+        let countBefore = searchResults.count
         isLoadingNextPage = true
         defer { isLoadingNextPage = false }
         await performSearch(query: currentSearchQuery, reset: false)
+        if searchResults.count == countBefore {
+            didEncounterEmptyNextPage = true
+        }
     }
 
     // MARK: - Detail (HFIN-03)

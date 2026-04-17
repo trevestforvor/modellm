@@ -30,11 +30,11 @@ struct ChatLoadingView: View {
             }
 
             Text("Loading \(modelName) \(quantization)...")
-                .font(.figtree(.callout))
+                .font(.appBody)
                 .foregroundStyle(Color(hex: "#9896B0"))
 
             Text("\(sizeDescription) into memory")
-                .font(.caption.monospaced())
+                .font(.appMonoSmall)
                 .foregroundStyle(Color(hex: "#6B6980"))
         }
     }
