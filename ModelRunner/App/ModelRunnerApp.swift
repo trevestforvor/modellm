@@ -33,6 +33,13 @@ struct ModelRunnerApp: App {
     // AppContainer is a shared singleton so AppDelegate can access downloadService
     @State private var container = AppContainer.shared
 
+    init() {
+        // Apply Outfit / Figtree to UIKit chrome — nav bar titles, bar button items.
+        // SwiftUI's NavigationStack title and Button("Done") in toolbars still go
+        // through UIKit and need explicit UIFont overrides.
+        AppAppearance.configure()
+    }
+
     // ModelContainer: DownloadedModel persists in Application Support (not Caches — see P-07)
     // isExcludedFromBackup is set per-file on GGUF blobs, not on the SwiftData store itself.
     private static let modelContainer: ModelContainer = {

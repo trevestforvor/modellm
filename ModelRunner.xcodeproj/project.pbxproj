@@ -108,6 +108,7 @@
 		FONT000000000001FONT0000 /* Outfit-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FONT000000000002FONT0000 /* Outfit-VariableFont_wght.ttf */; };
 		FONT000000000003FONT0000 /* Figtree-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FONT000000000004FONT0000 /* Figtree-VariableFont_wght.ttf */; };
 		FONT000000000005FONT0000 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FONT000000000006FONT0000 /* AppFont.swift */; };
+		APPR000000000001APPR0000 /* AppAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = APPR000000000002APPR0000 /* AppAppearance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,6 +224,7 @@
 		FONT000000000002FONT0000 /* Outfit-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		FONT000000000004FONT0000 /* Figtree-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Figtree-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		FONT000000000006FONT0000 /* AppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFont.swift; sourceTree = "<group>"; };
+		APPR000000000002APPR0000 /* AppAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -513,6 +515,7 @@
 				SH01000000000002SH010000 /* PressScaleButtonStyle.swift */,
 				SH01000000000004SH010000 /* Haptics.swift */,
 				FONT000000000006FONT0000 /* AppFont.swift */,
+				APPR000000000002APPR0000 /* AppAppearance.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				SH01000000000001SH010000 /* PressScaleButtonStyle.swift in Sources */,
 				SH01000000000003SH010000 /* Haptics.swift in Sources */,
 				FONT000000000005FONT0000 /* AppFont.swift in Sources */,
+				APPR000000000001APPR0000 /* AppAppearance.swift in Sources */,
 				CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */,
 				CC03010001000018CC030100 /* LibraryService.swift in Sources */,
 				CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */,
