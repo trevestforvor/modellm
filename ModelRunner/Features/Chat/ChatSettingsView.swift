@@ -28,9 +28,13 @@ struct ChatSettingsView: View {
                     .padding(.vertical, 20)
                 }
             }
-            .navigationTitle("Model Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Model Settings")
+                        .font(.outfit(.headline, weight: .semibold))
+                        .foregroundStyle(.white)
+                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button { dismiss() } label: {
                         Text("Done")

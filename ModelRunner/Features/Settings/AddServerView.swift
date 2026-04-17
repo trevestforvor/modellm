@@ -65,9 +65,13 @@ struct AddServerView: View {
             }
             .scrollContentBackground(.hidden)
         }
-        .navigationTitle("Add Server")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Add Server")
+                    .font(.outfit(.headline, weight: .semibold))
+                    .foregroundStyle(.white)
+            }
             ToolbarItem(placement: .topBarLeading) {
                 Button { dismiss() } label: {
                     Text("Cancel")

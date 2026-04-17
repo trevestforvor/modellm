@@ -59,9 +59,32 @@ enum AppAppearance {
         guard let base = UIFont(name: familyName, size: size) else {
             return UIFont.systemFont(ofSize: size, weight: weight)
         }
+        // For variable fonts (Outfit, Figtree), expose weight via the CoreText `wght`
+        // variation axis. UIFontDescriptor's `.traits[.weight:]` doesn't propagate to
+        // variable fonts — the font still renders at its default weight. The `wght`
+        // axis uses standard CSS-style numeric values (400 = regular, 600 = semibold,
+        // 700 = bold). FourCharCode('wght') = 2003265652.
+        let wghtTag = 2003265652
+        let wghtValue = cssWeight(for: weight)
         let descriptor = base.fontDescriptor.addingAttributes([
-            .traits: [UIFontDescriptor.TraitKey.weight: weight.rawValue]
+            UIFontDescriptor.AttributeName(rawValue: "NSCTFontVariationAttribute"): [wghtTag: wghtValue]
         ])
         return UIFont(descriptor: descriptor, size: size)
+    }
+
+    /// Map UIFont.Weight into a CSS-style `wght` axis value used by variable fonts.
+    private static func cssWeight(for weight: UIFont.Weight) -> Int {
+        switch weight {
+        case .ultraLight: return 100
+        case .thin:       return 200
+        case .light:      return 300
+        case .regular:    return 400
+        case .medium:     return 500
+        case .semibold:   return 600
+        case .bold:       return 700
+        case .heavy:      return 800
+        case .black:      return 900
+        default:          return 400
+        }
     }
 }

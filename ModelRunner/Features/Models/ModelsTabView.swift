@@ -288,9 +288,13 @@ struct SettingsView: View {
         }
         .scrollContentBackground(.hidden)
         .background(AppBackground())
-        .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Settings")
+                    .font(.outfit(.headline, weight: .semibold))
+                    .foregroundStyle(.white)
+            }
             ToolbarItem(placement: .confirmationAction) {
                 Button { dismiss() } label: {
                     Text("Done")
