@@ -80,12 +80,14 @@ struct ChatRootView: View {
                         Image(systemName: "gear")
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
+                    .accessibilityLabel("Settings")
                     Button {
                         viewModel?.showingHistory.toggle()
                     } label: {
                         Image(systemName: "bubble.left")
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
+                    .accessibilityLabel("Conversation history")
                     .disabled(viewModel == nil)
                 }
             }
@@ -95,18 +97,19 @@ struct ChatRootView: View {
                 } label: {
                     VStack(spacing: 2) {
                         Text(currentModelDisplayName)
-                            .font(.system(size: 16, weight: .bold))
+                            .font(.title3.weight(.semibold))
+                            .fontDesign(.serif)
                             .foregroundStyle(.white)
                             .lineLimit(1)
                             .truncationMode(.middle)
                         if let subtitle = currentModelSubtitle {
                             Text(subtitle)
-                                .font(.system(size: 11))
+                                .font(.caption)
                                 .foregroundStyle(Color(hex: "#6B6980"))
                                 .lineLimit(1)
                         }
                     }
-                    .frame(maxWidth: 200)
+                    .frame(maxWidth: 220)
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
@@ -117,6 +120,7 @@ struct ChatRootView: View {
                         .font(.system(size: 16, weight: .medium))
                         .foregroundStyle(Color(hex: "#9896B0"))
                 }
+                .accessibilityLabel("New chat")
                 .disabled(viewModel == nil)
             }
         }
@@ -156,9 +160,40 @@ struct ChatRootView: View {
     // MARK: - Toolbar Title Helpers
 
     private var currentModelDisplayName: String {
-        if let selected = container.selectedModel { return selected.displayName }
-        if let name = container.activeModelName, !name.isEmpty { return name }
-        return "No Model"
+        let raw: String
+        if let selected = container.selectedModel {
+            raw = selected.displayName
+        } else if let name = container.activeModelName, !name.isEmpty {
+            raw = name
+        } else {
+            return "No Model"
+        }
+        return Self.friendlyModelName(raw)
+    }
+
+    /// Produces a human-friendly short name from a verbose model string.
+    /// Example: "SmolLM2-360M-Instruct (Bundled) Q4_K_M" → "SmolLM2 360M"
+    static func friendlyModelName(_ raw: String) -> String {
+        var s = raw
+        // Drop parenthetical annotations: "(Bundled)", "(Q4_K_M)", etc.
+        if let parenIdx = s.firstIndex(of: "(") {
+            s = String(s[..<parenIdx])
+        }
+        s = s.trimmingCharacters(in: .whitespaces)
+
+        // Strip common trailing descriptors case-insensitively.
+        let suffixesToStrip = ["-Instruct", " Instruct", "-Chat", " Chat", "-it"]
+        for suffix in suffixesToStrip {
+            if let range = s.range(of: suffix, options: [.caseInsensitive, .backwards])
+                , range.upperBound == s.endIndex {
+                s.removeSubrange(range)
+            }
+        }
+
+        // Replace remaining dashes with spaces for readability.
+        s = s.replacingOccurrences(of: "-", with: " ")
+        s = s.replacingOccurrences(of: "  ", with: " ")
+        return s.trimmingCharacters(in: .whitespaces)
     }
 
     private var currentModelSubtitle: String? {
@@ -239,7 +274,10 @@ struct ChatRootView: View {
                         ChatBubbleView(
                             message: message,
                             tokensPerSecond: 0,
-                            isGenerating: false
+                            isGenerating: false,
+                            onFeedback: { kind in vm.toggleFeedback(for: message.id, kind: kind) },
+                            onCopy: { vm.copyMessage(message) },
+                            onRegenerate: { vm.regenerate(from: message.id) }
                         )
                         .id(message.id)
                     }
@@ -286,7 +324,7 @@ struct ChatRootView: View {
                 .font(.headline)
                 .foregroundStyle(Color(hex: "#9896B0"))
             ProgressView()
-                .tint(Color(hex: "#8B7CF0"))
+                .tint(Color(hex: "#7C7BF5"))
         }
         .padding()
     }

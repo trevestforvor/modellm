@@ -27,7 +27,7 @@ struct MyModelsSection: View {
                         Text("Add Server")
                             .font(.system(size: 12))
                     }
-                    .foregroundStyle(Color(hex: "#8B7CF0"))
+                    .foregroundStyle(Color(hex: "#7C7BF5"))
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)
                     .background(
@@ -47,10 +47,10 @@ struct MyModelsSection: View {
                         .font(.system(size: 36))
                         .foregroundStyle(Color(hex: "#302E42"))
                     Text("No models yet")
-                        .font(.system(size: 15, weight: .medium))
+                        .font(.body.weight(.medium))
                         .foregroundStyle(Color(hex: "#9896B0"))
                     Text("Add a remote server or download a model to get started")
-                        .font(.system(size: 13))
+                        .font(.footnote)
                         .foregroundStyle(Color(hex: "#6B6980"))
                         .multilineTextAlignment(.center)
                 }
@@ -59,12 +59,15 @@ struct MyModelsSection: View {
             } else {
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(models) { model in
-                        MyModelCard(model: model)
-                            .onTapGesture {
-                                if model.isOnline {
-                                    onSelectModel(model)
-                                }
+                        Button {
+                            if model.isOnline {
+                                Haptics.soft()
+                                onSelectModel(model)
                             }
+                        } label: {
+                            MyModelCard(model: model)
+                        }
+                        .buttonStyle(.pressScale)
                     }
                 }
             }

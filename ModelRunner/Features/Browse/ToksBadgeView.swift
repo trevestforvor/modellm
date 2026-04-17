@@ -76,5 +76,5 @@ extension Color {
         ToksBadgeView(result: .runsSlowly(estimatedTokensPerSec: 5...10, warning: "Slow on this device"))
     }
     .padding()
-    .background(Color(hex: "#0F0E1A"))
+    .background(Color(hex: "#0D0C18"))
 }

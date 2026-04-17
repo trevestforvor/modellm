@@ -33,5 +33,5 @@ struct VariantRowView: View {
         Text("VariantRowView Preview")
             .foregroundStyle(.white)
     }
-    .background(Color(hex: "#0F0E1A"))
+    .background(Color(hex: "#0D0C18"))
 }

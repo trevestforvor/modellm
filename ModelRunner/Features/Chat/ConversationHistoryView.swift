@@ -46,7 +46,7 @@ struct ConversationHistoryView: View {
                         ForEach(grouped, id: \.modelId) { group in
                             // Section header
                             Text(group.displayName)
-                                .font(.system(size: 13, weight: .semibold))
+                                .font(.footnote.weight(.semibold))
                                 .foregroundStyle(Color(hex: "#9896B0"))
                                 .padding(.horizontal, 16)
                                 .padding(.top, 12)
@@ -85,7 +85,7 @@ struct ConversationHistoryView: View {
     private var historyHeader: some View {
         HStack {
             Text("Conversations")
-                .font(.system(size: 16, weight: .semibold))
+                .font(.headline)
                 .foregroundStyle(.primary)
             Spacer()
             Button(action: onDismiss) {
@@ -96,9 +96,10 @@ struct ConversationHistoryView: View {
                     .background(
                         Circle()
                             .fill(Color(hex: "#1A1830").opacity(0.6))
-                            .overlay(Circle().strokeBorder(Color(hex: "#302E42"), lineWidth: 0.5))
+                            .overlay(Circle().strokeBorder(Color.white.opacity(0.08), lineWidth: 0.5))
                     )
             }
+            .accessibilityLabel("Dismiss")
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
@@ -111,13 +112,13 @@ struct ConversationHistoryView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(conv.title)
-                        .font(.system(size: 15))
+                        .font(.body)
                         .foregroundStyle(.primary)
                         .lineLimit(1)
                 }
                 Spacer()
                 Text(relativeDate(conv.updatedAt))
-                    .font(.system(size: 12))
+                    .font(.caption.monospaced())
                     .foregroundStyle(Color(hex: "#6B6980"))
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .medium))
@@ -130,7 +131,7 @@ struct ConversationHistoryView: View {
                     .fill(Color(hex: "#1A1830").opacity(0.6))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(Color(hex: "#302E42"), lineWidth: 0.5)
+                            .strokeBorder(Color.white.opacity(0.08), lineWidth: 0.5)
                     )
             )
             .padding(.horizontal, 12)
@@ -145,10 +146,10 @@ struct ConversationHistoryView: View {
                 .font(.system(size: 32))
                 .foregroundStyle(Color(hex: "#6B6980"))
             Text("No conversations yet")
-                .font(.system(size: 15))
+                .font(.body)
                 .foregroundStyle(Color(hex: "#9896B0"))
             Text("Start typing to begin")
-                .font(.system(size: 13))
+                .font(.footnote)
                 .foregroundStyle(Color(hex: "#6B6980"))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

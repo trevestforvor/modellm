@@ -73,6 +73,8 @@
 		FF09AB0001000002FF09AB00 /* LocalInferenceBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF09AB0001000001FF09AB00 /* LocalInferenceBackend.swift */; };
 		CC0601000100000FCC060100 /* RemoteInferenceBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000010CC060200 /* RemoteInferenceBackendTests.swift */; };
 		CLMV8QED6BPIPKAT42M4CDY8 /* AppBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = VMK8PQOCMDVXC68ITB2SPUMY /* AppBackground.swift */; };
+		SH01000000000001SH010000 /* PressScaleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = SH01000000000002SH010000 /* PressScaleButtonStyle.swift */; };
+		SH01000000000003SH010000 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = SH01000000000004SH010000 /* Haptics.swift */; };
 		DD07010001000001DD070100 /* AnthropicMessagesAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000002DD070100 /* AnthropicMessagesAdapter.swift */; };
 		DD07010001000003DD070100 /* ServerProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000004DD070100 /* ServerProbe.swift */; };
 		DD07010001000005DD070100 /* ServerProbeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000006DD070100 /* ServerProbeTests.swift */; };
@@ -199,6 +201,8 @@
 		FA0100000000002EFA010000 /* ModelUsageStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelUsageStats.swift; sourceTree = "<group>"; };
 		FA0100000000003EFA010000 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		VMK8PQOCMDVXC68ITB2SPUMY /* AppBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBackground.swift; sourceTree = "<group>"; };
+		SH01000000000002SH010000 /* PressScaleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressScaleButtonStyle.swift; sourceTree = "<group>"; };
+		SH01000000000004SH010000 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		FF09010001000002FF090100 /* llama.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = llama.xcframework; sourceTree = "<group>"; };
 		AA09010001000002AA090100 /* TranscriptionBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionBackend.swift; sourceTree = "<group>"; };
 		AA09010001000004AA090100 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
@@ -500,6 +504,8 @@
 			isa = PBXGroup;
 			children = (
 				VMK8PQOCMDVXC68ITB2SPUMY /* AppBackground.swift */,
+				SH01000000000002SH010000 /* PressScaleButtonStyle.swift */,
+				SH01000000000004SH010000 /* Haptics.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -769,6 +775,8 @@
 				CC03010001000005CC030100 /* DownloadService.swift in Sources */,
 				CC03010001000007CC030100 /* LibraryView.swift in Sources */,
 				CLMV8QED6BPIPKAT42M4CDY8 /* AppBackground.swift in Sources */,
+				SH01000000000001SH010000 /* PressScaleButtonStyle.swift in Sources */,
+				SH01000000000003SH010000 /* Haptics.swift in Sources */,
 				CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */,
 				CC03010001000018CC030100 /* LibraryService.swift in Sources */,
 				CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */,
@@ -862,6 +870,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ModelRunner uses the microphone to capture speech for on-device transcription testing.";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "ModelRunner uses on-device speech recognition to compare transcription engines.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1035,6 +1044,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ModelRunner uses the microphone to capture speech for on-device transcription testing.";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "ModelRunner uses on-device speech recognition to compare transcription engines.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

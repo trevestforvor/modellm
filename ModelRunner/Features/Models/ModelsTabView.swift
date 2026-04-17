@@ -40,10 +40,11 @@ struct ModelsTabView: View {
                                     Image(systemName: "internaldrive")
                                         .font(.system(size: 14))
                                     Text("Manage Downloads")
-                                        .font(.system(size: 13))
+                                        .font(.footnote)
                                 }
                                 .foregroundStyle(Color(hex: "#9896B0"))
                             }
+                            .accessibilityLabel("Manage downloads")
                             .padding(.horizontal, 16)
                             .padding(.top, 8)
                         }
@@ -85,6 +86,7 @@ struct ModelsTabView: View {
                         Image(systemName: "gear")
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
+                    .accessibilityLabel("Settings")
                 }
             }
             .sheet(isPresented: $showAddServer) {
@@ -134,7 +136,7 @@ private struct BrowseEmbeddedView: View {
                 HStack {
                     Spacer()
                     ProgressView()
-                        .tint(Color(hex: "#8B7CF0"))
+                        .tint(Color(hex: "#7C7BF5"))
                     Spacer()
                 }
                 .padding(.top, 20)
@@ -168,7 +170,7 @@ private struct BrowseEmbeddedContent: View {
                     .font(.system(size: 14))
                 TextField("Search GGUF models...", text: $viewModel.searchQuery)
                     .foregroundStyle(.white)
-                    .font(.system(size: 14))
+                    .font(.callout)
                 if !viewModel.searchQuery.isEmpty {
                     Button {
                         viewModel.searchQuery = ""
@@ -177,6 +179,7 @@ private struct BrowseEmbeddedContent: View {
                             .foregroundStyle(Color(hex: "#6B6980"))
                             .font(.system(size: 14))
                     }
+                    .accessibilityLabel("Clear search")
                 }
             }
             .padding(.horizontal, 14)
@@ -186,7 +189,7 @@ private struct BrowseEmbeddedContent: View {
                     .fill(Color(hex: "#1A1830"))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(Color(hex: "#302E42"), lineWidth: 0.5)
+                            .strokeBorder(Color.white.opacity(0.08), lineWidth: 0.5)
                     )
             )
             .padding(.horizontal, 16)
@@ -197,14 +200,14 @@ private struct BrowseEmbeddedContent: View {
                 if viewModel.isSearching && viewModel.searchResults.isEmpty {
                     HStack {
                         Spacer()
-                        ProgressView().tint(Color(hex: "#8B7CF0"))
+                        ProgressView().tint(Color(hex: "#7C7BF5"))
                         Spacer()
                     }
                     .padding(.top, 20)
                 } else if viewModel.searchResults.isEmpty && !viewModel.isSearching {
                     if viewModel.searchQuery.isEmpty && !viewModel.recommendations.isEmpty {
                         Text("Recommended for Your Device")
-                            .font(.system(size: 15, weight: .semibold))
+                            .font(.headline)
                             .foregroundStyle(.white)
                             .padding(.horizontal, 16)
                             .padding(.bottom, 8)
@@ -229,7 +232,7 @@ private struct BrowseEmbeddedContent: View {
                     if viewModel.hasMoreResults {
                         HStack {
                             Spacer()
-                            ProgressView().tint(Color(hex: "#8B7CF0"))
+                            ProgressView().tint(Color(hex: "#7C7BF5"))
                             Spacer()
                         }
                         .padding(.vertical, 16)
@@ -263,10 +266,10 @@ struct SettingsView: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(activeModel.displayName)
-                                    .font(.system(size: 15, weight: .medium))
+                                    .font(.body.weight(.medium))
                                     .foregroundStyle(.white)
                                 Text("Temperature, Top-P, System Prompt")
-                                    .font(.system(size: 12))
+                                    .font(.caption)
                                     .foregroundStyle(Color(hex: "#6B6980"))
                             }
                         }
@@ -290,7 +293,7 @@ struct SettingsView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") { dismiss() }
-                    .foregroundStyle(Color(hex: "#8B7CF0"))
+                    .foregroundStyle(Color(hex: "#7C7BF5"))
             }
         }
     }

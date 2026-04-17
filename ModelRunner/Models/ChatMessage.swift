@@ -20,6 +20,8 @@ public struct ChatMessage: Identifiable, Sendable {
     public var thinkingDuration: TimeInterval?
     /// Final measured tok/s — set when generation completes, persists on the message
     public var finalTokPerSec: Double?
+    /// In-memory feedback state. Values: "up", "down", nil. Persisted to SwiftData Message when available.
+    public var feedback: String?
 
     public init(role: MessageRole, content: String, isStreaming: Bool = false, thinkingContent: String = "") {
         self.id = UUID()

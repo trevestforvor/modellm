@@ -51,6 +51,7 @@ struct ModelRunnerApp: App {
                 ChatRootView()
                     .environment(container)
             }
+            .preferredColorScheme(.dark)
         }
         .modelContainer(Self.modelContainer)
     }

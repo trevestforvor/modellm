@@ -4,12 +4,12 @@ struct ChatBubbleView: View {
     let message: ChatMessage
     let tokensPerSecond: Double
     let isGenerating: Bool
+    var onFeedback: (String) -> Void = { _ in }
+    var onCopy: () -> Void = {}
+    var onRegenerate: () -> Void = {}
 
     @State private var isThinkingExpanded: Bool = false
-
-    private var userCornerRadii: RectangleCornerRadii {
-        RectangleCornerRadii(topLeading: 16, bottomLeading: 16, bottomTrailing: 4, topTrailing: 16)
-    }
+    @State private var copyFlashActive: Bool = false
 
     private var assistantCornerRadii: RectangleCornerRadii {
         RectangleCornerRadii(topLeading: 16, bottomLeading: 4, bottomTrailing: 16, topTrailing: 16)
@@ -28,7 +28,10 @@ struct ChatBubbleView: View {
                     assistantBubble
                     if message.role == .assistant && (isGenerating || tokensPerSecond > 0) {
                         ToksPerSecondBadge(tokensPerSecond: tokensPerSecond, isGenerating: isGenerating)
-                            .padding(.leading, 12)
+                            .padding(.leading, 16)
+                    }
+                    if message.role == .assistant && !message.isStreaming && !isGenerating {
+                        feedbackRow
                     }
                 }
                 Spacer(minLength: 60)
@@ -50,13 +53,13 @@ struct ChatBubbleView: View {
                         .font(.system(size: 12))
                     if isThinkingExpanded || message.isStreaming {
                         Text("Thinking")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(.footnote.weight(.medium))
                     } else if let duration = message.thinkingDuration {
                         Text("Thought for \(String(format: "%.1f", duration))s")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(.footnote.weight(.medium))
                     } else {
                         Text("Thinking")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(.footnote.weight(.medium))
                     }
                     Spacer()
                     Image(systemName: isThinkingExpanded ? "chevron.up" : "chevron.down")
@@ -67,7 +70,7 @@ struct ChatBubbleView: View {
 
             if isThinkingExpanded || message.isStreaming {
                 Text(message.thinkingContent)
-                    .font(.system(size: 13))
+                    .font(.footnote)
                     .foregroundStyle(Color(hex: "#6B6980"))
                     .italic()
                     .transition(.opacity.combined(with: .move(edge: .top)))
@@ -99,8 +102,8 @@ struct ChatBubbleView: View {
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
             .background(
-                UnevenRoundedRectangle(cornerRadii: userCornerRadii)
-                    .fill(Color(hex: "#8B7CF0"))
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color(hex: "#7C7BF5"))
             )
             .foregroundStyle(.white)
             .font(.body)
@@ -113,13 +116,61 @@ struct ChatBubbleView: View {
     private var assistantContent: some View {
         markdownText(message.content)
             .font(.body)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(
-                UnevenRoundedRectangle(cornerRadii: assistantCornerRadii)
-                    .fill(Color(hex: "#1A1830"))
-            )
-            .foregroundStyle(.white)
+            .lineSpacing(3)
+            .foregroundStyle(Color(hex: "#EDEDF4"))
+            .padding(.horizontal, 16)
+            .accessibilityAddTraits(message.isStreaming ? [.updatesFrequently] : [])
+    }
+
+    // MARK: - Feedback Row
+
+    private var feedbackRow: some View {
+        HStack(spacing: 16) {
+            feedbackIcon(system: message.feedback == "up" ? "hand.thumbsup.fill" : "hand.thumbsup",
+                         active: message.feedback == "up",
+                         label: "Good response") {
+                onFeedback("up")
+            }
+            feedbackIcon(system: message.feedback == "down" ? "hand.thumbsdown.fill" : "hand.thumbsdown",
+                         active: message.feedback == "down",
+                         label: "Bad response") {
+                onFeedback("down")
+            }
+            feedbackIcon(system: "doc.on.doc",
+                         active: copyFlashActive,
+                         label: "Copy message",
+                         flashColor: Color(hex: "#34D399")) {
+                onCopy()
+                copyFlashActive = true
+                Task { @MainActor in
+                    try? await Task.sleep(nanoseconds: 800_000_000)
+                    copyFlashActive = false
+                }
+            }
+            feedbackIcon(system: "arrow.counterclockwise",
+                         active: false,
+                         label: "Regenerate response") {
+                onRegenerate()
+            }
+        }
+        .padding(.leading, 16)
+        .padding(.top, 2)
+    }
+
+    private func feedbackIcon(system: String,
+                              active: Bool,
+                              label: String,
+                              flashColor: Color? = nil,
+                              action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: system)
+                .font(.system(size: 14, weight: .medium))
+                .foregroundStyle(active ? (flashColor ?? Color(hex: "#7C7BF5")) : Color(hex: "#6B6980"))
+                .frame(width: 32, height: 32)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.pressScale)
+        .accessibilityLabel(label)
     }
 
     /// Render markdown safely — falls back to plain text if markdown is malformed

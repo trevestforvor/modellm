@@ -1,6 +1,7 @@
 import Foundation
 import SwiftData
 import OSLog
+import UIKit
 
 private let logger = Logger(subsystem: "com.modelrunner", category: "ChatViewModel")
 
@@ -229,6 +230,72 @@ final class ChatViewModel {
         }
         isGenerating = false
         // tok/s persists — no reset
+    }
+
+    // MARK: - Message Feedback / Actions
+
+    /// Toggle user feedback on a specific assistant message.
+    /// - Parameters:
+    ///   - messageID: The target assistant message's id.
+    ///   - kind: "up", "down", or nil (clear). If the same kind is already set, clears to nil.
+    func toggleFeedback(for messageID: UUID, kind: String) {
+        guard let idx = messages.firstIndex(where: { $0.id == messageID }) else { return }
+        let current = messages[idx].feedback
+        let newValue: String? = (current == kind) ? nil : kind
+        messages[idx].feedback = newValue
+        // Persist if we have a parallel SwiftData Message. Match by content + role since
+        // in-memory ChatMessage.id and persisted Message have no shared identity field.
+        if let conv = activeConversation {
+            let target = messages[idx]
+            if let persistIdx = conv.messages.firstIndex(where: { $0.role == target.role.rawValue && $0.content == target.content }) {
+                conv.messages[persistIdx].userFeedback = newValue
+                try? modelContext?.save()
+            }
+        }
+    }
+
+    /// Copy an assistant message's text to the pasteboard and fire a success haptic.
+    func copyMessage(_ message: ChatMessage) {
+        UIPasteboard.general.string = message.content
+        Haptics.success()
+    }
+
+    /// Regenerate from a given assistant message. Removes that message and anything after,
+    /// then re-runs generation using the last user message as context.
+    func regenerate(from messageID: UUID) {
+        guard !isGenerating else { return }
+        guard let idx = messages.firstIndex(where: { $0.id == messageID }) else { return }
+        // Only regenerate assistant messages.
+        guard messages[idx].role == .assistant else { return }
+        // The prior message must be a user message to anchor the regeneration.
+        guard idx > 0, messages[idx - 1].role == .user else { return }
+
+        // Drop the assistant message and everything after. Keep persisted Message too.
+        let userAnchor = messages[idx - 1]
+        messages.removeSubrange(idx..<messages.endIndex)
+
+        if let conv = activeConversation {
+            if let persistAnchorIdx = conv.messages.lastIndex(where: { $0.role == userAnchor.role.rawValue && $0.content == userAnchor.content }) {
+                let removeFrom = persistAnchorIdx + 1
+                if removeFrom < conv.messages.count {
+                    conv.messages.removeSubrange(removeFrom..<conv.messages.count)
+                }
+                conv.updatedAt = Date()
+                try? modelContext?.save()
+            }
+        }
+
+        // Re-run generation. `messages` now ends with the user anchor — the generation
+        // path reads the full messages array for context.
+        isGenerating = true
+        generationTask = Task { [weak self] in
+            guard let self else { return }
+            if self.backend != nil {
+                await self.runRemoteGeneration()
+            } else if self.inferenceService != nil {
+                await self.runLocalGeneration()
+            }
+        }
     }
 
     /// Legacy: load a local GGUF model

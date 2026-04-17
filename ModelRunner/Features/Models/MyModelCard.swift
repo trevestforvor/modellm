@@ -17,14 +17,14 @@ struct MyModelCard: View {
             .padding(.bottom, 10)
 
             Text(model.displayName)
-                .font(.system(size: 14, weight: .semibold))
+                .font(.callout.weight(.semibold))
                 .foregroundStyle(.white)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
 
             if let serverName = model.serverName {
                 Text(serverName)
-                    .font(.system(size: 11))
+                    .font(.caption2)
                     .foregroundStyle(Color(hex: "#6B6980"))
                     .padding(.top, 3)
             }
@@ -34,11 +34,11 @@ struct MyModelCard: View {
             HStack {
                 if let tokPerSec = model.tokPerSec {
                     Text(String(format: "%.0f tok/s", tokPerSec))
-                        .font(.system(size: 11, design: .monospaced))
-                        .foregroundStyle(Color(hex: "#8B7CF0"))
+                        .font(.caption.monospaced())
+                        .foregroundStyle(Color(hex: "#7C7BF5"))
                 } else {
                     Text("— tok/s")
-                        .font(.system(size: 11, design: .monospaced))
+                        .font(.caption.monospaced())
                         .foregroundStyle(Color(hex: "#6B6980"))
                 }
 
@@ -61,7 +61,7 @@ struct MyModelCard: View {
 
     private var sourceDotColor: Color {
         if !model.isOnline { return Color(hex: "#ef4444") }
-        if case .local = model.source { return Color(hex: "#8B7CF0") }
+        if case .local = model.source { return Color(hex: "#7C7BF5") }
         return Color(hex: "#22c55e")
     }
 
@@ -77,7 +77,7 @@ struct MyModelCard: View {
                 .font(.system(size: 9))
                 .foregroundStyle(Color(hex: "#ef4444"))
         } else if model.supportsThinking {
-            badgePill(text: "🧠 think", color: Color(hex: "#8B7CF0"))
+            badgePill(text: "🧠 think", color: Color(hex: "#7C7BF5"))
         } else if case .local = model.source {
             badgePill(text: "Runs Well", color: Color(hex: "#22c55e"))
         }

@@ -32,31 +32,33 @@ struct SpeechSpikeView: View {
                         Circle()
                             .fill(viewModel.recorder.isRecording
                                   ? Color(red: 0.95, green: 0.35, blue: 0.40)
-                                  : Color(hex: "#8B7CF0"))
+                                  : Color(hex: "#7C7BF5"))
                             .frame(width: 64, height: 64)
                         Image(systemName: viewModel.recorder.isRecording ? "stop.fill" : "mic.fill")
                             .font(.system(size: 24, weight: .semibold))
                             .foregroundStyle(.white)
                     }
                 }
+                .accessibilityLabel(viewModel.recorder.isRecording ? "Stop recording" : "Push to talk")
+                .accessibilityHint(viewModel.recorder.isRecording ? "Tap to stop and transcribe" : "Tap to start recording speech")
                 .buttonStyle(.plain)
                 .disabled(viewModel.isProcessing)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(viewModel.recorder.isRecording ? "Recording…" : "Tap mic to start, tap again to stop")
-                        .font(.system(size: 13, weight: .medium))
+                        .font(.footnote.weight(.medium))
                         .foregroundStyle(.white)
                     if let err = viewModel.recorder.errorMessage {
                         Text(err)
-                            .font(.system(size: 11))
+                            .font(.caption2)
                             .foregroundStyle(Color(red: 0.95, green: 0.45, blue: 0.45))
                     } else if let err = viewModel.errorMessage {
                         Text(err)
-                            .font(.system(size: 11))
+                            .font(.caption2)
                             .foregroundStyle(Color(red: 0.95, green: 0.45, blue: 0.45))
                     } else {
                         Text("Compares 3 STT engines on the same clip.")
-                            .font(.system(size: 11))
+                            .font(.caption2)
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                 }
@@ -68,9 +70,10 @@ struct SpeechSpikeView: View {
                         viewModel.clearResults()
                     } label: {
                         Text("Clear")
-                            .font(.system(size: 12, weight: .semibold))
+                            .font(.caption.weight(.semibold))
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
+                    .accessibilityLabel("Clear results")
                     .buttonStyle(.plain)
                 }
             }
@@ -87,9 +90,9 @@ struct SpeechSpikeView: View {
                 if viewModel.isProcessing {
                     HStack(spacing: 8) {
                         ProgressView()
-                            .tint(Color(hex: "#8B7CF0"))
+                            .tint(Color(hex: "#7C7BF5"))
                         Text("Transcribing…")
-                            .font(.system(size: 12))
+                            .font(.caption)
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                     .padding(12)

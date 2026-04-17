@@ -71,5 +71,5 @@ struct ModelCardView: View {
             .foregroundStyle(.white)
     }
     .padding()
-    .background(Color(hex: "#0F0E1A"))
+    .background(Color(hex: "#0D0C18"))
 }

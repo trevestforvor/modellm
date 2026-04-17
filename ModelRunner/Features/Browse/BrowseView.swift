@@ -4,9 +4,9 @@ struct BrowseView: View {
     @Environment(AppContainer.self) private var container
     @State private var viewModel: HFBrowseViewModel?
 
-    private let meshBase      = Color(hex: "#0F0E1A")
+    private let meshBase      = Color(hex: "#0D0C18")
     private let secondaryText = Color(hex: "#9896B0")
-    private let accent        = Color(hex: "#8B7CF0")
+    private let accent        = Color(hex: "#7C7BF5")
 
     var body: some View {
         Group {
@@ -53,7 +53,7 @@ private struct BrowseContentView: View {
     private let primaryText   = Color(hex: "#EDEDF4")
     private let secondaryText = Color(hex: "#9896B0")
     private let tertiaryText  = Color(hex: "#6B6980")
-    private let accent        = Color(hex: "#8B7CF0")
+    private let accent        = Color(hex: "#7C7BF5")
 
     var body: some View {
         NavigationStack {

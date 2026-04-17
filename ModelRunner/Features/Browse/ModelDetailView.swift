@@ -16,7 +16,7 @@ struct ModelDetailView: View {
     private let secondaryText = Color(hex: "#9896B0")
     private let tertiaryText  = Color(hex: "#6B6980")
     private let border        = Color(hex: "#302E42")
-    private let accent        = Color(hex: "#8B7CF0")
+    private let accent        = Color(hex: "#7C7BF5")
 
     private var displayModel: AnnotatedModel { detailedModel ?? model }
 
@@ -105,6 +105,7 @@ struct ModelDetailView: View {
                     Image(systemName: "arrow.up.right.square")
                         .foregroundStyle(accent)
                 }
+                .accessibilityLabel("View on Hugging Face")
             }
         }
         .task {

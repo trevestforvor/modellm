@@ -13,7 +13,7 @@ struct AddServerView: View {
 
     private let background    = Color(hex: "#0D0C18")
     private let surface       = Color(hex: "#1A1830")
-    private let accent        = Color(hex: "#8B7CF0")
+    private let accent        = Color(hex: "#7C7BF5")
     private let secondaryText = Color(hex: "#9896B0")
 
     private enum ProbeState {
@@ -74,7 +74,7 @@ struct AddServerView: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Add") { saveServer() }
-                    .foregroundStyle(canAdd ? accent : Color.gray)
+                    .foregroundStyle(canAdd ? accent : Color(hex: "#6B6980"))
                     .disabled(!canAdd)
             }
         }

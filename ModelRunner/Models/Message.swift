@@ -7,6 +7,8 @@ final class Message {
     var role: String      // "user" | "assistant"
     var content: String
     var createdAt: Date
+    /// User feedback on an assistant message. Values: "up", "down", or nil (no feedback).
+    var userFeedback: String? = nil
 
     var conversation: Conversation?
 

@@ -7,7 +7,7 @@ struct ChatEmptyState: View {
     let modelName: String?
     let onBrowse: () -> Void
 
-    private let accent = Color(hex: "#8B7CF0")
+    private let accent = Color(hex: "#7C7BF5")
 
     var body: some View {
         VStack(spacing: 24) {
@@ -24,19 +24,20 @@ struct ChatEmptyState: View {
 
             VStack(spacing: 8) {
                 Text(headline)
-                    .font(.system(size: 22, weight: .bold))
+                    .font(.largeTitle.weight(.medium))
+                    .fontDesign(.serif)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
 
                 Text("Your on-device AI")
-                    .font(.system(size: 15))
+                    .font(.body)
                     .foregroundStyle(Color(hex: "#9896B0"))
             }
             .padding(.horizontal, 24)
 
             Button(action: onBrowse) {
                 Text("Browse models")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(.headline)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)

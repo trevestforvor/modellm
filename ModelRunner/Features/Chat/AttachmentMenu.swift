@@ -1,10 +1,11 @@
 import SwiftUI
 
-/// Leading-side attachment menu for the chat input bar.
-/// Only rendered when the active model declares `supportsVision == true`. Real picker
-/// integration (PhotosPicker, UIImagePickerController, fileImporter) lands in a later phase —
-/// for now each option fires its closure and the parent logs.
+/// Leading-side attachment menu for the chat input bar. Always rendered.
+/// Vision-only options (Take photo / Attach photo) are disabled when the active
+/// model can't process images. Files are always allowed — they'll be text-extracted
+/// and prepended to the prompt in a later phase.
 struct AttachmentMenu: View {
+    var supportsVision: Bool = false
     var onAttachFile: () -> Void = {}
     var onTakePhoto: () -> Void = {}
     var onAttachPhoto: () -> Void = {}
@@ -17,15 +18,23 @@ struct AttachmentMenu: View {
             Button(action: onTakePhoto) {
                 Label("Take photo", systemImage: "camera")
             }
+            .disabled(!supportsVision)
             Button(action: onAttachPhoto) {
                 Label("Attach photo", systemImage: "photo")
             }
+            .disabled(!supportsVision)
         } label: {
-            Image(systemName: "plus.circle.fill")
-                .font(.system(size: 22))
+            Image(systemName: "plus")
+                .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(Color(hex: "#9896B0"))
                 .frame(width: 36, height: 36)
+                .background(
+                    Circle()
+                        .fill(Color(hex: "#1A1830").opacity(0.6))
+                        .overlay(Circle().strokeBorder(Color.white.opacity(0.08), lineWidth: 0.5))
+                )
         }
+        .accessibilityLabel("Attach")
     }
 }
 
