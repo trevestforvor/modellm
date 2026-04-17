@@ -44,11 +44,11 @@ final class LibraryService {
     /// 2. Deletes the SwiftData record
     /// D-09: confirmation alert with size freed is shown by LibraryView BEFORE calling this.
     func deleteModel(_ model: DownloadedModel, context: ModelContext) throws {
-        let localPath = model.localPath
-
-        // Step 1: Remove file from Application Support
-        let fileURL = URL(filePath: localPath)
-        if FileManager.default.fileExists(atPath: localPath) {
+        // Step 1: Remove file from Application Support.
+        // Use resolvedFileURL — `localPath` stored at download time goes stale across
+        // reinstalls because the container UUID changes.
+        let fileURL = model.resolvedFileURL
+        if FileManager.default.fileExists(atPath: fileURL.path) {
             try FileManager.default.removeItem(at: fileURL)
         }
 
