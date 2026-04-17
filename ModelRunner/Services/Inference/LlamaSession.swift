@@ -74,6 +74,14 @@ final class LlamaSession {
 
         var modelParams = llama_model_default_params()
         modelParams.n_gpu_layers = params.gpuLayers
+        #if targetEnvironment(simulator)
+        // Simulator's Metal device is MTLDebugDevice (via Metal API Validation) and does NOT
+        // support residency sets — llama.cpp's Metal backend hits an assertion in
+        // ggml_metal_buffer_rset_init. Force CPU-only on simulator to sidestep that path.
+        // Real devices keep GPU acceleration.
+        modelParams.n_gpu_layers = 0
+        sessionLogger.info("Simulator build: forcing n_gpu_layers=0 (CPU-only) to avoid Metal residency-set assertion")
+        #endif
         guard let loadedModel = llama_model_load_from_file(modelURL.path, modelParams) else {
             throw InferenceError.modelLoadFailed(
                 "llama_model_load_from_file returned nil for \(modelURL.lastPathComponent)"
