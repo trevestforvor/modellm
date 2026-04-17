@@ -103,7 +103,7 @@ struct ChatBubbleView: View {
             .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(Color(hex: "#7C7BF5"))
+                    .fill(Color(hex: "#5E6AD2"))
             )
             .foregroundStyle(.white)
             .font(.body)
@@ -165,7 +165,7 @@ struct ChatBubbleView: View {
         Button(action: action) {
             Image(systemName: system)
                 .font(.system(size: 14, weight: .medium))
-                .foregroundStyle(active ? (flashColor ?? Color(hex: "#7C7BF5")) : Color(hex: "#6B6980"))
+                .foregroundStyle(active ? (flashColor ?? Color(hex: "#5E6AD2")) : Color(hex: "#6B6980"))
                 .frame(width: 32, height: 32)
                 .contentShape(Rectangle())
         }

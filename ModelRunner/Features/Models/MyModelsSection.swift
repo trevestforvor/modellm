@@ -27,7 +27,7 @@ struct MyModelsSection: View {
                         Text("Add Server")
                             .font(.system(size: 12))
                     }
-                    .foregroundStyle(Color(hex: "#7C7BF5"))
+                    .foregroundStyle(Color(hex: "#5E6AD2"))
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)
                     .background(

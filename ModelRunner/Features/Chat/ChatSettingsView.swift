@@ -35,7 +35,7 @@ struct ChatSettingsView: View {
                     Button("Done") {
                         dismiss()
                     }
-                    .foregroundStyle(Color(hex: "#7C7BF5"))
+                    .foregroundStyle(Color(hex: "#5E6AD2"))
                 }
             }
         }
@@ -63,7 +63,7 @@ struct ChatSettingsView: View {
                             .padding(.vertical, 8)
                             .background(
                                 Capsule()
-                                    .fill(isSelected ? Color(hex: "#7C7BF5") : Color.clear)
+                                    .fill(isSelected ? Color(hex: "#5E6AD2") : Color.clear)
                                     .overlay(
                                         Capsule()
                                             .strokeBorder(
@@ -108,7 +108,7 @@ struct ChatSettingsView: View {
         )
         .padding()
         .background(glassBackground)
-        .tint(Color(hex: "#7C7BF5"))
+        .tint(Color(hex: "#5E6AD2"))
     }
 
     private var temperatureSlider: some View {
@@ -127,7 +127,7 @@ struct ChatSettingsView: View {
                 in: 0.0...2.0,
                 step: 0.1
             )
-            .tint(Color(hex: "#7C7BF5"))
+            .tint(Color(hex: "#5E6AD2"))
             HStack {
                 Text("0.0")
                     .font(.system(size: 12))
@@ -156,7 +156,7 @@ struct ChatSettingsView: View {
                 in: 0.0...1.0,
                 step: 0.05
             )
-            .tint(Color(hex: "#7C7BF5"))
+            .tint(Color(hex: "#5E6AD2"))
             HStack {
                 Text("0.0")
                     .font(.system(size: 12))
@@ -193,7 +193,7 @@ struct ChatSettingsView: View {
                                 .padding(.vertical, 6)
                                 .background(
                                     Capsule()
-                                        .fill(isSelected ? Color(hex: "#7C7BF5") : Color.clear)
+                                        .fill(isSelected ? Color(hex: "#5E6AD2") : Color.clear)
                                         .overlay(
                                             Capsule()
                                                 .strokeBorder(

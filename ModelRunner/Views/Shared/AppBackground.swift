@@ -17,20 +17,21 @@ struct AppBackground: View {
                     SIMD2(0.0, 1.0), SIMD2(0.5, 1.0), SIMD2(1.0, 1.0)
                 ],
                 colors: [
-                    // Top row (vibrant but still controlled)
-                    Color(hex: "#1E2A78"),  // deep indigo-blue
-                    Color(hex: "#2B2180"),  // toned-down violet (was #3A2DA8)
-                    Color(hex: "#1C3F7A"),  // blue push
+                    // Top row — subtle indigo tint, far darker than v1 per Cinema Mobile spec.
+                    // Luminance roughly matches #0A0A0F base; color barely above monochrome.
+                    Color(hex: "#141830"),  // deep indigo
+                    Color(hex: "#0D0E1E"),  // near-base neutral
+                    Color(hex: "#12182C"),  // subtle sapphire
 
-                    // Middle row (blend zone)
-                    Color(hex: "#1A1F4D"),
-                    Color(hex: "#221B5C"),
-                    Color(hex: "#162A52"),
+                    // Middle row — even darker blend zone
+                    Color(hex: "#0B0D1C"),
+                    Color(hex: "#070812"),
+                    Color(hex: "#090E1C"),
 
-                    // Bottom row (intentionally compressed / dark)
-                    Color(hex: "#0B0C1A"),
-                    Color(hex: "#080913"),
-                    Color(hex: "#0A0E1F")
+                    // Bottom row — approaches #020203 per spec; cards on top read clean
+                    Color(hex: "#030308"),
+                    Color(hex: "#020203"),
+                    Color(hex: "#03050E")
                 ]
             )
             .overlay {

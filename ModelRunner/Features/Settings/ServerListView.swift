@@ -8,7 +8,7 @@ struct ServerListView: View {
 
     private let background    = Color(hex: "#0D0C18")
     private let surface       = Color(hex: "#1A1830")
-    private let accent        = Color(hex: "#7C7BF5")
+    private let accent        = Color(hex: "#5E6AD2")
     private let secondaryText = Color(hex: "#9896B0")
     private let muted         = Color(hex: "#6B6980")
 
