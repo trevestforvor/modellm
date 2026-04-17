@@ -7,7 +7,7 @@ struct EngineResultRow: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
                 Text(displayName)
-                    .font(.footnote.weight(.semibold))
+                    .font(.figtree(.footnote, weight: .semibold))
                     .foregroundStyle(.white)
                 Spacer()
                 Text(String(format: "%.1fs", result.wallClockSeconds))
@@ -22,16 +22,16 @@ struct EngineResultRow: View {
 
             if let err = result.error {
                 Text(err)
-                    .font(.footnote)
+                    .font(.figtree(.footnote))
                     .foregroundStyle(Color(red: 0.95, green: 0.45, blue: 0.45))
                     .textSelection(.enabled)
             } else if result.text.isEmpty {
                 Text("(no transcript)")
-                    .font(.footnote)
+                    .font(.figtree(.footnote))
                     .foregroundStyle(Color(hex: "#6B6980"))
             } else {
                 Text(result.text)
-                    .font(.callout)
+                    .font(.figtree(.callout))
                     .foregroundStyle(.white)
                     .textSelection(.enabled)
                     .fixedSize(horizontal: false, vertical: true)

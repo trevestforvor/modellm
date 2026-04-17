@@ -28,7 +28,7 @@ struct ModelDetailView: View {
                     Image(systemName: "internaldrive")
                         .foregroundStyle(tertiaryText)
                     Text(storageImpactText)
-                        .font(.subheadline)
+                        .font(.figtree(.subheadline))
                         .foregroundStyle(secondaryText)
                 }
             }
@@ -45,7 +45,7 @@ struct ModelDetailView: View {
                     }
                 } else if displayModel.variants.isEmpty {
                     Text("No compatible variants for this device")
-                        .font(.subheadline)
+                        .font(.figtree(.subheadline))
                         .foregroundStyle(tertiaryText)
                 } else {
                     ForEach(displayModel.variants) { variant in
@@ -55,8 +55,7 @@ struct ModelDetailView: View {
                 }
             } header: {
                 Text("Variants")
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
+                    .font(.outfit(.subheadline, weight: .semibold))
                     .foregroundStyle(secondaryText)
                     .textCase(nil)
             }
@@ -74,13 +73,13 @@ struct ModelDetailView: View {
                                 .tint(primaryText)
                                 .padding(.trailing, 8)
                             Text("Downloading...")
-                                .font(.headline)
+                                .font(.outfit(.headline, weight: .semibold))
                                 .foregroundStyle(primaryText)
                         } else {
                             Image(systemName: "arrow.down.circle.fill")
                                 .foregroundStyle(primaryText)
                             Text(downloadButtonLabel)
-                                .font(.headline)
+                                .font(.outfit(.headline, weight: .semibold))
                                 .foregroundStyle(primaryText)
                         }
                         Spacer()

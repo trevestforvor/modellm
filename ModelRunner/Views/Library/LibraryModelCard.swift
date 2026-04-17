@@ -22,8 +22,7 @@ struct LibraryModelCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 // Model name
                 Text(model.displayName)
-                    .font(.body)
-                    .fontWeight(.medium)
+                    .font(.figtree(.body, weight: .medium))
                     .lineLimit(2)
 
                 // Quantization + file size
@@ -31,21 +30,21 @@ struct LibraryModelCard: View {
                     QuantizationBadge(quantization: model.quantization)
 
                     Text(model.formattedSize)
-                        .font(.caption)
+                        .font(.figtree(.caption))
                         .foregroundStyle(.secondary)
                 }
 
                 // Last used + conversation count (D-08)
                 HStack(spacing: 8) {
                     Text(model.relativeLastUsed)
-                        .font(.caption)
+                        .font(.figtree(.caption))
                         .foregroundStyle(.tertiary)
 
                     if model.conversationCount > 0 {
                         Text("·")
                             .foregroundStyle(.tertiary)
                         Text("\(model.conversationCount) chat\(model.conversationCount == 1 ? "" : "s")")
-                            .font(.caption)
+                            .font(.figtree(.caption))
                             .foregroundStyle(.tertiary)
                     }
                 }
@@ -71,8 +70,7 @@ private struct QuantizationBadge: View {
 
     var body: some View {
         Text(quantization)
-            .font(.caption2)
-            .fontWeight(.semibold)
+            .font(.figtree(.caption2, weight: .semibold))
             .padding(.horizontal, 6)
             .padding(.vertical, 2)
             .background(Color.secondary.opacity(0.15))

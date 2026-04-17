@@ -17,14 +17,14 @@ struct MyModelCard: View {
             .padding(.bottom, 10)
 
             Text(model.displayName)
-                .font(.callout.weight(.semibold))
+                .font(.outfit(.callout, weight: .semibold))
                 .foregroundStyle(.white)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
 
             if let serverName = model.serverName {
                 Text(serverName)
-                    .font(.caption2)
+                    .font(.figtree(.caption2))
                     .foregroundStyle(Color(hex: "#6B6980"))
                     .padding(.top, 3)
             }

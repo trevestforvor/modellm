@@ -53,13 +53,13 @@ struct ChatBubbleView: View {
                         .font(.system(size: 12))
                     if isThinkingExpanded || message.isStreaming {
                         Text("Thinking")
-                            .font(.footnote.weight(.medium))
+                            .font(.figtree(.footnote, weight: .medium))
                     } else if let duration = message.thinkingDuration {
                         Text("Thought for \(String(format: "%.1f", duration))s")
-                            .font(.footnote.weight(.medium))
+                            .font(.figtree(.footnote, weight: .medium))
                     } else {
                         Text("Thinking")
-                            .font(.footnote.weight(.medium))
+                            .font(.figtree(.footnote, weight: .medium))
                     }
                     Spacer()
                     Image(systemName: isThinkingExpanded ? "chevron.up" : "chevron.down")
@@ -70,7 +70,7 @@ struct ChatBubbleView: View {
 
             if isThinkingExpanded || message.isStreaming {
                 Text(message.thinkingContent)
-                    .font(.footnote)
+                    .font(.figtree(.footnote))
                     .foregroundStyle(Color(hex: "#6B6980"))
                     .italic()
                     .transition(.opacity.combined(with: .move(edge: .top)))
@@ -106,7 +106,7 @@ struct ChatBubbleView: View {
                     .fill(Color(hex: "#4D6CF2"))
             )
             .foregroundStyle(.white)
-            .font(.body)
+            .font(.figtree(.body))
     }
 
     private var assistantBubble: some View {
@@ -115,7 +115,7 @@ struct ChatBubbleView: View {
 
     private var assistantContent: some View {
         markdownText(message.content)
-            .font(.body)
+            .font(.figtree(.body))
             .lineSpacing(3)
             .foregroundStyle(Color(hex: "#EDEDF4"))
             .padding(.horizontal, 16)

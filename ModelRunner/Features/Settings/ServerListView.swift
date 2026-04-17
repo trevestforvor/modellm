@@ -92,18 +92,18 @@ private struct ServerRowView: View {
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(server.name)
-                    .font(.body)
+                    .font(.figtree(.body))
                     .foregroundStyle(.primary)
                     .lineLimit(1)
 
                 Text(server.baseURL)
-                    .font(.caption)
+                    .font(.figtree(.caption))
                     .foregroundStyle(secondaryText)
                     .lineLimit(1)
                     .truncationMode(.middle)
 
                 Text(server.activeFormat.displayName)
-                    .font(.caption2)
+                    .font(.figtree(.caption2))
                     .foregroundStyle(muted)
             }
 

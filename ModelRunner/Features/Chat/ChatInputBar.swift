@@ -61,7 +61,7 @@ struct ChatInputBar: View {
                         )
                 )
                 .foregroundStyle(.white)
-                .font(.body)
+                .font(.figtree(.body))
                 .disabled(!isModelLoaded)
                 .opacity(isModelLoaded ? 1 : 0.5)
                 .onSubmit {

@@ -40,7 +40,7 @@ struct ModelsTabView: View {
                                     Image(systemName: "internaldrive")
                                         .font(.system(size: 14))
                                     Text("Manage Downloads")
-                                        .font(.footnote)
+                                        .font(.figtree(.footnote))
                                 }
                                 .foregroundStyle(Color(hex: "#9896B0"))
                             }
@@ -170,7 +170,7 @@ private struct BrowseEmbeddedContent: View {
                     .font(.system(size: 14))
                 TextField("Search GGUF models...", text: $viewModel.searchQuery)
                     .foregroundStyle(.white)
-                    .font(.callout)
+                    .font(.figtree(.callout))
                 if !viewModel.searchQuery.isEmpty {
                     Button {
                         viewModel.searchQuery = ""
@@ -207,7 +207,7 @@ private struct BrowseEmbeddedContent: View {
                 } else if viewModel.searchResults.isEmpty && !viewModel.isSearching {
                     if viewModel.searchQuery.isEmpty && !viewModel.recommendations.isEmpty {
                         Text("Recommended for Your Device")
-                            .font(.headline)
+                            .font(.outfit(.headline, weight: .semibold))
                             .foregroundStyle(.white)
                             .padding(.horizontal, 16)
                             .padding(.bottom, 8)
@@ -266,10 +266,10 @@ struct SettingsView: View {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(activeModel.displayName)
-                                    .font(.body.weight(.medium))
+                                    .font(.figtree(.body, weight: .medium))
                                     .foregroundStyle(.white)
                                 Text("Temperature, Top-P, System Prompt")
-                                    .font(.caption)
+                                    .font(.figtree(.caption))
                                     .foregroundStyle(Color(hex: "#6B6980"))
                             }
                         }

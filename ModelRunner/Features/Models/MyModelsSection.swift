@@ -47,10 +47,10 @@ struct MyModelsSection: View {
                         .font(.system(size: 36))
                         .foregroundStyle(Color(hex: "#302E42"))
                     Text("No models yet")
-                        .font(.body.weight(.medium))
+                        .font(.figtree(.body, weight: .medium))
                         .foregroundStyle(Color(hex: "#9896B0"))
                     Text("Add a remote server or download a model to get started")
-                        .font(.footnote)
+                        .font(.figtree(.footnote))
                         .foregroundStyle(Color(hex: "#6B6980"))
                         .multilineTextAlignment(.center)
                 }

@@ -105,6 +105,9 @@
 		BD02000000000005BD020000 /* AttachmentMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD02000000000006BD020000 /* AttachmentMenu.swift */; };
 		BD02000000000007BD020000 /* ChatRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD02000000000008BD020000 /* ChatRootView.swift */; };
 		BD01000000000003BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf in Resources */ = {isa = PBXBuildFile; fileRef = BD01000000000004BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf */; };
+		FONT000000000001FONT0000 /* Outfit-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FONT000000000002FONT0000 /* Outfit-VariableFont_wght.ttf */; };
+		FONT000000000003FONT0000 /* Figtree-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FONT000000000004FONT0000 /* Figtree-VariableFont_wght.ttf */; };
+		FONT000000000005FONT0000 /* AppFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FONT000000000006FONT0000 /* AppFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,6 +220,9 @@
 		BD02000000000006BD020000 /* AttachmentMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentMenu.swift; sourceTree = "<group>"; };
 		BD02000000000008BD020000 /* ChatRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRootView.swift; sourceTree = "<group>"; };
 		BD01000000000004BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SmolLM2-360M-Instruct-Q8_0.gguf"; sourceTree = "<group>"; };
+		FONT000000000002FONT0000 /* Outfit-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Outfit-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		FONT000000000004FONT0000 /* Figtree-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Figtree-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		FONT000000000006FONT0000 /* AppFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFont.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -506,6 +512,7 @@
 				VMK8PQOCMDVXC68ITB2SPUMY /* AppBackground.swift */,
 				SH01000000000002SH010000 /* PressScaleButtonStyle.swift */,
 				SH01000000000004SH010000 /* Haptics.swift */,
+				FONT000000000006FONT0000 /* AppFont.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -587,8 +594,18 @@
 			isa = PBXGroup;
 			children = (
 				BD01000000000011BD010000 /* BundledModels */,
+				FONT000000000007FONT0000 /* Fonts */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		FONT000000000007FONT0000 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FONT000000000002FONT0000 /* Outfit-VariableFont_wght.ttf */,
+				FONT000000000004FONT0000 /* Figtree-VariableFont_wght.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		BD01000000000011BD010000 /* BundledModels */ = {
@@ -703,6 +720,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD01000000000003BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf in Resources */,
+				FONT000000000001FONT0000 /* Outfit-VariableFont_wght.ttf in Resources */,
+				FONT000000000003FONT0000 /* Figtree-VariableFont_wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,6 +796,7 @@
 				CLMV8QED6BPIPKAT42M4CDY8 /* AppBackground.swift in Sources */,
 				SH01000000000001SH010000 /* PressScaleButtonStyle.swift in Sources */,
 				SH01000000000003SH010000 /* Haptics.swift in Sources */,
+				FONT000000000005FONT0000 /* AppFont.swift in Sources */,
 				CC03010001000016CC030100 /* LibraryModelCard.swift in Sources */,
 				CC03010001000018CC030100 /* LibraryService.swift in Sources */,
 				CC03010001000013CC030100 /* DownloadProgressBar.swift in Sources */,
@@ -870,6 +890,10 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ModelRunner uses the microphone to capture speech for on-device transcription testing.";
+				INFOPLIST_KEY_UIAppFonts = (
+					"Outfit-VariableFont_wght.ttf",
+					"Figtree-VariableFont_wght.ttf",
+				);
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "ModelRunner uses on-device speech recognition to compare transcription engines.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1044,6 +1068,10 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "ModelRunner uses the microphone to capture speech for on-device transcription testing.";
+				INFOPLIST_KEY_UIAppFonts = (
+					"Outfit-VariableFont_wght.ttf",
+					"Figtree-VariableFont_wght.ttf",
+				);
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "ModelRunner uses on-device speech recognition to compare transcription engines.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

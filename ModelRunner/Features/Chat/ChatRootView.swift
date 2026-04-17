@@ -97,13 +97,13 @@ struct ChatRootView: View {
                 } label: {
                     VStack(spacing: 2) {
                         Text(currentModelDisplayName)
-                            .font(.title3.weight(.bold))
+                            .font(.outfit(.title3, weight: .semibold))
                             .foregroundStyle(.white)
                             .lineLimit(1)
                             .truncationMode(.middle)
                         if let subtitle = currentModelSubtitle {
                             Text(subtitle)
-                                .font(.caption)
+                                .font(.figtree(.caption))
                                 .foregroundStyle(Color(hex: "#6B6980"))
                                 .lineLimit(1)
                         }
@@ -320,7 +320,7 @@ struct ChatRootView: View {
                 .font(.system(size: 48))
                 .foregroundStyle(Color(hex: "#302E42"))
             Text("Loading model...")
-                .font(.headline)
+                .font(.outfit(.headline, weight: .semibold))
                 .foregroundStyle(Color(hex: "#9896B0"))
             ProgressView()
                 .tint(Color(hex: "#4D6CF2"))

@@ -12,14 +12,13 @@ struct ModelCardView: View {
             VStack(alignment: .leading, spacing: 6) {
                 // Model name
                 Text(model.displayName)
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                    .font(.outfit(.headline, weight: .semibold))
                     .foregroundStyle(primaryText)
                     .lineLimit(1)
 
                 // Metadata row: params · quant · size · downloads
                 Text(metadataText)
-                    .font(.subheadline)
+                    .font(.figtree(.subheadline))
                     .foregroundStyle(secondaryText)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)

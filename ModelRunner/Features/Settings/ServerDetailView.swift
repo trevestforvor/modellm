@@ -100,7 +100,7 @@ struct ServerDetailView: View {
                                 .foregroundStyle(secondaryText)
                             Spacer()
                             Text(lastChecked, style: .relative)
-                                .font(.subheadline)
+                                .font(.figtree(.subheadline))
                                 .foregroundStyle(secondaryText)
                         }
                     }
@@ -132,7 +132,7 @@ struct ServerDetailView: View {
                     .tint(accent)
                     .scaleEffect(0.8)
                 Text("Probing server…")
-                    .font(.subheadline)
+                    .font(.figtree(.subheadline))
                     .foregroundStyle(secondaryText)
             }
 
@@ -140,9 +140,9 @@ struct ServerDetailView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Label(msg, systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
-                    .font(.subheadline)
+                    .font(.figtree(.subheadline))
                 Button("Re-detect Again") { runRedetect() }
-                    .font(.caption)
+                    .font(.figtree(.caption))
                     .foregroundStyle(accent)
             }
 
@@ -150,9 +150,9 @@ struct ServerDetailView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Label(msg, systemImage: "xmark.circle.fill")
                     .foregroundStyle(.red)
-                    .font(.subheadline)
+                    .font(.figtree(.subheadline))
                 Button("Try Again") { runRedetect() }
-                    .font(.caption)
+                    .font(.figtree(.caption))
                     .foregroundStyle(accent)
             }
         }

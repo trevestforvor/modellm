@@ -10,8 +10,7 @@ struct VariantRowView: View {
         HStack(spacing: 12) {
             // Quantization type — left aligned
             Text(variant.quantType == .unknown ? variant.filename : variant.quantType.rawValue)
-                .font(.subheadline)
-                .fontWeight(.medium)
+                .font(.figtree(.subheadline, weight: .medium))
                 .foregroundStyle(primaryText)
 
             Spacer()

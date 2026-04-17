@@ -46,19 +46,19 @@ struct SpeechSpikeView: View {
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(viewModel.recorder.isRecording ? "Recording…" : "Tap mic to start, tap again to stop")
-                        .font(.footnote.weight(.medium))
+                        .font(.figtree(.footnote, weight: .medium))
                         .foregroundStyle(.white)
                     if let err = viewModel.recorder.errorMessage {
                         Text(err)
-                            .font(.caption2)
+                            .font(.figtree(.caption2))
                             .foregroundStyle(Color(red: 0.95, green: 0.45, blue: 0.45))
                     } else if let err = viewModel.errorMessage {
                         Text(err)
-                            .font(.caption2)
+                            .font(.figtree(.caption2))
                             .foregroundStyle(Color(red: 0.95, green: 0.45, blue: 0.45))
                     } else {
                         Text("Compares 3 STT engines on the same clip.")
-                            .font(.caption2)
+                            .font(.figtree(.caption2))
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                 }
@@ -70,7 +70,7 @@ struct SpeechSpikeView: View {
                         viewModel.clearResults()
                     } label: {
                         Text("Clear")
-                            .font(.caption.weight(.semibold))
+                            .font(.figtree(.caption, weight: .semibold))
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                     .accessibilityLabel("Clear results")
@@ -92,7 +92,7 @@ struct SpeechSpikeView: View {
                         ProgressView()
                             .tint(Color(hex: "#4D6CF2"))
                         Text("Transcribing…")
-                            .font(.caption)
+                            .font(.figtree(.caption))
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                     .padding(12)

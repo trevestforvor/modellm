@@ -20,7 +20,7 @@ struct BrowseView: View {
                         ProgressView()
                             .tint(accent)
                         Text("Initializing…")
-                            .font(.subheadline)
+                            .font(.figtree(.subheadline))
                             .foregroundStyle(secondaryText)
                     }
                 }
@@ -91,8 +91,7 @@ private struct BrowseContentView: View {
     private var recommendationsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(recommendationsHeader)
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.outfit(.title2, weight: .semibold))
                 .foregroundStyle(primaryText)
                 .padding(.top, 20)
                 .padding(.bottom, 2)
@@ -118,8 +117,7 @@ private struct BrowseContentView: View {
     private var allModelsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("All Models")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.outfit(.title2, weight: .semibold))
                 .foregroundStyle(primaryText)
                 .padding(.top, 8)
 
@@ -182,13 +180,13 @@ private struct BrowseContentView: View {
     private func errorView(error: HFBrowseError) -> some View {
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
-                .font(.largeTitle)
+                .font(.outfit(.largeTitle, weight: .regular))
                 .foregroundStyle(tertiaryText)
             Text("Couldn't load models")
-                .font(.headline)
+                .font(.outfit(.headline, weight: .semibold))
                 .foregroundStyle(primaryText)
             Text("Check your connection and try again.")
-                .font(.body)
+                .font(.figtree(.body))
                 .foregroundStyle(secondaryText)
                 .multilineTextAlignment(.center)
             Button("Try Again") {
@@ -206,13 +204,13 @@ private struct BrowseContentView: View {
     private var emptyStateView: some View {
         VStack(spacing: 16) {
             Image(systemName: "magnifyingglass")
-                .font(.largeTitle)
+                .font(.outfit(.largeTitle, weight: .regular))
                 .foregroundStyle(tertiaryText)
             Text("No models found")
-                .font(.headline)
+                .font(.outfit(.headline, weight: .semibold))
                 .foregroundStyle(primaryText)
             Text("Try a different search term or browse all models.")
-                .font(.body)
+                .font(.figtree(.body))
                 .foregroundStyle(secondaryText)
                 .multilineTextAlignment(.center)
             Button("Browse All Models") {

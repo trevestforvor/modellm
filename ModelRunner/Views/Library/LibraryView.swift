@@ -104,8 +104,7 @@ struct LibraryView: View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 Text("Models: \(models.count)")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
+                    .font(.figtree(.subheadline, weight: .medium))
                 Text("\(libraryService.formattedTotalStorage(models: models)) used · \(libraryService.formattedFreeStorage(freeBytes: freeStorageBytes)) free")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -122,11 +121,10 @@ struct LibraryView: View {
                 .foregroundStyle(.tertiary)
 
             Text("No Models Downloaded")
-                .font(.title3)
-                .fontWeight(.semibold)
+                .font(.outfit(.title3, weight: .semibold))
 
             Text("Browse Hugging Face models and download one that's compatible with your device.")
-                .font(.subheadline)
+                .font(.figtree(.subheadline))
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 40)

@@ -95,7 +95,7 @@ struct AddServerView: View {
                 ProgressView()
                     .tint(accent)
                 Text("Detecting server capabilities…")
-                    .font(.subheadline)
+                    .font(.figtree(.subheadline))
                     .foregroundStyle(Color(hex: "#9896B0"))
             }
 
@@ -103,21 +103,21 @@ struct AddServerView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Label("\(result.models.count) model(s) detected", systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
-                    .font(.subheadline)
+                    .font(.figtree(.subheadline))
 
                 ForEach(result.supportedFormats) { format in
                     HStack {
                         Image(systemName: "checkmark")
                             .foregroundStyle(.green)
-                            .font(.caption)
+                            .font(.figtree(.caption))
                         Text(format.displayName)
-                            .font(.caption)
+                            .font(.figtree(.caption))
                             .foregroundStyle(Color(hex: "#9896B0"))
                     }
                 }
 
                 Button("Re-detect") { runProbe() }
-                    .font(.caption)
+                    .font(.figtree(.caption))
                     .foregroundStyle(accent)
                     .padding(.top, 4)
             }
@@ -126,10 +126,10 @@ struct AddServerView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Label(message, systemImage: "xmark.circle.fill")
                     .foregroundStyle(.red)
-                    .font(.subheadline)
+                    .font(.figtree(.subheadline))
 
                 Button("Try Again") { runProbe() }
-                    .font(.caption)
+                    .font(.figtree(.caption))
                     .foregroundStyle(accent)
             }
         }

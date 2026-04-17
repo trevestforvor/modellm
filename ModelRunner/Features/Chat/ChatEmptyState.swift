@@ -24,20 +24,19 @@ struct ChatEmptyState: View {
 
             VStack(spacing: 8) {
                 Text(headline)
-                    .font(.largeTitle.weight(.medium))
-                    .fontDesign(.serif)
+                    .font(.outfit(.largeTitle, weight: .medium))
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
 
                 Text("Your on-device AI")
-                    .font(.body)
+                    .font(.figtree(.body))
                     .foregroundStyle(Color(hex: "#9896B0"))
             }
             .padding(.horizontal, 24)
 
             Button(action: onBrowse) {
                 Text("Browse models")
-                    .font(.headline)
+                    .font(.outfit(.headline, weight: .semibold))
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
