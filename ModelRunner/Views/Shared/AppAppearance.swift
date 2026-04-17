@@ -33,14 +33,11 @@ enum AppAppearance {
     }
 
     private static func configureBarButtons() {
-        // Bar button items (Done, Cancel, etc.) use Figtree so they match body/UI type.
-        let buttonFont = figtreeFont(size: 17, weight: .medium)
-        let attrs: [NSAttributedString.Key: Any] = [.font: buttonFont]
-
-        UIBarButtonItem.appearance().setTitleTextAttributes(attrs, for: .normal)
-        UIBarButtonItem.appearance().setTitleTextAttributes(attrs, for: .highlighted)
-        UIBarButtonItem.appearance().setTitleTextAttributes(attrs, for: .disabled)
-        UIBarButtonItem.appearance().setTitleTextAttributes(attrs, for: .selected)
+        // SwiftUI's `Button("...")` inside `.toolbar { ToolbarItem { ... } }` is rendered
+        // by SwiftUI — it bypasses both the global UIBarButtonItem proxy AND the
+        // navigation bar's buttonAppearance entirely. Fonts on those buttons must be
+        // applied at the call site via `Text("Done").font(.figtree(.body, weight: .medium))`.
+        // This function is intentionally a no-op; kept so the init flow reads consistently.
     }
 
     // MARK: - Variable-font weight helpers

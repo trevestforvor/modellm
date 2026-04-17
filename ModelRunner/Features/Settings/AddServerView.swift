@@ -69,13 +69,19 @@ struct AddServerView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button("Cancel") { dismiss() }
-                    .foregroundStyle(secondaryText)
+                Button { dismiss() } label: {
+                    Text("Cancel")
+                        .font(.figtree(.body, weight: .medium))
+                        .foregroundStyle(secondaryText)
+                }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Add") { saveServer() }
-                    .foregroundStyle(canAdd ? accent : Color(hex: "#6B6980"))
-                    .disabled(!canAdd)
+                Button { saveServer() } label: {
+                    Text("Add")
+                        .font(.figtree(.body, weight: .semibold))
+                        .foregroundStyle(canAdd ? accent : Color(hex: "#6B6980"))
+                }
+                .disabled(!canAdd)
             }
         }
     }

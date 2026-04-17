@@ -292,8 +292,11 @@ struct SettingsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("Done") { dismiss() }
-                    .foregroundStyle(Color(hex: "#4D6CF2"))
+                Button { dismiss() } label: {
+                    Text("Done")
+                        .font(.figtree(.body, weight: .medium))
+                        .foregroundStyle(Color(hex: "#4D6CF2"))
+                }
             }
         }
     }

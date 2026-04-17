@@ -32,10 +32,11 @@ struct ChatSettingsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        dismiss()
+                    Button { dismiss() } label: {
+                        Text("Done")
+                            .font(.figtree(.body, weight: .medium))
+                            .foregroundStyle(Color(hex: "#4D6CF2"))
                     }
-                    .foregroundStyle(Color(hex: "#4D6CF2"))
                 }
             }
         }
