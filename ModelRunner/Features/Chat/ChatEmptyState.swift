@@ -7,7 +7,7 @@ struct ChatEmptyState: View {
     let modelName: String?
     let onBrowse: () -> Void
 
-    private let accent = Color(hex: "#5E6AD2")
+    private let accent = Color(hex: "#4D6CF2")
 
     var body: some View {
         VStack(spacing: 24) {

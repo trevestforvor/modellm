@@ -35,7 +35,7 @@ struct MyModelCard: View {
                 if let tokPerSec = model.tokPerSec {
                     Text(String(format: "%.0f tok/s", tokPerSec))
                         .font(.caption.monospaced())
-                        .foregroundStyle(Color(hex: "#5E6AD2"))
+                        .foregroundStyle(Color(hex: "#4D6CF2"))
                 } else {
                     Text("— tok/s")
                         .font(.caption.monospaced())
@@ -61,7 +61,7 @@ struct MyModelCard: View {
 
     private var sourceDotColor: Color {
         if !model.isOnline { return Color(hex: "#ef4444") }
-        if case .local = model.source { return Color(hex: "#5E6AD2") }
+        if case .local = model.source { return Color(hex: "#4D6CF2") }
         return Color(hex: "#22c55e")
     }
 
@@ -77,7 +77,7 @@ struct MyModelCard: View {
                 .font(.system(size: 9))
                 .foregroundStyle(Color(hex: "#ef4444"))
         } else if model.supportsThinking {
-            badgePill(text: "🧠 think", color: Color(hex: "#5E6AD2"))
+            badgePill(text: "🧠 think", color: Color(hex: "#4D6CF2"))
         } else if case .local = model.source {
             badgePill(text: "Runs Well", color: Color(hex: "#22c55e"))
         }

@@ -136,7 +136,7 @@ private struct BrowseEmbeddedView: View {
                 HStack {
                     Spacer()
                     ProgressView()
-                        .tint(Color(hex: "#5E6AD2"))
+                        .tint(Color(hex: "#4D6CF2"))
                     Spacer()
                 }
                 .padding(.top, 20)
@@ -200,7 +200,7 @@ private struct BrowseEmbeddedContent: View {
                 if viewModel.isSearching && viewModel.searchResults.isEmpty {
                     HStack {
                         Spacer()
-                        ProgressView().tint(Color(hex: "#5E6AD2"))
+                        ProgressView().tint(Color(hex: "#4D6CF2"))
                         Spacer()
                     }
                     .padding(.top, 20)
@@ -232,7 +232,7 @@ private struct BrowseEmbeddedContent: View {
                     if viewModel.hasMoreResults {
                         HStack {
                             Spacer()
-                            ProgressView().tint(Color(hex: "#5E6AD2"))
+                            ProgressView().tint(Color(hex: "#4D6CF2"))
                             Spacer()
                         }
                         .padding(.vertical, 16)
@@ -293,7 +293,7 @@ struct SettingsView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Done") { dismiss() }
-                    .foregroundStyle(Color(hex: "#5E6AD2"))
+                    .foregroundStyle(Color(hex: "#4D6CF2"))
             }
         }
     }

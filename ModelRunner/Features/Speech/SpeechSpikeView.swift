@@ -32,7 +32,7 @@ struct SpeechSpikeView: View {
                         Circle()
                             .fill(viewModel.recorder.isRecording
                                   ? Color(red: 0.95, green: 0.35, blue: 0.40)
-                                  : Color(hex: "#5E6AD2"))
+                                  : Color(hex: "#4D6CF2"))
                             .frame(width: 64, height: 64)
                         Image(systemName: viewModel.recorder.isRecording ? "stop.fill" : "mic.fill")
                             .font(.system(size: 24, weight: .semibold))
@@ -90,7 +90,7 @@ struct SpeechSpikeView: View {
                 if viewModel.isProcessing {
                     HStack(spacing: 8) {
                         ProgressView()
-                            .tint(Color(hex: "#5E6AD2"))
+                            .tint(Color(hex: "#4D6CF2"))
                         Text("Transcribing…")
                             .font(.caption)
                             .foregroundStyle(Color(hex: "#9896B0"))

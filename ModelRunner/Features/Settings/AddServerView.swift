@@ -13,7 +13,7 @@ struct AddServerView: View {
 
     private let background    = Color(hex: "#0D0C18")
     private let surface       = Color(hex: "#1A1830")
-    private let accent        = Color(hex: "#5E6AD2")
+    private let accent        = Color(hex: "#4D6CF2")
     private let secondaryText = Color(hex: "#9896B0")
 
     private enum ProbeState {

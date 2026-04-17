@@ -324,7 +324,7 @@ struct ChatRootView: View {
                 .font(.headline)
                 .foregroundStyle(Color(hex: "#9896B0"))
             ProgressView()
-                .tint(Color(hex: "#5E6AD2"))
+                .tint(Color(hex: "#4D6CF2"))
         }
         .padding()
     }

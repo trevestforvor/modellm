@@ -33,13 +33,13 @@ struct ChatInputBar: View {
             } label: {
                 Image(systemName: "brain")
                     .font(.system(size: 16))
-                    .foregroundStyle(enableThinking ? Color(hex: "#5E6AD2") : Color(hex: "#6B6980"))
+                    .foregroundStyle(enableThinking ? Color(hex: "#4D6CF2") : Color(hex: "#6B6980"))
                     .frame(width: 36, height: 36)
                     .background(
                         Circle()
-                            .fill(enableThinking ? Color(hex: "#5E6AD2").opacity(0.15) : Color(hex: "#1A1830").opacity(0.6))
+                            .fill(enableThinking ? Color(hex: "#4D6CF2").opacity(0.15) : Color(hex: "#1A1830").opacity(0.6))
                             .overlay(Circle().strokeBorder(
-                                enableThinking ? Color(hex: "#5E6AD2").opacity(0.3) : Color.white.opacity(0.08),
+                                enableThinking ? Color(hex: "#4D6CF2").opacity(0.3) : Color.white.opacity(0.08),
                                 lineWidth: 0.5
                             ))
                     )
@@ -98,7 +98,7 @@ struct ChatInputBar: View {
                 // Same accent hue for send and stop — the icon (arrow vs square) carries
                 // the semantic, opacity differentiates state without introducing a new color.
                 Circle()
-                    .fill(Color(hex: "#5E6AD2").opacity(isGenerating ? 0.55 : (canSend ? 1 : 0.4)))
+                    .fill(Color(hex: "#4D6CF2").opacity(isGenerating ? 0.55 : (canSend ? 1 : 0.4)))
                     .frame(width: 34, height: 34)
 
                 Image(systemName: isGenerating ? "stop.fill" : "arrow.up")
