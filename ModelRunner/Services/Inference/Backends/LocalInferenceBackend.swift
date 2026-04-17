@@ -39,11 +39,13 @@ public final class LocalInferenceBackend: InferenceBackend, @unchecked Sendable 
         params: InferenceParams,
         enableThinking: Bool
     ) -> AsyncThrowingStream<StreamToken, Error> {
-        let prompt = PromptFormatter.chatml(system: params.systemPrompt, messages: messages)
-
         return AsyncThrowingStream { continuation in
             Task.detached { [weak self] in
                 guard let self else { continuation.finish(); return }
+                let prompt = await self.inferenceService.formatPrompt(
+                    system: params.systemPrompt,
+                    messages: messages
+                )
                 let stream = await self.inferenceService.generate(prompt: prompt, params: params)
                 do {
                     for try await token in stream {

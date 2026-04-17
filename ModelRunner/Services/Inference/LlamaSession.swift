@@ -120,6 +120,21 @@ final class LlamaSession {
         return chain
     }
 
+    // MARK: - Template Formatting
+
+    /// Format messages using the chat template embedded in this model's GGUF metadata.
+    ///
+    /// Reads `tokenizer.chat_template` from the file via `llama_model_chat_template`. If absent,
+    /// PromptFormatter falls back to ChatML.
+    func formatPrompt(system: String, messages: [ChatMessage]) -> String {
+        guard let model else {
+            return PromptFormatter.chatml(system: system, messages: messages)
+        }
+        let templatePtr = llama_model_chat_template(model, nil)
+        let template = templatePtr.map { String(cString: $0) }
+        return PromptFormatter.applyModelTemplate(template: template, system: system, messages: messages)
+    }
+
     // MARK: - Decode Loop
 
     /// Generate tokens by running the llama.cpp decode loop.
@@ -153,13 +168,16 @@ final class LlamaSession {
             return
         }
 
-        // Tokenize the prompt
+        // Tokenize the prompt.
+        // add_bos is false: llama_chat_apply_template already emits the BOS text token
+        // (e.g. <bos> for Gemma, <|begin_of_text|> for Llama-3). Passing true here would
+        // prepend a second BOS token ID — a known cause of garbled / foreign-language output.
         let promptBytes = Array(prompt.utf8)
         let maxTokens = Int32(promptBytes.count) + 256
         var tokens = [llama_token](repeating: 0, count: Int(maxTokens))
         let nTokens = llama_tokenize(
             vocab, prompt, Int32(promptBytes.count),
-            &tokens, maxTokens, true, true
+            &tokens, maxTokens, false, true
         )
         guard nTokens > 0 else {
             continuation.finish(throwing: InferenceError.tokenizationFailed)

@@ -103,6 +103,15 @@ public actor InferenceService {
         }
     }
 
+    /// Format messages using the currently loaded model's embedded chat template.
+    /// Falls back to ChatML when no model is loaded or the file has no template.
+    public func formatPrompt(system: String, messages: [ChatMessage]) -> String {
+        guard let session else {
+            return PromptFormatter.chatml(system: system, messages: messages)
+        }
+        return session.formatPrompt(system: system, messages: messages)
+    }
+
     /// Signal the decode loop to stop after the current token.
     ///
     /// Also cancel the outer Task to stop the continuation from being held open.
