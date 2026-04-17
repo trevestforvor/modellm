@@ -10,7 +10,6 @@
 		0A9AE88B5DC2448597F66C5D /* DeviceCapabilityServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9AE88B5DC2448597F66C5E /* DeviceCapabilityServiceTests.swift */; };
 		44321BB674EA4DBA9669F67A /* CompatibilityEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44321BB674EA4DBA9669F67B /* CompatibilityEngineTests.swift */; };
 		7404603D397B41748C7AD101 /* ModelRunnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7404603D397B41748C7AD100 /* ModelRunnerApp.swift */; };
-		8225560F7DBD44C99EA7AD93 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8225560F7DBD44C99EA7AD92 /* ContentView.swift */; };
 		99EDF330C9DA4E82B653CDB0 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EDF330C9DA4E82B653CDB1 /* AppContainer.swift */; };
 		9C31C4E1288841068B4131B4 /* ChipLookupTableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C31C4E1288841068B4131B5 /* ChipLookupTableTests.swift */; };
 		A1B2C3D4E5F60010A2B3C4D5 /* ChipLookupTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60011A2B3C4D5 /* ChipLookupTable.swift */; };
@@ -55,7 +54,6 @@
 		CC04030001000005CC040300 /* ChatInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000006CC040300 /* ChatInputBar.swift */; };
 		CC04030001000007CC040300 /* ChatLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000008CC040300 /* ChatLoadingView.swift */; };
 		CC04030001000009CC040300 /* ChatSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000ACC040300 /* ChatSettingsView.swift */; };
-		CC0403000100000BCC040300 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000CCC040300 /* ChatView.swift */; };
 		CC0403000100000DCC040300 /* ChatSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0403000100000ECC040300 /* ChatSettings.swift */; };
 		CC0403000100000FCC040300 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC04030001000011CC040300 /* ChatViewModel.swift */; };
 		CC05010001000001CC050100 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05010001000002CC050100 /* Conversation.swift */; };
@@ -65,7 +63,6 @@
 		CC05010001000009CC050100 /* InferencePresetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0501000100000ACC050100 /* InferencePresetTests.swift */; };
 		CC05030001000001CC050300 /* ConversationHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05030001000002CC050300 /* ConversationHistoryView.swift */; };
 		CC05030001000003CC050300 /* ChatViewModelPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05030001000004CC050300 /* ChatViewModelPersistenceTests.swift */; };
-		CC05040001000001CC050400 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC05040001000002CC050400 /* WelcomeView.swift */; };
 		CC06010001000001CC060100 /* InferenceBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000002CC060100 /* InferenceBackend.swift */; };
 		CC06010001000003CC060100 /* APIAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000004CC060100 /* APIAdapter.swift */; };
 		CC06010001000005CC060100 /* OpenAIChatAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC06010001000006CC060100 /* OpenAIChatAdapter.swift */; };
@@ -79,7 +76,6 @@
 		DD07010001000001DD070100 /* AnthropicMessagesAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000002DD070100 /* AnthropicMessagesAdapter.swift */; };
 		DD07010001000003DD070100 /* ServerProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000004DD070100 /* ServerProbe.swift */; };
 		DD07010001000005DD070100 /* ServerProbeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000006DD070100 /* ServerProbeTests.swift */; };
-		DD07010001000007DD070100 /* ModelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD07010001000008DD070100 /* ModelPickerView.swift */; };
 		DD07010001000009DD070100 /* ModelPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0701000100000ADD070100 /* ModelPickerViewModel.swift */; };
 		DD0701000100000BDD070100 /* ServerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0701000100000CDD070100 /* ServerListView.swift */; };
 		DD0701000100000DDD070100 /* AddServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0701000100000EDD070100 /* AddServerView.swift */; };
@@ -102,6 +98,10 @@
 		AA0901000100000DAA090100 /* SpeechSpikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0901000100000EAA090100 /* SpeechSpikeView.swift */; };
 		AA09010001000032AA090100 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA09010001000031AA090100 /* WhisperKit */; };
 		BD01000000000001BD010000 /* BundledModelInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01000000000002BD010000 /* BundledModelInstaller.swift */; };
+		BD02000000000001BD020000 /* VisionWhitelist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD02000000000002BD020000 /* VisionWhitelist.swift */; };
+		BD02000000000003BD020000 /* ChatEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD02000000000004BD020000 /* ChatEmptyState.swift */; };
+		BD02000000000005BD020000 /* AttachmentMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD02000000000006BD020000 /* AttachmentMenu.swift */; };
+		BD02000000000007BD020000 /* ChatRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD02000000000008BD020000 /* ChatRootView.swift */; };
 		BD01000000000003BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf in Resources */ = {isa = PBXBuildFile; fileRef = BD01000000000004BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf */; };
 /* End PBXBuildFile section */
 
@@ -121,7 +121,6 @@
 		3BB18C8F4F4B485380132B87 /* ModelRunner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ModelRunner.entitlements; sourceTree = "<group>"; };
 		44321BB674EA4DBA9669F67B /* CompatibilityEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityEngineTests.swift; sourceTree = "<group>"; };
 		7404603D397B41748C7AD100 /* ModelRunnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRunnerApp.swift; sourceTree = "<group>"; };
-		8225560F7DBD44C99EA7AD92 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		99EDF330C9DA4E82B653CDB1 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		9C31C4E1288841068B4131B5 /* ChipLookupTableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipLookupTableTests.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60011A2B3C4D5 /* ChipLookupTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipLookupTable.swift; sourceTree = "<group>"; };
@@ -166,7 +165,6 @@
 		CC04030001000006CC040300 /* ChatInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputBar.swift; sourceTree = "<group>"; };
 		CC04030001000008CC040300 /* ChatLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLoadingView.swift; sourceTree = "<group>"; };
 		CC0403000100000ACC040300 /* ChatSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettingsView.swift; sourceTree = "<group>"; };
-		CC0403000100000CCC040300 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		CC0403000100000ECC040300 /* ChatSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSettings.swift; sourceTree = "<group>"; };
 		CC04030001000011CC040300 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		CC05010001000002CC050100 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
@@ -176,7 +174,6 @@
 		CC0501000100000ACC050100 /* InferencePresetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferencePresetTests.swift; sourceTree = "<group>"; };
 		CC05030001000002CC050300 /* ConversationHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationHistoryView.swift; sourceTree = "<group>"; };
 		CC05030001000004CC050300 /* ChatViewModelPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModelPersistenceTests.swift; sourceTree = "<group>"; };
-		CC05040001000002CC050400 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		CC06010001000002CC060100 /* InferenceBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InferenceBackend.swift; sourceTree = "<group>"; };
 		CC06010001000004CC060100 /* APIAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAdapter.swift; sourceTree = "<group>"; };
 		CC06010001000006CC060100 /* OpenAIChatAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChatAdapter.swift; sourceTree = "<group>"; };
@@ -189,7 +186,6 @@
 		DD07010001000002DD070100 /* AnthropicMessagesAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnthropicMessagesAdapter.swift; sourceTree = "<group>"; };
 		DD07010001000004DD070100 /* ServerProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerProbe.swift; sourceTree = "<group>"; };
 		DD07010001000006DD070100 /* ServerProbeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerProbeTests.swift; sourceTree = "<group>"; };
-		DD07010001000008DD070100 /* ModelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPickerView.swift; sourceTree = "<group>"; };
 		DD0701000100000ADD070100 /* ModelPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPickerViewModel.swift; sourceTree = "<group>"; };
 		DD0701000100000CDD070100 /* ServerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerListView.swift; sourceTree = "<group>"; };
 		DD0701000100000EDD070100 /* AddServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddServerView.swift; sourceTree = "<group>"; };
@@ -212,6 +208,10 @@
 		AA0901000100000CAA090100 /* EngineResultRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineResultRow.swift; sourceTree = "<group>"; };
 		AA0901000100000EAA090100 /* SpeechSpikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpikeView.swift; sourceTree = "<group>"; };
 		BD01000000000002BD010000 /* BundledModelInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledModelInstaller.swift; sourceTree = "<group>"; };
+		BD02000000000002BD020000 /* VisionWhitelist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionWhitelist.swift; sourceTree = "<group>"; };
+		BD02000000000004BD020000 /* ChatEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatEmptyState.swift; sourceTree = "<group>"; };
+		BD02000000000006BD020000 /* AttachmentMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentMenu.swift; sourceTree = "<group>"; };
+		BD02000000000008BD020000 /* ChatRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRootView.swift; sourceTree = "<group>"; };
 		BD01000000000004BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SmolLM2-360M-Instruct-Q8_0.gguf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -251,7 +251,6 @@
 				CC0301000100000FCC030100 /* Models */,
 				CC03010001000010CC030100 /* Views */,
 				BD01000000000010BD010000 /* Resources */,
-				8225560F7DBD44C99EA7AD92 /* ContentView.swift */,
 				3BB18C8F4F4B485380132B87 /* ModelRunner.entitlements */,
 			);
 			path = ModelRunner;
@@ -306,6 +305,7 @@
 				FA0100000000004EFA010000 /* Keychain */,
 				AA09010001000020AA090100 /* Speech */,
 				BD01000000000020BD010000 /* BundledModels */,
+				BD02000000000020BD020000 /* VisionCapability */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -315,7 +315,6 @@
 			children = (
 				BB01AA0000000022BB01AA00 /* Browse */,
 				CC04030001000010CC040300 /* Chat */,
-				CC05040001000010CC050400 /* Onboarding */,
 				DD07010001000020DD070100 /* ModelPicker */,
 				DD07010001000030DD070100 /* Settings */,
 				EE08010001000020EE080100 /* Models */,
@@ -441,18 +440,12 @@
 				CC04030001000006CC040300 /* ChatInputBar.swift */,
 				CC04030001000008CC040300 /* ChatLoadingView.swift */,
 				CC0403000100000ACC040300 /* ChatSettingsView.swift */,
-				CC0403000100000CCC040300 /* ChatView.swift */,
 				CC05030001000002CC050300 /* ConversationHistoryView.swift */,
+				BD02000000000008BD020000 /* ChatRootView.swift */,
+				BD02000000000004BD020000 /* ChatEmptyState.swift */,
+				BD02000000000006BD020000 /* AttachmentMenu.swift */,
 			);
 			path = Chat;
-			sourceTree = "<group>";
-		};
-		CC05040001000010CC050400 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				CC05040001000002CC050400 /* WelcomeView.swift */,
-			);
-			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		CC06010001000010CC060100 /* Backends */ = {
@@ -488,7 +481,6 @@
 		DD07010001000020DD070100 /* ModelPicker */ = {
 			isa = PBXGroup;
 			children = (
-				DD07010001000008DD070100 /* ModelPickerView.swift */,
 				DD0701000100000ADD070100 /* ModelPickerViewModel.swift */,
 			);
 			path = ModelPicker;
@@ -607,6 +599,14 @@
 				BD01000000000002BD010000 /* BundledModelInstaller.swift */,
 			);
 			path = BundledModels;
+			sourceTree = "<group>";
+		};
+		BD02000000000020BD020000 /* VisionCapability */ = {
+			isa = PBXGroup;
+			children = (
+				BD02000000000002BD020000 /* VisionWhitelist.swift */,
+			);
+			path = VisionCapability;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -745,7 +745,10 @@
 				7404603D397B41748C7AD101 /* ModelRunnerApp.swift in Sources */,
 				99EDF330C9DA4E82B653CDB0 /* AppContainer.swift in Sources */,
 				BD01000000000001BD010000 /* BundledModelInstaller.swift in Sources */,
-				8225560F7DBD44C99EA7AD93 /* ContentView.swift in Sources */,
+				BD02000000000001BD020000 /* VisionWhitelist.swift in Sources */,
+				BD02000000000003BD020000 /* ChatEmptyState.swift in Sources */,
+				BD02000000000005BD020000 /* AttachmentMenu.swift in Sources */,
+				BD02000000000007BD020000 /* ChatRootView.swift in Sources */,
 				C3BFBAEE689F486190398248 /* CompatibilityModels.swift in Sources */,
 				A1B2C3D4E5F60010A2B3C4D5 /* ChipLookupTable.swift in Sources */,
 				A1B2C3D4E5F60012A2B3C4D5 /* DeviceCapabilityService.swift in Sources */,
@@ -779,13 +782,11 @@
 				CC04030001000005CC040300 /* ChatInputBar.swift in Sources */,
 				CC04030001000007CC040300 /* ChatLoadingView.swift in Sources */,
 				CC04030001000009CC040300 /* ChatSettingsView.swift in Sources */,
-				CC0403000100000BCC040300 /* ChatView.swift in Sources */,
 				CC0403000100000DCC040300 /* ChatSettings.swift in Sources */,
 				CC0403000100000FCC040300 /* ChatViewModel.swift in Sources */,
 				CC05010001000001CC050100 /* Conversation.swift in Sources */,
 				CC05010001000003CC050100 /* Message.swift in Sources */,
 				CC05010001000005CC050100 /* InferencePreset.swift in Sources */,
-				CC05040001000001CC050400 /* WelcomeView.swift in Sources */,
 				CC05030001000001CC050300 /* ConversationHistoryView.swift in Sources */,
 				CC06010001000001CC060100 /* InferenceBackend.swift in Sources */,
 				CC06010001000003CC060100 /* APIAdapter.swift in Sources */,
@@ -801,7 +802,6 @@
 				EE08010001000002EE080100 /* ModelsTabView.swift in Sources */,
 				EE08010001000004EE080100 /* MyModelCard.swift in Sources */,
 				EE08010001000006EE080100 /* MyModelsSection.swift in Sources */,
-				DD07010001000007DD070100 /* ModelPickerView.swift in Sources */,
 				DD07010001000009DD070100 /* ModelPickerViewModel.swift in Sources */,
 				DD0701000100000BDD070100 /* ServerListView.swift in Sources */,
 				DD0701000100000DDD070100 /* AddServerView.swift in Sources */,

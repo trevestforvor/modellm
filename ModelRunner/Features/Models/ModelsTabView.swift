@@ -10,6 +10,9 @@ struct ModelsTabView: View {
     @State private var showLibrary = false
 
     let onSelectModel: (PickerModel) -> Void
+    /// Optional dismiss callback. Used when ModelsTabView is presented as a sheet
+    /// (single-screen layout) so picking a model both selects and closes the sheet.
+    var onDismiss: (() -> Void)? = nil
 
     var body: some View {
         NavigationStack {
@@ -20,7 +23,10 @@ struct ModelsTabView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         MyModelsSection(
                             models: allMyModels,
-                            onSelectModel: onSelectModel,
+                            onSelectModel: { model in
+                                onSelectModel(model)
+                                onDismiss?()
+                            },
                             onAddServer: { showAddServer = true }
                         )
                         .padding(.horizontal, 16)
@@ -244,14 +250,30 @@ private struct BrowseEmbeddedContent: View {
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(AppContainer.self) private var container
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
         List {
-            Section("Inference Defaults") {
-                Text("Temperature, Top-P, System Prompt")
-                    .foregroundStyle(Color(hex: "#6B6980"))
+            if let activeModel = activeDownloadedModel() {
+                Section("Active Model") {
+                    NavigationLink {
+                        ChatSettingsView(model: activeModel)
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(activeModel.displayName)
+                                    .font(.system(size: 15, weight: .medium))
+                                    .foregroundStyle(.white)
+                                Text("Temperature, Top-P, System Prompt")
+                                    .font(.system(size: 12))
+                                    .foregroundStyle(Color(hex: "#6B6980"))
+                            }
+                        }
+                    }
+                }
+                .listRowBackground(Color(hex: "#1A1830"))
             }
-            .listRowBackground(Color(hex: "#1A1830"))
 
             Section("About") {
                 LabeledContent("Version") {
@@ -271,5 +293,16 @@ struct SettingsView: View {
                     .foregroundStyle(Color(hex: "#8B7CF0"))
             }
         }
+    }
+
+    /// Resolve the active local DownloadedModel from container.activeModelURL.
+    /// Remote-only selections return nil — there's nothing to edit per-model for them yet.
+    private func activeDownloadedModel() -> DownloadedModel? {
+        guard let url = container.activeModelURL else { return nil }
+        var descriptor = FetchDescriptor<DownloadedModel>(
+            predicate: #Predicate { $0.localPath == url.path }
+        )
+        descriptor.fetchLimit = 1
+        return try? modelContext.fetch(descriptor).first
     }
 }

@@ -415,6 +415,7 @@ extension DownloadService {
             fileSizeBytes: fileSizeBytes,
             localPath: localURL.path
         )
+        model.supportsVision = VisionWhitelist.supportsVision(repoId: repoId)
 
         context.insert(model)
 

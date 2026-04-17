@@ -32,6 +32,12 @@ final class DownloadedModel {
     /// System prompt sent at the start of every conversation with this model.
     var systemPrompt: String = "You are a helpful assistant."
 
+    // MARK: - Vision Capability
+    /// True if this model accepts image inputs. Defaults to false (text-only).
+    /// Set at download time via `VisionWhitelist.supportsVision(repoId:)`.
+    /// When true, the chat UI reveals the attachment menu (file/photo/camera).
+    var supportsVision: Bool = false
+
     init(
         repoId: String,
         displayName: String,
