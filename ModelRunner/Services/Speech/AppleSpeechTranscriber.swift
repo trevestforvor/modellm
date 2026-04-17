@@ -42,7 +42,11 @@ final class AppleSpeechTranscriber: TranscriptionBackend, @unchecked Sendable {
 
             let request = SFSpeechURLRecognitionRequest(url: audioURL)
             request.requiresOnDeviceRecognition = true
-            request.shouldReportPartialResults = false
+            // Enable partial results so we receive ongoing segments across pauses.
+            // On-device recognizer emits isFinal=true for each silence-delimited
+            // utterance; we accumulate and return when recognition truly finishes.
+            request.shouldReportPartialResults = true
+            request.taskHint = .dictation
 
             let result = await Self.runRecognition(recognizer: recognizer, request: request)
             switch result {
@@ -77,14 +81,63 @@ final class AppleSpeechTranscriber: TranscriptionBackend, @unchecked Sendable {
         request: SFSpeechURLRecognitionRequest
     ) async -> Result<String, Error> {
         await withCheckedContinuation { (cont: CheckedContinuation<Result<String, Error>, Never>) in
+            let state = RecognitionState(continuation: cont)
             recognizer.recognitionTask(with: request) { result, error in
                 if let error {
-                    cont.resume(returning: .failure(error))
+                    state.finish(.failure(error))
                     return
                 }
-                guard let result, result.isFinal else { return }
-                cont.resume(returning: .success(result.bestTranscription.formattedString))
+                guard let result else { return }
+                state.update(text: result.bestTranscription.formattedString,
+                             isFinal: result.isFinal)
             }
+        }
+    }
+
+    /// Accumulates the latest transcription across partial/final callbacks.
+    /// Resumes the continuation on a debounce after the most recent update,
+    /// so silence-delimited `isFinal=true` segments don't cut transcription short.
+    private final class RecognitionState: @unchecked Sendable {
+        private let lock = NSLock()
+        private var hasResumed = false
+        private var latestText: String = ""
+        private var sawFinal = false
+        private var debounce: DispatchWorkItem?
+        private let continuation: CheckedContinuation<Result<String, Error>, Never>
+
+        init(continuation: CheckedContinuation<Result<String, Error>, Never>) {
+            self.continuation = continuation
+        }
+
+        func update(text: String, isFinal: Bool) {
+            lock.lock()
+            defer { lock.unlock() }
+            guard !hasResumed else { return }
+            if text.count >= latestText.count { latestText = text }
+            if isFinal { sawFinal = true }
+            debounce?.cancel()
+            // Shorter debounce once we've seen a final segment; longer while still streaming.
+            let delay: TimeInterval = sawFinal ? 0.6 : 1.5
+            let work = DispatchWorkItem { [weak self] in self?.resume() }
+            debounce = work
+            DispatchQueue.global().asyncAfter(deadline: .now() + delay, execute: work)
+        }
+
+        func finish(_ result: Result<String, Error>) {
+            lock.lock()
+            defer { lock.unlock() }
+            guard !hasResumed else { return }
+            hasResumed = true
+            debounce?.cancel()
+            continuation.resume(returning: result)
+        }
+
+        private func resume() {
+            lock.lock()
+            defer { lock.unlock() }
+            guard !hasResumed else { return }
+            hasResumed = true
+            continuation.resume(returning: .success(latestText))
         }
     }
 }

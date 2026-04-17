@@ -63,10 +63,11 @@ final class ChatViewModel {
 
     // MARK: - Init
 
-    /// New init for protocol-based backends (remote models)
+    /// New init for protocol-based backends. Remote backends are .ready immediately;
+    /// local backends start in .loading until prepareBackend() finishes loading the GGUF.
     init(backend: any InferenceBackend) {
         self.backend = backend
-        self.loadingState = .ready
+        self.loadingState = (backend.source == .local) ? .loading(progress: 0) : .ready
     }
 
     /// Legacy init for local InferenceService (kept until LocalInferenceBackend ships)
@@ -240,6 +241,28 @@ final class ChatViewModel {
         } catch {
             loadingState = .failed(error.localizedDescription)
             logger.error("Model load failed: \(error)")
+        }
+    }
+
+    /// Prepare the active backend for inference. For local backends this loads
+    /// the GGUF off disk into the LlamaSession; for remote backends it's a no-op.
+    /// Manages loadingState so the UI can gate input while the model is loading.
+    /// Without this, init(backend:) optimistically sets .ready and a user can
+    /// send a message before LocalInferenceBackend.loadModel() completes,
+    /// triggering "No model loaded — call loadModel() first".
+    func prepareBackend() async {
+        guard let backend else { return }
+        if let local = backend as? LocalInferenceBackend {
+            loadingState = .loading(progress: 0)
+            do {
+                try await local.loadModel()
+                loadingState = .ready
+            } catch {
+                loadingState = .failed(error.localizedDescription)
+                logger.error("Local backend load failed: \(error)")
+            }
+        } else {
+            loadingState = .ready
         }
     }
 

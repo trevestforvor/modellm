@@ -15,9 +15,9 @@ final class SpeechSpikeViewModel {
         self.recorder = AudioRecorder()
         self.transcribers = [
             WhisperKitTranscriber(
-                id: "whisperkit-distil-small-en",
-                displayName: "WhisperKit · distil-small.en",
-                modelID: "distil-whisper_distil-small.en"
+                id: "whisperkit-distil-large-v3-turbo",
+                displayName: "WhisperKit · distil-large-v3-turbo",
+                modelID: "distil-whisper_distil-large-v3_turbo_600MB"
             ),
             WhisperKitTranscriber(
                 id: "whisperkit-base-en",

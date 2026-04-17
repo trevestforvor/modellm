@@ -101,6 +101,8 @@
 		AA0901000100000BAA090100 /* EngineResultRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0901000100000CAA090100 /* EngineResultRow.swift */; };
 		AA0901000100000DAA090100 /* SpeechSpikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0901000100000EAA090100 /* SpeechSpikeView.swift */; };
 		AA09010001000032AA090100 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA09010001000031AA090100 /* WhisperKit */; };
+		BD01000000000001BD010000 /* BundledModelInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD01000000000002BD010000 /* BundledModelInstaller.swift */; };
+		BD01000000000003BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf in Resources */ = {isa = PBXBuildFile; fileRef = BD01000000000004BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +211,8 @@
 		AA0901000100000AAA090100 /* SpeechSpikeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpikeViewModel.swift; sourceTree = "<group>"; };
 		AA0901000100000CAA090100 /* EngineResultRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineResultRow.swift; sourceTree = "<group>"; };
 		AA0901000100000EAA090100 /* SpeechSpikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSpikeView.swift; sourceTree = "<group>"; };
+		BD01000000000002BD010000 /* BundledModelInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledModelInstaller.swift; sourceTree = "<group>"; };
+		BD01000000000004BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SmolLM2-360M-Instruct-Q8_0.gguf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -246,6 +250,7 @@
 				BB01AA0000000020BB01AA00 /* Features */,
 				CC0301000100000FCC030100 /* Models */,
 				CC03010001000010CC030100 /* Views */,
+				BD01000000000010BD010000 /* Resources */,
 				8225560F7DBD44C99EA7AD92 /* ContentView.swift */,
 				3BB18C8F4F4B485380132B87 /* ModelRunner.entitlements */,
 			);
@@ -300,6 +305,7 @@
 				CC04010001000010CC040100 /* Inference */,
 				FA0100000000004EFA010000 /* Keychain */,
 				AA09010001000020AA090100 /* Speech */,
+				BD01000000000020BD010000 /* BundledModels */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -579,6 +585,30 @@
 			path = Speech;
 			sourceTree = "<group>";
 		};
+		BD01000000000010BD010000 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BD01000000000011BD010000 /* BundledModels */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BD01000000000011BD010000 /* BundledModels */ = {
+			isa = PBXGroup;
+			children = (
+				BD01000000000004BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf */,
+			);
+			path = BundledModels;
+			sourceTree = "<group>";
+		};
+		BD01000000000020BD010000 /* BundledModels */ = {
+			isa = PBXGroup;
+			children = (
+				BD01000000000002BD010000 /* BundledModelInstaller.swift */,
+			);
+			path = BundledModels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -666,6 +696,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD01000000000003BD010000 /* SmolLM2-360M-Instruct-Q8_0.gguf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,6 +744,7 @@
 			files = (
 				7404603D397B41748C7AD101 /* ModelRunnerApp.swift in Sources */,
 				99EDF330C9DA4E82B653CDB0 /* AppContainer.swift in Sources */,
+				BD01000000000001BD010000 /* BundledModelInstaller.swift in Sources */,
 				8225560F7DBD44C99EA7AD93 /* ContentView.swift in Sources */,
 				C3BFBAEE689F486190398248 /* CompatibilityModels.swift in Sources */,
 				A1B2C3D4E5F60010A2B3C4D5 /* ChipLookupTable.swift in Sources */,

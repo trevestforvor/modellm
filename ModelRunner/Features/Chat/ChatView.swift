@@ -320,12 +320,7 @@ struct ChatView: View {
             vm.startNewConversation(for: selected)
         }
         viewModel = vm
-
-        do {
-            try await localBackend.loadModel()
-        } catch {
-            logger.error("Local model load failed: \(error)")
-        }
+        await vm.prepareBackend()
     }
 
     private func selectModel(_ pickerModel: PickerModel) {

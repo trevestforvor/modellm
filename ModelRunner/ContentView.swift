@@ -41,6 +41,7 @@ struct ContentView: View {
             .tint(accent)
             .task {
                 await container.downloadService.setModelContext(modelContext)
+                BundledModelInstaller.installIfNeeded(modelContext: modelContext)
             }
             .onAppear {
                 consumeGuidedOnboarding()
